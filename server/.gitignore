@@ -1,0 +1,21 @@
+# Ігноруємо node_modules
+node_modules/
+
+# Вихідна директорія TypeScript компіляції
+dist/
+
+# Лог-файли
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Конфіденційні файли
+.env
+
+# Системні файли та IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
