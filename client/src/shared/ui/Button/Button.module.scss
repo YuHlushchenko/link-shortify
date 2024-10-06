@@ -1,6 +1,6 @@
-@import "@/app/styles/mixins.scss";
+@import '@/app/styles/mixins';
 
-.button {
+%button {
   font-family: var(--font-monserat);
   width: 100%;
   font-size: var(--font-size-16);
@@ -14,19 +14,26 @@
   text-transform: uppercase;
 }
 
+.button {
+  @extend %button;
+}
+
 .default {
-  @extend .button;
+  @extend %button;
+
   color: var(--bg-color);
   background-color: var(--accent-color);
   line-height: var(--line-height-16);
   font-weight: 500;
+
   &:hover {
     background-color: var(--extra-color);
   }
 }
 
 .outlineWhite {
-  @extend .button;
+  @extend %button;
+
   background-color: transparent;
   border: 1px solid var(--bg-color);
   color: var(--bg-color);
@@ -35,32 +42,42 @@
     line-height: var(--line-height-14);
     padding: 12px 22px;
   }
+
   &:hover {
     background-color: var(--bg-color);
     color: var(--bg-color-inverted);
   }
 }
 
-.transparent {
-  @extend .button;
+%transparent {
+  @extend %button;
+
   color: var(--secondary-color-1);
   font-weight: 500;
   padding: 0;
+
   &:hover {
     color: var(--primary-color-1);
   }
 }
 
+.transparent {
+  @extend %transparent;
+}
+
 .transparentActive {
-  @extend .transparent;
+  @extend %transparent;
+
   color: var(--primary-color-1);
 }
 
 .disabled {
-  @extend .button;
+  @extend %button;
+
   cursor: not-allowed;
   background-color: #787878;
   color: var(--bg-color);
+
   &:hover {
     background-color: #787878;
     color: var(--bg-color);

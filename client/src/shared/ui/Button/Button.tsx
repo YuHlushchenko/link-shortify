@@ -1,33 +1,33 @@
-import Link from "next/link";
-import { IChildren } from "@/app/types/globals.type";
+import Link from 'next/link'
+import { IChildren } from '@/app/types/global'
 
-import styles from "./Button.module.scss";
+import styles from './Button.module.scss'
 
 export type TButtonClassName =
-  | "default"
-  | "outlineWhite"
-  | "outlineBlack"
-  | "transparent"
-  | "transparentActive"
-  | "disabled";
+  | 'default'
+  | 'outlineWhite'
+  | 'outlineBlack'
+  | 'transparent'
+  | 'transparentActive'
+  | 'disabled'
 
 interface IProps {
-  children: IChildren;
-  type?: "button" | "submit" | "reset";
-  href?: string;
-  style?: React.CSSProperties;
-  className?: TButtonClassName;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
+  children: IChildren
+  type?: 'button' | 'submit' | 'reset'
+  href?: string
+  style?: React.CSSProperties
+  className?: TButtonClassName
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  disabled?: boolean
 }
 
 const Button = ({
   href,
   children,
   style,
-  className = "default",
+  className = 'default',
   onClick,
-  type = "submit",
+  type = 'submit',
   disabled = false,
 }: IProps) => {
   const defaultStyle = {
@@ -37,7 +37,7 @@ const Button = ({
     transparent: styles.transparent,
     transparentActive: styles.transparentActive,
     disabled: styles.disabled,
-  };
+  }
 
   return href ? (
     <Link href={href}>
@@ -65,7 +65,7 @@ const Button = ({
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

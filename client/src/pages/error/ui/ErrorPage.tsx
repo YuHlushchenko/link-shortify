@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 // import Button from "@/components/UI/Button/Button";
 
@@ -16,13 +16,13 @@ const Error = () => {
       </Button> */}
       <button
         onClick={() => {
-          window.location.reload();
+          window.location.reload()
         }}
       >
         Перезавантажити сторінку
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Error;
+export default Error

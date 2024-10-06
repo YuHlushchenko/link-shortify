@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 // import styles from "@/styles/pages/notFound.module.sass";
 
@@ -9,10 +9,11 @@ const NotFound = () => {
     >
       <h1>Сторінку не знайдено</h1>
       <h2>
-        Повернутися на <Link href="/">головну</Link>
+        Повернутися на
+        <Link href='/'>головну</Link>
       </h2>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
