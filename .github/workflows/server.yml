@@ -31,27 +31,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install mongosh
+      - name: Install pm2
         run: |
-          sudo apt-get install gnupg
-          wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-mongosh
-          mongosh --version
-
-      - name: Initalize MongoDB
-        run: |
-          mongosh --host localhost:27017 -u admin -p admin --authenticationDatabase admin <<EOF
-            db = db.getSiblingDB('APP-DB');
-            db.createUser({ user: 'APP-USERNAME', pwd: 'APP-PASSWORD', roles: [{ role: 'readWrite', db: 'APP-DB' }] })
-            db.createCollection('APP-COLLECTION');
-          EOF
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
+          npm install -g pm2
 
       - name: Install dependencies
         run: |
@@ -63,12 +45,12 @@ jobs:
           cd server
           yarn build
 
-      - name: Start app
+      - name: Start app with pm2
         env:
           MONGO_URI: mongodb://localhost:27017/APP-DB
         run: |
           cd server
-          yarn start
+          pm2 start yarn --name "my-app" -- start
 
       - name: Run tests
         run: |
@@ -80,12 +62,13 @@ jobs:
           cd server
           echo "No linting yet"
 
-      - name: Stop MongoDB
+      - name: Stop pm2 app
         run: |
-          sudo service mongod stop
+          pm2 stop "my-app"
 
       - name: Cleanup
         run: |
+          pm2 delete "my-app"
           sudo apt-get remove -y mongodb-mongosh
           sudo apt-get purge -y mongodb-mongosh
           sudo apt-get autoremove -y
@@ -93,5 +76,3 @@ jobs:
       - name: Finish
         run: |
           echo "All done!"
-
-# Важливо: не забудьте замінити APP-DB, APP-USERNAME, APP-PASSWORD, APP-COLLECTION на власні значення
