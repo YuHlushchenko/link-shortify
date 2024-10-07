@@ -14,27 +14,27 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # Оновлено до v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
           cache: "yarn" # Кешуємо Yarn для швидшого білду
 
       - name: Install dependencies
         run: |
-          cd сlient
+          cd client  # Виправлення на "client"
           yarn install
 
       - name: Lint code
         run: |
-          cd сlient
+          cd client  # Виправлення на "client"
           yarn lint
           yarn lint:prettier
           yarn lint:style
 
       - name: Build Next.js app
         run: |
-          cd сlient
+          cd client  # Виправлення на "client"
           yarn build
