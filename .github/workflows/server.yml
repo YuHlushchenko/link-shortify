@@ -3,7 +3,7 @@ name: Server CI
 on:
   push:
     paths:
-      - "server/**" # Виконуємо дії тільки при змінах в папці backend
+      - "server/**"
   pull_request:
     paths:
       - "server/**"
@@ -65,7 +65,33 @@ jobs:
 
       - name: Start app
         env:
-          MONGO_URI: mongodb://localhost:27017/link-shortify
+          MONGO_URI: mongodb://localhost:27017/APP-DB
         run: |
           cd server
           yarn start
+
+      - name: Run tests
+        run: |
+          cd server
+          echo "No tests yet"
+
+      - name: Lint code
+        run: |
+          cd server
+          echo "No linting yet"
+
+      - name: Stop MongoDB
+        run: |
+          sudo service mongod stop
+
+      - name: Cleanup
+        run: |
+          sudo apt-get remove -y mongodb-mongosh
+          sudo apt-get purge -y mongodb-mongosh
+          sudo apt-get autoremove -y
+
+      - name: Finish
+        run: |
+          echo "All done!"
+
+# Важливо: не забудьте замінити APP-DB, APP-USERNAME, APP-PASSWORD, APP-COLLECTION на власні значення
