@@ -12,6 +12,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -33,7 +44,7 @@ jobs:
 
       - name: Start app
         env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_URI: mongodb://localhost:27017/link-shortify
         run: |
           cd server
           yarn start
