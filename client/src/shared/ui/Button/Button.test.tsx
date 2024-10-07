@@ -32,12 +32,12 @@ describe('Button', () => {
     render(<Button style={{ color: 'red' }}>Click me</Button>)
     expect(screen.getByText('Click me')).toHaveStyle('color: red')
   })
-  test('if className', () => {
-    render(<Button className='outlineWhite'>Click me</Button>)
-    expect(screen.getByText('Click me')).toHaveClass('outlineWhite')
-  })
   test('if default className', () => {
     render(<Button>Click me</Button>)
     expect(screen.getByText('Click me')).toHaveClass('default')
+  })
+  test('if className', () => {
+    render(<Button className='outlineWhite'>Click me</Button>)
+    expect(screen.getByText('Click me')).toHaveClass('outlineWhite')
   })
 })
