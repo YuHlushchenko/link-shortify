@@ -32,6 +32,8 @@ jobs:
           yarn build
 
       - name: Start app
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: |
           cd server
           yarn start
