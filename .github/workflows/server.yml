@@ -53,9 +53,6 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Get Mongo logs
-        run: docker logs mongo
-
       - name: Install dependencies
         run: |
           cd server
