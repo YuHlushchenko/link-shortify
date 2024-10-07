@@ -30,6 +30,11 @@ jobs:
           cd client
           yarn install --frozen-lockfile  # Обов'язкове використання lockfile
 
+      - name: Run tests
+        run: |
+          cd client
+          yarn test:unit
+
       - name: Lint code
         run: |
           cd client
