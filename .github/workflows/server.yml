@@ -40,10 +40,10 @@ jobs:
           cd server
           yarn install
 
-      - name: Build TypeScript
+      - name: Lint code
         run: |
           cd server
-          yarn build
+          echo "No linting yet"
 
       - name: Start app with pm2
         env:
@@ -57,22 +57,11 @@ jobs:
           cd server
           echo "No tests yet"
 
-      - name: Lint code
-        run: |
-          cd server
-          echo "No linting yet"
-
       - name: Stop pm2 app
         run: |
           pm2 stop "my-app"
 
-      - name: Cleanup
+      - name: Build TypeScript
         run: |
-          pm2 delete "my-app"
-          sudo apt-get remove -y mongodb-mongosh
-          sudo apt-get purge -y mongodb-mongosh
-          sudo apt-get autoremove -y
-
-      - name: Finish
-        run: |
-          echo "All done!"
+          cd server
+          yarn build
