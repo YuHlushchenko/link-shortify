@@ -42,9 +42,21 @@ jobs:
           cd server
           yarn build
 
+      - name: Wait for MongoDB
+        run: |
+          echo "Waiting for MongoDB to be ready..."
+          for i in {1..10}; do
+            if mongo --host mongo --eval "print(\"waited for connection\")"; then
+              echo "MongoDB is ready!"
+              break
+            fi
+            echo "MongoDB is not ready yet, waiting 10 seconds..."
+            sleep 10
+          done
+
       - name: Start app
         env:
-          MONGODB_URI: mongodb://localhost:27017/link-shortify
+          MONGO_URI: mongodb://localhost:27017/link-shortify
         run: |
           cd server
           yarn start
