@@ -22,10 +22,14 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
+      - name: Disable Yarn cache (optional, для перевірки)
+        run: |
+          yarn cache clean
+
       - name: Install dependencies
         run: |
           cd client
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile  # Обов'язкове використання lockfile
 
       - name: Lint code
         run: |
