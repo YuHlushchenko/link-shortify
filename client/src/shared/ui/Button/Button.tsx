@@ -59,8 +59,8 @@ const Button = ({
       className={
         !disabled ? `${defaultStyle[className]}` : `${defaultStyle.disabled}`
       }
-      onClick={onClick}
       disabled={disabled}
+      onClick={onClick}
       style={style}
     >
       {children}
