@@ -1,0 +1,19 @@
+{
+  "name": "link-shortify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/YuHlushchenko/link-shortify.git",
+  "author": "YuHlushchenko <yuhlushchenko@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "husky": "^9.1.6"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
+}
