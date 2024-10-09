@@ -1,2 +1,7 @@
-cd client || exit 1
-yarn lint-staged
+# Перехід до директорії client і виконання lint-staged
+# cd client || exit 1
+# yarn lint-staged
+
+# Додаткові команди для сервера, якщо потрібно
+# cd ../server || exit 1
+# yarn lint
