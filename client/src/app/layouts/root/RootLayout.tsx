@@ -28,6 +28,7 @@ const RootLayout = async ({
     <html lang={locale}>
       <body
         className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
+        data-theme='dark'
       >
         <NextIntlClientProvider messages={messages}>
           {children}
