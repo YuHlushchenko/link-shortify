@@ -1,4 +1,10 @@
 // all imports should be done here
+@import './reset';
+@import './mixins';
+
+// @import './variables.scss';
+@import './themes/dark';
+@import './themes/light';
 
 :root {
   --background: #fff;

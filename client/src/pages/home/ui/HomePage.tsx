@@ -16,7 +16,7 @@ const HomePage = () => {
       <p>Welcome to the Home page</p>
       <code>{t('title')}</code>
 
-      <Button className='disabled'>btn</Button>
+      <Button className='default'>btn</Button>
     </div>
   )
 }

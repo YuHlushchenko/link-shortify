@@ -1,3 +1,21 @@
-.app_light_theme {
-  --bg-color: #212121;
+[data-theme='light'] {
+  --bg-color: #f5f5f5;
+  --bg-color-inverted: #fff;
+  --accent-color: #ff7a59; /* новий акцентний колір */
+  --extra-color: #ff5c33; /* колір для hover або додаткових елементів */
+  --text-color: #333; /* темніший текст на світлому фоні */
+  --gradient-color: linear-gradient(180deg, #ffb347 0%, #fc3 100%);
+  --webkit-gradient-color: linear-gradient(
+    90deg,
+    #ffb347 0%,
+    #fc3 100%
+  );
+  --transparent-color: #00000014; /* прозорий чорний */
+  --primary-color-1: #ffefd5; /* світліший колір для основних елементів */
+  --primary-color-2: #ffe4b5;
+  --primary-color-3: #ffdead;
+  --secondary-color-1: #a9a9a9; /* сірий для другорядних елементів */
+  --secondary-color-2: #696969;
+  --error-color: #ff6347; /* новий колір для помилок */
+  --success-color: #32cd32; /* новий колір для успіху */
 }
