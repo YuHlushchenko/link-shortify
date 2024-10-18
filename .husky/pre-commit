@@ -1,5 +1,5 @@
 [ -d client ] && cd client && yarn lint-staged || exit 1
 
-# Додаткові команди для сервера, якщо потрібно
+# Додаткові команди для сервера
 # cd ../server || exit 1
 # yarn lint
