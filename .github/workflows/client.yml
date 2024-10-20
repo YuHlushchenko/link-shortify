@@ -34,16 +34,17 @@ jobs:
         run: |
           cd client
           yarn test:unit
-
         if: always()
+
       - name: Build Storybook
         run: |
           cd client
           yarn storybook:build
-
         if: always()
+
       - name: Screenshot testing
         run: npm run test:ui:ci
+        if: always()
 
       - name: Lint code
         run: |
