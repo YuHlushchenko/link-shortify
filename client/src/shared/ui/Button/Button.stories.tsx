@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Button, { TButtonClassName } from './Button'
-import { ThemeDecorator } from '@/shared/config/storybook/ThemeDecorator'
+// import { ThemeDecorator } from '@/shared/config/storybook/ThemeDecorator'
+import { Theme } from '@/shared/const/theme'
 
 // Storybook meta-інформація про компонент
 const meta: Meta<typeof Button> = {
@@ -37,7 +38,26 @@ export const Default: Story = {
     className: 'default' as TButtonClassName,
     disabled: false,
   },
-  decorators: [ThemeDecorator],
+  // decorators: [ThemeDecorator],
 }
 
-// Приклад кнопки з
+// Приклад кнопки за замовчуванням для світлої теми
+export const DefaultLIGHT: Story = {
+  args: {
+    children: 'Default Button LIGHT',
+    className: 'default' as TButtonClassName,
+    disabled: false,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
+// Приклад кнопки заблокованої кнопки
+export const Disabled: Story = {
+  args: {
+    children: 'Disabled Button',
+    className: 'default' as TButtonClassName,
+    disabled: true,
+  },
+}

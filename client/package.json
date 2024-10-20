@@ -13,17 +13,16 @@
     "lint:style": "stylelint '**/*.{css,scss}'",
     "lint:style:fix": "stylelint '**/*.{css,scss}' --fix",
     "test:unit": "jest",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build",
     "test:ui": "loki test",
-    "test:ui:ok": "loki test approve"
+    "test:ui:ok": "loki approve",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "dependencies": {
     "next": "14.2.14",
     "next-intl": "^3.20.0",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.79.4",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
@@ -52,6 +51,8 @@
     "lint-staged": "^15.2.10",
     "loki": "^0.35.1",
     "prettier": "^3.3.3",
+    "sass": "^1.80.3",
+    "sass-loader": "^16.0.2",
     "storybook": "^8.3.5",
     "stylelint": "^16.9.0",
     "stylelint-config-prettier-scss": "^1.0.0",
