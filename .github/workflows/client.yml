@@ -25,6 +25,10 @@ jobs:
         run: |
           yarn cache clean
 
+      - name: Install pm2
+        run: |
+          npm install -g pm2
+
       - name: Install dependencies
         run: |
           cd client
@@ -34,17 +38,26 @@ jobs:
         run: |
           cd client
           yarn test:unit
-        if: always()
 
       - name: Build Storybook
         run: |
           cd client
           yarn storybook:build
-        if: always()
+
+      - name: Start Storybook
+        run: |
+          cd client
+          pm2 start yarn --name "storybook" -- storybook
+
+      - name: Test Screenshots
+        run: |
+          cd client
+          yarn test:ui
 
       - name: Screenshot testing
-        run: npm run test:ui:ci
-        if: always()
+        run: |
+          cd client
+          yarn test:ui:ci
 
       - name: Lint code
         run: |
