@@ -53,6 +53,15 @@ export const DefaultLIGHT: Story = {
   },
 }
 
+// Приклад кнопки з білим контуром
+// export const OutlineWhite: Story = {
+//   args: {
+//     children: 'Outline White Button',
+//     className: 'outlineWhite' as TButtonClassName,
+//     disabled: false,
+//   },
+// }
+
 // Приклад кнопки заблокованої кнопки
 export const Disabled: Story = {
   args: {
