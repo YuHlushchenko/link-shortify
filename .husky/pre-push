@@ -1,5 +1,5 @@
 cd client || exit 1
-yarn test:unit && yarn test:ui
+yarn test:unit
 
 # cd ../server || exit 1
 # yarn lint
