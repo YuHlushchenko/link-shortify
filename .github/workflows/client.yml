@@ -41,6 +41,10 @@ jobs:
           cd client
           yarn storybook:build
 
+        if: always()
+      - name: Screenshot testing
+        run: npm run test:ui:ci
+
       - name: Lint code
         run: |
           cd client
