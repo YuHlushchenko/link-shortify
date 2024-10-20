@@ -35,6 +35,12 @@ jobs:
           cd client
           yarn test:unit
 
+        if: always()
+      - name: Build Storybook
+        run: |
+          cd client
+          yarn storybook:build
+
       - name: Lint code
         run: |
           cd client
