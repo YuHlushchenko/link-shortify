@@ -34,31 +34,31 @@ jobs:
           cd client
           yarn install --frozen-lockfile  # Обов'язкове використання lockfile
 
+        if: always()
       - name: Run tests
         run: |
           cd client
           yarn test:unit
 
+        if: always()
       - name: Build Storybook
         run: |
           cd client
           yarn storybook:build
 
+        if: always()
       - name: Start Storybook
         run: |
           cd client
           pm2 start yarn --name "storybook" -- storybook
 
-      - name: Test Screenshots
-        run: |
-          cd client
-          yarn test:ui
-
+        if: always()
       - name: Screenshot testing
         run: |
           cd client
           yarn test:ui:ci
 
+        if: always()
       - name: Lint code
         run: |
           cd client
@@ -66,6 +66,11 @@ jobs:
           yarn lint:prettier
           yarn lint:style
 
+      - name: Stop Storybook
+        run: |
+          pm2 stop "storybook"
+
+        if: always()
       - name: Build Next.js app
         run: |
           cd client

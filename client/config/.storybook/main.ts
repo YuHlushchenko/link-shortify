@@ -11,7 +11,10 @@ function getAbsolutePath(value: string): any {
 }
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    '../../src/**/*.mdx',
+    '../../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  ],
   addons: [
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@storybook/addon-links'),
@@ -23,7 +26,7 @@ const config: StorybookConfig = {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
-  staticDirs: ['../public'],
+  staticDirs: ['../../public'],
   webpackFinal: async (config) => {
     // Перевірка на наявність config.resolve
     if (!config.resolve) {
@@ -34,7 +37,7 @@ const config: StorybookConfig = {
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../src'),
+      '@': path.resolve(__dirname, '../../src'),
     }
 
     // Повертаємо змінену конфігурацію
