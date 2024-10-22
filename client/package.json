@@ -12,15 +12,15 @@
     "lint:prettier:fix": "prettier --write .",
     "lint:style": "stylelint '**/*.{css,scss}'",
     "lint:style:fix": "stylelint '**/*.{css,scss}' --fix",
-    "test:unit": "jest",
+    "test:unit": "jest --config ./config/jest/jest.config.ts",
     "test:ui": "loki test",
     "test:ui:ok": "loki approve",
     "test:ui:ci": "loki --requireReference --reactUri file:./storybook-static",
     "test:ui:report": "npm run test:ui:json && npm run test:ui:html",
     "test:ui:json": "node scripts/generate-visual-json-report.js",
     "test:ui:html": "reg-cli --from .loki/report.json --report .loki/report.html",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook": "storybook dev -p 6006 --config-dir config/.storybook",
+    "storybook:build": "storybook build --config-dir config/.storybook"
   },
   "dependencies": {
     "next": "14.2.14",

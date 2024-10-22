@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react'
-import { ThemeDecorator } from '../src/shared/config/storybook/ThemeDecorator'
+import { ThemeDecorator } from '../../src/shared/config/storybook/ThemeDecorator'
 
 export const decorators = [ThemeDecorator]
 
