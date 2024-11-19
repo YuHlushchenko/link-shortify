@@ -1,3 +1,3 @@
 export type IChildren = React.ReactNode | React.ReactNode[]
 
-export type Locale = 'en' | 'uk'
+export type TLocale = 'en' | 'uk'

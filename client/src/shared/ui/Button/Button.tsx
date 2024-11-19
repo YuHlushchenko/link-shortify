@@ -10,7 +10,7 @@ export type TButtonClassName =
   | 'transparentActive'
   | 'disabled'
 
-export interface IProps {
+interface IProps {
   children: IChildren
   type?: 'button' | 'submit' | 'reset'
   href?: string

@@ -1,0 +1,34 @@
+%default {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+}
+
+.default300 {
+  @extend %default;
+
+  font-weight: 300;
+}
+
+.default {
+  @extend %default;
+}
+
+.subTitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  font-weight: 600;
+}
+
+.lg {
+  font-size: var(--font-size-xxl);
+  line-height: var(--line-height-xxl);
+  font-weight: 300;
+  text-align: center;
+}
