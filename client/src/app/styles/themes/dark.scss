@@ -1,9 +1,10 @@
 [data-theme='app_dark_theme'] {
-  --bg-color: #fff;
-  --bg-color-inverted: #000010;
+  --bg-color: #000010;
+  --bg-color-inverted: #fff;
   --accent-color: #2f52e0;
   --extra-color: #0b2fc1;
-  --text-color: #000010;
+  --text-color: #fff;
+  --text-color-inverted: #000010;
   --gradient-color: linear-gradient(180deg, #25afb0 0%, #0441b6 100%);
   --webkit-gradient-color: linear-gradient(90deg, #25afb0 0%, #0441b6 100%);
   --transparent-color: #ffffff14;
@@ -12,6 +13,8 @@
   --primary-color-3: #d9d9d9;
   --secondary-color-1: #989898;
   --secondary-color-2: #444;
-  --error-color: #f00;
   --success-color: #00ca8d;
+  --warning-color: #fc0;
+  --error-color: #f00;
+  --disabled-color: #787878;
 }

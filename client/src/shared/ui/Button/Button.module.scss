@@ -21,7 +21,7 @@
 .default {
   @extend %button;
 
-  color: var(--bg-color);
+  color: var(--text-color);
   background-color: var(--accent-color);
   line-height: var(--line-height-16);
   font-weight: 500;
@@ -76,11 +76,11 @@
   @extend %button;
 
   cursor: not-allowed;
-  background-color: #787878;
+  background-color: var(--disabled-color);
   color: var(--bg-color);
 
   &:hover {
-    background-color: #787878;
+    background-color: var(--disabled-color);
     color: var(--bg-color);
   }
 }

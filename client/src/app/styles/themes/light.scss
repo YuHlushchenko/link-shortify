@@ -4,6 +4,7 @@
   --accent-color: #ff7a59; /* новий акцентний колір */
   --extra-color: #ff5c33; /* колір для hover або додаткових елементів */
   --text-color: #333; /* темніший текст на світлому фоні */
+  --text-color-inverted: #fff; /* світлий текст на темному фоні */
   --gradient-color: linear-gradient(180deg, #ffb347 0%, #fc3 100%);
   --webkit-gradient-color: linear-gradient(90deg, #ffb347 0%, #fc3 100%);
   --transparent-color: #00000014; /* прозорий чорний */
@@ -12,6 +13,7 @@
   --primary-color-3: #ffdead;
   --secondary-color-1: #a9a9a9; /* сірий для другорядних елементів */
   --secondary-color-2: #696969;
-  --error-color: #ff6347; /* новий колір для помилок */
-  --success-color: #32cd32; /* новий колір для успіху */
+  --success-color: #32cd32;
+  --warning-color: #ff8c00;
+  --error-color: #ff6347;
 }

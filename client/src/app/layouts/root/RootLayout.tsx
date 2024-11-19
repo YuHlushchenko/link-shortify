@@ -4,17 +4,17 @@ import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
-import { geistSans, geistMono, monserat } from '../../fonts'
+import { geistSans, geistMono, monserat } from '@/app/fonts'
+import { IChildren, TLocale } from '@/app/types/global'
 
-import { IChildren } from '../../types/global'
-import { Theme } from '@/shared/const/theme'
-
-import '@/app/styles/index.scss'
 import { ThemeWrapper } from '@/app/wrappers'
+
+import { Theme } from '@/shared/const/theme'
+import '@/app/styles/index.scss'
 
 interface IProps {
   children: IChildren
-  params: { locale: string }
+  params: { locale: TLocale }
 }
 
 export const metadata: Metadata = {
@@ -31,14 +31,14 @@ const RootLayout = async ({
   const themeFromCookies = cookies().get('app_theme')?.value || Theme.DARK
 
   return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
-        data-theme={themeFromCookies}
-      >
+    <html
+      lang={locale}
+      className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
+    >
+      <body data-theme={themeFromCookies}>
         <ThemeWrapper />
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <main>{children}</main>
         </NextIntlClientProvider>
       </body>
     </html>
