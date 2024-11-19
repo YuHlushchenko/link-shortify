@@ -3,7 +3,7 @@
 %button {
   font-family: var(--font-monserat);
   width: 100%;
-  font-size: var(--font-size-16);
+  font-size: var(--font-size-sm);
   border-radius: 4px;
   padding: 14px 24px;
   cursor: pointer;
@@ -21,9 +21,9 @@
 .default {
   @extend %button;
 
-  color: var(--text-color);
+  color: var(--text-color-inverted);
   background-color: var(--accent-color);
-  line-height: var(--line-height-16);
+  line-height: var(--line-height-sm);
   font-weight: 500;
 
   &:hover {
@@ -39,8 +39,8 @@
   color: var(--bg-color);
 
   @include for-tablet {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-14);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
     padding: 12px 22px;
   }
 
