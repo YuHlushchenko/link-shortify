@@ -45,3 +45,4 @@ storybook-static/*
 .loki/report.html
 .loki/report.json
 /reports/unit
+yarn.lock
