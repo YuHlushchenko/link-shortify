@@ -69,7 +69,7 @@ Ensure the following software is installed on your system:
 Clone the repository and install dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/YuHlushchenko/link-shortify.git
 cd client
 npm install
 ```
