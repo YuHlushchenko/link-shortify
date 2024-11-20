@@ -68,13 +68,11 @@ Ensure the following software is installed on your system:
 
 Clone the repository and install dependencies:
 
-bash
-
-Copy code
-
-`git clone <repository-url>
+```bash
+git clone <repository-url>
 cd client
-npm install`
+npm install
+```
 
 ---
 
@@ -82,11 +80,9 @@ npm install`
 
 Start the development server:
 
-bash
-
-Copy code
-
-`npm run dev`
+```bash
+npm run dev
+```
 
 Open http://localhost:3000 in your browser to see the app.
 
@@ -96,19 +92,15 @@ Open http://localhost:3000 in your browser to see the app.
 
 To create a production build:
 
-bash
-
-Copy code
-
-`npm run build`
+```bash
+npm run build
+```
 
 Serve the production build locally:
 
-bash
-
-Copy code
-
-`npm start`
+```bash
+npm start
+```
 
 ---
 
