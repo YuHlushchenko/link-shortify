@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl'
 
 import Button from '@/shared/ui/Button/Button'
 import { ThemeSwitcher } from '@/features/ThemeSwitcher'
+import Heading from '@/shared/ui/Heading/Heading'
 
 const HomePage = () => {
   const t = useTranslations('HomePage')
@@ -14,6 +15,7 @@ const HomePage = () => {
       <code>{t('title')}</code>
 
       <Button className='default'>btn</Button>
+      <Heading>Heading</Heading>
       <ThemeSwitcher />
     </>
   )

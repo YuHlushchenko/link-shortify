@@ -5,7 +5,7 @@ import styles from './Button.module.scss'
 
 export type TButtonClassName =
   | 'default'
-  | 'outlineWhite'
+  | 'outlined'
   | 'transparent'
   | 'transparentActive'
   | 'disabled'
@@ -31,7 +31,7 @@ const Button = ({
 }: IProps) => {
   const defaultStyle = {
     default: styles.default,
-    outlineWhite: styles.outlineWhite,
+    outlined: styles.outlined,
     transparent: styles.transparent,
     transparentActive: styles.transparentActive,
     disabled: styles.disabled,

@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Button, { TButtonClassName } from './Button'
-// import { ThemeDecorator } from '@/shared/config/storybook/ThemeDecorator'
 import { Theme } from '@/shared/const/theme'
 
 // Storybook meta-інформація про компонент
@@ -38,7 +37,6 @@ export const Default: Story = {
     className: 'default' as TButtonClassName,
     disabled: false,
   },
-  // decorators: [ThemeDecorator],
 }
 
 // Приклад кнопки за замовчуванням для світлої теми
@@ -53,12 +51,24 @@ export const DefaultLIGHT: Story = {
   },
 }
 
-// Приклад кнопки з білим контуром
-export const OutlineWhite: Story = {
+// Приклад кнопки з контуром
+export const Outlined: Story = {
   args: {
-    children: 'Outline White Button',
-    className: 'outlineWhite' as TButtonClassName,
+    children: 'Outlined Button',
+    className: 'outlined' as TButtonClassName,
     disabled: false,
+  },
+}
+
+// Приклад кнопки з контуром для світлої теми
+export const OutlinedLight: Story = {
+  args: {
+    children: 'Outlined Light Button',
+    className: 'outlined' as TButtonClassName,
+    disabled: false,
+  },
+  globals: {
+    theme: Theme.LIGHT,
   },
 }
 
