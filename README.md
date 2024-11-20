@@ -137,35 +137,27 @@ Run different types of tests:
 
     - Test current UI:
 
-      bash
-
-      Copy code
-
-      `npm run test:ui`
+      ```bash
+      npm run test:ui
+      ```
 
     - Approve visual changes:
 
-      bash
-
-      Copy code
-
-      `npm run test:ui:ok`
+      ```bash
+      npm run test:ui:ok
+      ```
 
     - Run tests in CI:
 
-      bash
-
-      Copy code
-
-      `npm run test:ui:ci`
+      ```bash
+      npm run test:ui:ci
+      ```
 
     - Generate test reports:
 
-      bash
-
-      Copy code
-
-      `npm run test:ui:report`
+      ```bash
+      npm run test:ui:report
+      ```
 
 ---
 
@@ -173,19 +165,15 @@ Run different types of tests:
 
 Launch **Storybook** to develop and view UI components in isolation:
 
-bash
-
-Copy code
-
-`npm run storybook`
+```bash
+npm run storybook
+```
 
 Build a static version of Storybook for deployment:
 
-bash
-
-Copy code
-
-`npm run storybook:build`
+```bash
+npm run storybook:build
+```
 
 ---
 
