@@ -31,12 +31,12 @@
   }
 }
 
-.outlineWhite {
+.outlined {
   @extend %button;
 
   background-color: transparent;
-  border: 1px solid var(--bg-color);
-  color: var(--bg-color);
+  border: 1px solid var(--bg-color-inverted);
+  color: var(--bg-color-inverted);
 
   @include for-tablet {
     font-size: var(--font-size-xs);
@@ -45,8 +45,8 @@
   }
 
   &:hover {
-    background-color: var(--bg-color);
-    color: var(--bg-color-inverted);
+    background-color: var(--bg-color-inverted);
+    color: var(--bg-color);
   }
 }
 

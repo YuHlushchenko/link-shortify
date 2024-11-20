@@ -37,7 +37,7 @@ describe('Button', () => {
     expect(screen.getByText('Click me')).toHaveClass('default')
   })
   test('if className', () => {
-    render(<Button className='outlineWhite'>Click me</Button>)
-    expect(screen.getByText('Click me')).toHaveClass('outlineWhite')
+    render(<Button className='outlined'>Click me</Button>)
+    expect(screen.getByText('Click me')).toHaveClass('outlined')
   })
 })

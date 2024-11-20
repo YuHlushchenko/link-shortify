@@ -4,7 +4,12 @@ import { HeadingColor } from './Heading.type'
 
 import styles from './Heading.module.scss'
 
-type THeadingClassName = 'default300' | 'default' | 'subTitle' | 'title' | 'lg'
+export type THeadingClassName =
+  | 'default300'
+  | 'default'
+  | 'subTitle'
+  | 'title'
+  | 'lg'
 
 interface IProps {
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span'
@@ -33,7 +38,7 @@ const Heading = ({
     tag,
     {
       className: `${defaultStyle[className]}`,
-      style: { ...style, color: `var(${color})` },
+      style: { color: `var(${color})`, ...style },
     },
     children,
   )
