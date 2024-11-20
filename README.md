@@ -58,11 +58,11 @@ Welcome to **Link-Shortify**! This project is built using **Next.js** as the fou
 
 Ensure the following software is installed on your system:
 
--   **Node.js** (version 18 or later recommended)
--   **npm** (comes with Node.js) or **yarn** (if preferred)
--   **Docker** (optional, for specific testing configurations)
+- **Node.js** (version 18 or later recommended)
+- **npm** (comes with Node.js) or **yarn** (if preferred)
+- **Docker** (optional, for specific testing configurations)
 
-* * * * *
+---
 
 #### Installation
 
@@ -76,7 +76,7 @@ Copy code
 cd client
 npm install`
 
-* * * * *
+---
 
 #### Development Workflow
 
@@ -90,7 +90,7 @@ Copy code
 
 Open http://localhost:3000 in your browser to see the app.
 
-* * * * *
+---
 
 #### Building for Production
 
@@ -110,18 +110,18 @@ Copy code
 
 `npm start`
 
-* * * * *
+---
 
 #### Linting and Formatting
 
--   **Lint code**: `npm run lint`
--   **Fix linting errors**: `npm run lint:fix`
--   **Check code formatting (Prettier)**: `npm run lint:prettier`
--   **Fix code formatting**: `npm run lint:prettier:fix`
--   **Lint stylesheets**: `npm run lint:style`
--   **Fix stylesheet issues**: `npm run lint:style:fix`
+- **Lint code**: `npm run lint`
+- **Fix linting errors**: `npm run lint:fix`
+- **Check code formatting (Prettier)**: `npm run lint:prettier`
+- **Fix code formatting**: `npm run lint:prettier:fix`
+- **Lint stylesheets**: `npm run lint:style`
+- **Fix stylesheet issues**: `npm run lint:style:fix`
 
-* * * * *
+---
 
 #### Testing
 
@@ -129,47 +129,45 @@ Run different types of tests:
 
 1.  **Unit tests** (via Jest):
 
-    bash
-
-    Copy code
-
-    `npm run test:unit`
+    ```bash
+    npm run test:unit
+    ```
 
 2.  **Visual regression tests** (via Loki):
 
-    -   Test current UI:
+    - Test current UI:
 
-        bash
+      bash
 
-        Copy code
+      Copy code
 
-        `npm run test:ui`
+      `npm run test:ui`
 
-    -   Approve visual changes:
+    - Approve visual changes:
 
-        bash
+      bash
 
-        Copy code
+      Copy code
 
-        `npm run test:ui:ok`
+      `npm run test:ui:ok`
 
-    -   Run tests in CI:
+    - Run tests in CI:
 
-        bash
+      bash
 
-        Copy code
+      Copy code
 
-        `npm run test:ui:ci`
+      `npm run test:ui:ci`
 
-    -   Generate test reports:
+    - Generate test reports:
 
-        bash
+      bash
 
-        Copy code
+      Copy code
 
-        `npm run test:ui:report`
+      `npm run test:ui:report`
 
-* * * * *
+---
 
 #### Storybook for UI Development
 
@@ -189,14 +187,14 @@ Copy code
 
 `npm run storybook:build`
 
-* * * * *
+---
 
 #### Pre-commit Hooks
 
 The project uses **Husky** and **lint-staged** for pre-commit checks:
 
--   Code is automatically linted and formatted before each commit.
+- Code is automatically linted and formatted before each commit.
 
-* * * * *
+---
 
 Feel free to contribute, report issues, or customize as needed. Happy coding! 🎉
