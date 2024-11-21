@@ -70,8 +70,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/YuHlushchenko/link-shortify.git
-cd client
-npm install
+yarn install
 ```
 
 ---
@@ -81,7 +80,7 @@ npm install
 Start the development server:
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 Open http://localhost:3000 in your browser to see the app.
@@ -93,13 +92,13 @@ Open http://localhost:3000 in your browser to see the app.
 To create a production build:
 
 ```bash
-npm run build
+yarn build
 ```
 
 Serve the production build locally:
 
 ```bash
-npm start
+yarn start
 ```
 
 ---
@@ -122,7 +121,7 @@ Run different types of tests:
 1.  **Unit tests** (via Jest):
 
     ```bash
-    npm run test:unit
+    yarn test:unit
     ```
 
 2.  **Visual regression tests** (via Loki):
@@ -130,25 +129,25 @@ Run different types of tests:
     - Test current UI:
 
       ```bash
-      npm run test:ui
+      yarn test:ui
       ```
 
     - Approve visual changes:
 
       ```bash
-      npm run test:ui:ok
+      yarn test:ui:ok
       ```
 
     - Run tests in CI:
 
       ```bash
-      npm run test:ui:ci
+      yarn test:ui:ci
       ```
 
     - Generate test reports:
 
       ```bash
-      npm run test:ui:report
+      yarn test:ui:report
       ```
 
 ---
@@ -158,13 +157,13 @@ Run different types of tests:
 Launch **Storybook** to develop and view UI components in isolation:
 
 ```bash
-npm run storybook
+yarn storybook
 ```
 
 Build a static version of Storybook for deployment:
 
 ```bash
-npm run storybook:build
+yarn storybook:build
 ```
 
 ---

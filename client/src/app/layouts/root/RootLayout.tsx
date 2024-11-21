@@ -14,7 +14,7 @@ import '@/app/styles/index.scss'
 
 interface IProps {
   children: IChildren
-  params: { locale: TLocale }
+  params: Promise<{ locale: TLocale }> // since Next.js 15 `params` is asynchronous
 }
 
 export const metadata: Metadata = {
@@ -22,18 +22,20 @@ export const metadata: Metadata = {
   description: 'Link-Shortify description',
 }
 
-const RootLayout = async ({
-  children,
-  params: { locale },
-}: Readonly<IProps>) => {
+const RootLayout = async ({ children, params }: Readonly<IProps>) => {
+  //Route "/[locale]" used `params.locale`. `params` should be awaited before using its properties.
+  //Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+  const { locale } = await params
   const messages = await getMessages({ locale })
 
-  const themeFromCookies = cookies().get('app_theme')?.value || Theme.DARK
+  const themeFromCookies =
+    (await cookies()).get('app_theme')?.value || Theme.DARK
 
   return (
     <html
       lang={locale}
       className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
+      suppressHydrationWarning
     >
       <body data-theme={themeFromCookies}>
         <ThemeWrapper />
