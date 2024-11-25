@@ -188,8 +188,6 @@ Install **i18n Ally** in VS Code:
 - Search for `i18n Ally`.
 - Click **Install**.
 
----
-
 ##### 2\. **Create Configuration Files**
 
 In the root of the project, create a directory named `.vscode` and add the following files:
@@ -214,8 +212,6 @@ scopeRangeRegex: "useTranslations\\(\\s*['\"`](.*?)['\"`]"
 monopoly: true
 ```
 
----
-
 ###### **2.2. settings.json**
 
 This file defines the main paths and format for your localization files:
@@ -228,16 +224,12 @@ This file defines the main paths and format for your localization files:
 }
 ```
 
----
-
 ##### 3\. **Usage**
 
 Once configured:
 
 - Open any file containing translation keys, and **i18n Ally** will automatically recognize them.
 - Use the extension to manage keys, edit translations, and find usages directly from the editor.
-
----
 
 Your project is now ready for smooth localization management with **i18n Ally**! 🚀
 
