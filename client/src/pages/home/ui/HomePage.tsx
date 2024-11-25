@@ -4,8 +4,10 @@ import Button from '@/shared/ui/Button/Button'
 import { ThemeSwitcher } from '@/features/ThemeSwitcher'
 import Heading from '@/shared/ui/Heading/Heading'
 
+import { Link } from '@/app/i18n/routing'
+
 const HomePage = () => {
-  const t = useTranslations('HomePage')
+  const t = useTranslations('common')
 
   return (
     <>
@@ -16,6 +18,7 @@ const HomePage = () => {
 
       <Button className='default'>btn</Button>
       <Heading>Heading</Heading>
+      <Link href='/about'>About</Link>
       <ThemeSwitcher />
     </>
   )
