@@ -2,5 +2,6 @@
   "NotFoundPage": {
     "title": "Page not found",
     "message": "Sorry, the page you are looking for does not exist."
-  }
+  },
+  "homePage": "Home Page"
 }

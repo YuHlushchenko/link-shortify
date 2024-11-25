@@ -35,7 +35,7 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
     <html
       lang={locale}
       className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
-      suppressHydrationWarning
+      // suppressHydrationWarning
     >
       <body data-theme={themeFromCookies}>
         <ThemeWrapper />
