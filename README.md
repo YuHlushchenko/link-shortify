@@ -176,4 +176,71 @@ The project uses **Husky** and **lint-staged** for pre-commit checks:
 
 ---
 
+#### Setting up **i18n Ally** for the Project
+
+**i18n Ally** is a VS Code extension that simplifies working with localization in your project [Official Documentation for i18n Ally](https://github.com/lokalise/i18n-ally). Below are the steps to configure it for your setup.
+
+##### 1\. **Install the Extension**
+
+Install **i18n Ally** in VS Code:
+
+- Open the **Extensions** panel (Ctrl+Shift+X).
+- Search for `i18n Ally`.
+- Click **Install**.
+
+---
+
+##### 2\. **Create Configuration Files**
+
+In the root of the project, create a directory named `.vscode` and add the following files:
+
+###### **2.1. i18n-ally-custom-framework.yml**
+
+This file customizes key detection in your project:
+
+```bash
+languageIds:
+  - javascript
+  - typescript
+  - javascriptreact
+  - typescriptreact
+
+usageMatchRegex:
+  - "[^\\w\\d]t\\(['\"`]({key})['\"`]\\)"
+  - "[^\\w\\d]useTranslations\\(['\"`]({key})['\"`]\\)\\.\\w+"
+
+scopeRangeRegex: "useTranslations\\(\\s*['\"`](.*?)['\"`]"
+
+monopoly: true
+```
+
+---
+
+###### **2.2. settings.json**
+
+This file defines the main paths and format for your localization files:
+
+```bash
+{
+  "i18n-ally.localesPaths": ["client/public/locales"],
+  "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally.keystyle": "nested"
+}
+```
+
+---
+
+##### 3\. **Usage**
+
+Once configured:
+
+- Open any file containing translation keys, and **i18n Ally** will automatically recognize them.
+- Use the extension to manage keys, edit translations, and find usages directly from the editor.
+
+---
+
+Your project is now ready for smooth localization management with **i18n Ally**! 🚀
+
+---
+
 Feel free to contribute, report issues, or customize as needed. Happy coding! 🎉
