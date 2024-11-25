@@ -70,6 +70,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/YuHlushchenko/link-shortify.git
+cd link-shortify
 yarn install
 ```
 
