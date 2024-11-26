@@ -1,0 +1,85 @@
+.container {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoContainer {
+  position: fixed;
+  top: 60px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin-left: 10px;
+    font-family: var(--font-geist-mono);
+    font-size: var(--font-size-xl);
+    color: var(--primary-color-3);
+  }
+}
+
+.infinityContainer {
+  position: relative;
+}
+
+.circleLeft {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  position: absolute;
+  animation: animation-left 3.5s forwards infinite;
+  animation-timing-function: linear;
+  top: calc(50% - 20px);
+  left: calc(50% - 120px);
+  visibility: hidden;
+}
+
+.circleRight {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  position: absolute;
+  animation: animation-right 3.5s forwards infinite;
+  animation-timing-function: linear;
+  top: calc(50% - 20px);
+  left: calc(50% + 80px);
+  visibility: hidden;
+}
+
+@keyframes animation-left {
+  0% {
+    transform: rotate(0deg) translateX(100px);
+    visibility: visible;
+  }
+
+  50% {
+    transform: rotate(360deg) translateX(100px);
+    visibility: hidden;
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(100px);
+    visibility: hidden;
+  }
+}
+
+@keyframes animation-right {
+  0% {
+    transform: rotate(-180deg) translateX(100px);
+    visibility: hidden;
+  }
+
+  50% {
+    transform: rotate(180deg) translateX(100px);
+    visibility: hidden;
+  }
+
+  100% {
+    transform: rotate(-180deg) translateX(100px);
+    visibility: visible;
+  }
+}
