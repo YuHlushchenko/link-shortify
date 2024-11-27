@@ -9,8 +9,11 @@ const CIRCLES_COUNT = 170
 const Loading = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.logoContainer}>
-        <Image src={Logo} alt='Link-Shortify' width={35} height={35} />
+      <div className={styles.logoWithTextContainer}>
+        <div className={styles.logoContainer}>
+          <Image src={Logo} alt='Link-Shortify' layout='fill' />
+        </div>
+
         <h1>Link-Shortify</h1>
       </div>
 
