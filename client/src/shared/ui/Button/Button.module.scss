@@ -21,7 +21,7 @@
 .default {
   @extend %button;
 
-  color: var(--text-color-inverted);
+  color: var(--text-color-light);
   background-color: var(--accent-color);
   line-height: var(--line-height-sm);
   font-weight: 500;

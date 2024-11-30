@@ -1,28 +1,43 @@
 'use client'
 
-// import Button from "@/components/UI/Button/Button";
+import { useRouter } from '@/app/i18n/routing'
+import Image from 'next/image'
 
-// import styles from "@/styles/pages/notFound.module.sass";
+import Button from '@/shared/ui/Button/Button'
 
-const Error = () => {
+import styles from './ErrorPage.module.scss'
+
+import BgImage from 'public/assets/svgs/NotFoundPattern.svg'
+
+const ErrorPage = () => {
+  const router = useRouter()
+
   return (
-    <div
-    // className={styles.container}
-    >
-      <h1>Схоже сталася помилка :(</h1>
+    <div className={styles.container}>
+      <div className={styles.bgImageContainer}>
+        <Image
+          src={BgImage}
+          alt='500 Internal Server Error Background'
+          layout='fill'
+          priority
+        />
+      </div>
 
-      {/* <Button className="dark" onClick={() => window.location.reload()}>
-        Перезавантажити сторінку
-      </Button> */}
-      <button
-        onClick={() => {
-          window.location.reload()
-        }}
-      >
-        Перезавантажити сторінку
-      </button>
+      <div className={styles.contentContainer}>
+        <h1>500</h1>
+
+        <h2>Sorry! It&apos;s me, not you.</h2>
+
+        <p>Let me help you return to the previous page.</p>
+
+        <div>
+          <Button onClick={router.back} aria-label='Go to the previous page'>
+            Go Back
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Error
+export default ErrorPage

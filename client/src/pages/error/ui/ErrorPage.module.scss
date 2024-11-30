@@ -1,0 +1,112 @@
+@use '@/app/styles/mixins.scss' as *;
+
+.container {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgImageContainer {
+  position: absolute;
+  transform: rotate(45deg);
+
+  // opacity: 0.6;
+  z-index: -1;
+  top: -250px;
+  left: -250px;
+  width: 900px;
+  height: 900px;
+  @include for-small-desktop {
+    width: 700px;
+    height: 700px;
+  }
+  @include for-phone {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.contentContainer {
+  min-height: 100svh;
+  z-index: 1;
+  border-radius: 50px;
+  padding: 100px 200px;
+  background: radial-gradient(
+    ellipse,
+    var(--bg-color) 50%,
+    var(--bg-color-transparent) 70%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @include for-small-desktop {
+    padding: 60px 160px;
+  }
+  @include for-tablet {
+    padding: 60px 120px;
+  }
+  @include for-phone {
+    padding: 40px 60px;
+  }
+
+  h1 {
+    font-family: var(--font-geist-mono);
+    font-size: 250px;
+    line-height: 1.1;
+    text-shadow:
+      -2px -2px 0 var(--primary-color-3),
+      2px -2px 0 var(--primary-color-3),
+      -2px 2px 0 var(--primary-color-3),
+      2px 2px 0 var(--primary-color-3);
+    color: var(--text-color-inverted);
+    @include for-small-desktop {
+      font-size: 200px;
+    }
+    @include for-phone {
+      font-size: 150px;
+    }
+  }
+
+  h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 100;
+    margin-bottom: 80px;
+    color: var(--primary-color-3);
+    text-align: center;
+    @include for-phone {
+      font-size: var(--font-size-md);
+      margin-bottom: 60px;
+    }
+  }
+
+  p {
+    font-size: var(--font-size-xl);
+    font-weight: 100;
+    text-align: center;
+    margin-bottom: 20px;
+    @include for-phone {
+      font-size: var(--font-size-lg);
+    }
+
+    span {
+      font-weight: 400;
+      font-family: var(--font-geist-mono);
+      color: var(--accent-color);
+    }
+
+    a {
+      font-family: var(--font-geist-mono);
+      font-weight: 300;
+      color: var(--accent-color);
+      text-decoration: underline;
+      transition: 0.3s;
+
+      &:hover {
+        color: var(--extra-color);
+      }
+    }
+  }
+}

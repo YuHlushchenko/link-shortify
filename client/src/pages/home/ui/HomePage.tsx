@@ -7,7 +7,7 @@ import { ThemeSwitcher } from '@/features/ThemeSwitcher'
 import Heading from '@/shared/ui/Heading/Heading'
 
 import { Link } from '@/app/i18n/routing'
-import { NotFoundPage } from '@/pages/notFound'
+import { ErrorPage } from '@/pages/error'
 
 const HomePage = () => {
   const t = useTranslations('common')
@@ -38,12 +38,11 @@ const HomePage = () => {
         style={{
           width: '100vw',
           height: '100svh',
-          border: '1px solid red',
           display: 'flex',
           justifyContent: 'center',
         }}
       >
-        <NotFoundPage />
+        <ErrorPage />
       </div>
     </>
   )
