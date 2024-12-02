@@ -1,0 +1,34 @@
+.container {
+  padding: 0 200px;
+  min-height: 100svh;
+  height: 100%;
+
+  p {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.logoWithTextContainer {
+  position: relative;
+  margin: 20px 0;
+
+  h1 {
+    font-family: var(--font-geist-mono);
+    font-size: var(--font-size-xxxl);
+    margin-left: 70px;
+  }
+}
+
+.logoContainer {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 5px;
+  left: 0;
+}
+
+.mainFormContainer {
+  padding: 20px 40px;
+  background-color: var(--secondary-color-2);
+  border-radius: 10px;
+}
