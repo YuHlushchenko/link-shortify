@@ -1,7 +1,5 @@
 {
   "common": {
-    "title": "Hello, world!",
-    "about": "Go to the about page"
-  },
-  "title": "my new title"
+    "welcomeTo": "Welcome to"
+  }
 }
