@@ -17,7 +17,7 @@ const meta: Meta<typeof Heading> = {
         HeadingColor.SECONDARY,
         HeadingColor.ACCENT,
         HeadingColor.TEXT,
-        HeadingColor.TEXT_INVERTED,
+        // HeadingColor.TEXT_INVERTED,
       ],
     },
   },
