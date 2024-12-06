@@ -57,10 +57,10 @@
     font-size: 250px;
     line-height: 1.1;
     text-shadow:
-      -2px -2px 0 var(--primary-color-3),
-      2px -2px 0 var(--primary-color-3),
-      -2px 2px 0 var(--primary-color-3),
-      2px 2px 0 var(--primary-color-3);
+      -2px -2px 0 var(--primary-color-1),
+      2px -2px 0 var(--primary-color-1),
+      -2px 2px 0 var(--primary-color-1),
+      2px 2px 0 var(--primary-color-1);
     color: var(--text-color-inverted);
     @include for-small-desktop {
       font-size: 200px;
@@ -74,7 +74,7 @@
     font-size: var(--font-size-lg);
     font-weight: 100;
     margin-bottom: 80px;
-    color: var(--primary-color-3);
+    color: var(--primary-color-1);
     text-align: center;
     @include for-phone {
       font-size: var(--font-size-md);
@@ -93,13 +93,13 @@
     span {
       font-weight: 400;
       font-family: var(--font-geist-mono);
-      color: var(--accent-color);
+      color: var(--accent-color-1);
     }
 
     a {
       font-family: var(--font-geist-mono);
       font-weight: 300;
-      color: var(--accent-color);
+      color: var(--accent-color-1);
       text-decoration: underline;
       transition: 0.3s;
 

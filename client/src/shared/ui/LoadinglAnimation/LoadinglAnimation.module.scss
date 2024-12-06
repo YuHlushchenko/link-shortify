@@ -4,7 +4,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--accent-color);
+  background-color: var(--accent-color-1);
   position: absolute;
   animation: animation-left 2s forwards infinite;
   animation-timing-function: linear;
@@ -25,7 +25,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--accent-color);
+  background-color: var(--accent-color-1);
   position: absolute;
   animation: animation-right 2s forwards infinite;
   animation-timing-function: linear;
