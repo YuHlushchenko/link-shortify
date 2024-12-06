@@ -4,6 +4,8 @@ import Button from '@/shared/ui/Button/Button'
 import { Theme } from '@/shared/const/theme'
 import { useStore } from '@/app/providers/store/createStore'
 
+import styles from './ThemeSwitcher.module.scss'
+
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useStore()
 
@@ -18,7 +20,7 @@ export const ThemeSwitcher = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <Button onClick={toggleThemeHandler}>Toggle Theme</Button>
       <p>
         Theme:

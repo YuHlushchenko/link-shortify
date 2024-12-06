@@ -1,28 +1,24 @@
 [data-theme='app_light_theme'] {
-  --bg-color: #fff; /* Основний фон */
-  --bg-color-transparent: rgb(255 255 255 / 80%); /* Напівпрозорий білий */
-  --bg-color-inverted: #000010; /* Темний для інверсії */
-  --accent-color: #0056d6; /* Насичений синій для акцентів */
-  --extra-color: #07f; /* Блакитний для додаткових акцентів */
-  --text-color: #1a1a1a; /* Основний колір тексту */
-  --text-color-inverted: #fff; /* Білий для тексту на темному фоні */
-  --text-color-light: #f0f0f0; /* Світлий колір тексту */
-  --gradient-color: linear-gradient(180deg, #64c8e0 0%, #0056d6 100%);
-  --webkit-gradient-color: linear-gradient(90deg, #64c8e0 0%, #0056d6 100%);
-  --transparent-color: rgb(0 0 0 / 10%); /* Для легких тіней чи обводок */
-
-  /* Кольори для тексту */
-  --primary-color-1: #1a1a1a; /* Насичений чорний для основного тексту */
-  --primary-color-2: #4d4d4d; /* Темно-сірий для другорядного тексту */
-  --primary-color-3: #6f6f6f; /* Нейтральний сірий для підказок чи непомітного тексту */
-
-  /* Кольори для корисної інформації */
-  --secondary-color-1: #4a90e2; /* Яскравий синій для посилань чи важливих слів */
-  --secondary-color-2: #007bff; /* Темніший блакитний для виділення */
-
-  /* Стани елементів */
-  --success-color: #28a745; /* Зелений для успіху */
-  --warning-color: #ffc107; /* Жовтий для попереджень */
-  --error-color: #dc3545; /* Червоний для помилок */
-  --disabled-color: #bdbdbd; /* Сірий для неактивних елементів */
+  --bg-color: #fff;
+  --text-color: #1a1a1a;
+  --accent-color-1: #144ee3;
+  --accent-color-2: #eb568e;
+  --extra-color: #0b2fc1;
+  --primary-color-1: #c9ced6;
+  --secondary-color-1: #353c4a;
+  --secondary-color-2: #181e29;
+  --gradient-color: linear-gradient(
+    75deg,
+    #144ee3 0%,
+    #eb568e 20%,
+    #a353aa 60%,
+    #144ee3 100%
+  );
+  --webkit-gradient-color: linear-gradient(
+    75deg,
+    #144ee3 0%,
+    #eb568e 20%,
+    #a353aa 60%,
+    #144ee3 100%
+  );
 }

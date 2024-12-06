@@ -1,34 +1,77 @@
 .container {
-  padding: 0 200px;
+  position: relative;
+  padding: 0 55px;
   min-height: 100svh;
   height: 100%;
+}
 
-  p {
-    font-size: var(--font-size-lg);
+.bgSwirlContainer {
+  z-index: 0;
+  position: fixed;
+  inset: 0;
+  background: url('/assets/svgs/swirl.svg') no-repeat center center fixed;
+  animation: rotate-swirl 30s infinite linear;
+}
+
+.bgCubesContainer {
+  z-index: 1;
+  position: fixed;
+  inset: 0;
+
+  .cubeOneContainer {
+    position: absolute;
+    top: -120px;
+    right: 155px;
+    animation: float-cube 10s infinite ease-in-out;
+  }
+
+  .cubeTwoContainer {
+    position: absolute;
+    bottom: -80px;
+    left: 50px;
+    animation: float-cube 10s 1s infinite ease-in-out;
+  }
+
+  .cubeThreeContainer {
+    position: absolute;
+    bottom: 30px;
+    right: 70px;
+    animation: float-cube 10s 3s infinite ease-in-out;
   }
 }
 
-.logoWithTextContainer {
-  position: relative;
-  margin: 20px 0;
-
-  h1 {
-    font-family: var(--font-geist-mono);
-    font-size: var(--font-size-xxxl);
-    margin-left: 70px;
-  }
+.btn {
+  background: var(--gradient-color);
 }
 
-.logoContainer {
+.themeSwitcherContainer {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 5px;
-  left: 0;
+  transform: translate(0, -50%);
+  top: 50%;
+  right: 55px;
+  z-index: 2;
 }
 
-.mainFormContainer {
-  padding: 20px 40px;
-  background-color: var(--secondary-color-2);
-  border-radius: 10px;
+@keyframes rotate-swirl {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-cube {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-40px) rotate(25deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
 }

@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+// import { useTranslations } from 'next-intl'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ const ONE_SECOND = 1000
 const NotFound = () => {
   const [remainingTime, setRemainingTime] = useState(REDIRECT_TIMER)
   const router = useRouter()
-  const t = useTranslations()
+  // const t = useTranslations()
 
   const redirectToHome = () => {
     router.push('/')
@@ -52,7 +52,11 @@ const NotFound = () => {
         <p>
           You will be returned to the
           <br />
-          <Link href='/'>{t('homePage')}</Link> in{' '}
+          <Link href='/'>
+            {/* {t('homePage')} */}
+            Home Page
+          </Link>{' '}
+          in{' '}
           <span>
             {remainingTime >= 10 ? '' : 0}
             {remainingTime}
