@@ -10,6 +10,7 @@ import { IChildren, TLocale } from '@/app/types/global'
 import { ThemeWrapper } from '@/app/wrappers'
 
 import { Theme } from '@/shared/const/theme'
+
 import '@/app/styles/index.scss'
 
 interface IProps {

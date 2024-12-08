@@ -8,26 +8,6 @@
   justify-content: center;
 }
 
-.bgImageContainer {
-  position: absolute;
-  transform: rotate(45deg);
-
-  // opacity: 0.6;
-  z-index: -1;
-  top: -250px;
-  left: -250px;
-  width: 900px;
-  height: 900px;
-  @include for-small-desktop {
-    width: 700px;
-    height: 700px;
-  }
-  @include for-phone {
-    width: 500px;
-    height: 500px;
-  }
-}
-
 .contentContainer {
   min-height: 100svh;
   z-index: 1;

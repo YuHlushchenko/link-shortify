@@ -13,7 +13,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+
+  // padding: 14px 0; //! This padding is causing the issue
+  padding: 15px 8px;
   background-color: var(--secondary-color-2);
   transition: background-color 0.5s;
   border-radius: 48px;
