@@ -23,6 +23,19 @@
     text-orientation: mixed;
     color: var(--text-color);
   }
+
+  .iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    svg {
+      path {
+        fill: var(--primary-color-1);
+      }
+    }
+  }
 }
 
 .lightThemeContainerActive,
@@ -42,17 +55,4 @@
       }
     }
   }
-}
-
-.iconContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-
-  // svg {
-  //   path {
-  //     fill: var(--primary-color-1);
-  //   }
-  // }
 }
