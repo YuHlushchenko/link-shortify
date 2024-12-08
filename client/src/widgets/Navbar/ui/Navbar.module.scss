@@ -1,5 +1,38 @@
 @use '@/app/styles/mixins.scss' as *;
 
 .container {
-  border: 1px solid red;
+  z-index: 1;
+  position: fixed;
+  top: 40px;
+  margin: 0 55px;
+  width: calc(100% - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; // !
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  img {
+    width: 44px;
+    height: 44px;
+  }
+
+  h1 {
+    margin-left: 8px;
+    font-family: var(--font-geist-mono);
+    font-size: var(--font-size-xxl);
+    font-weight: 800;
+    background: var(--gradient-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.btnsContainer {
+  display: flex;
 }

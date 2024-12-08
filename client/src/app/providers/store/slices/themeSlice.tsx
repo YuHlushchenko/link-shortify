@@ -7,11 +7,7 @@ export interface IThemeSlice {
   setTheme: (newTheme: Theme) => void
 }
 
-const getInitialTheme = () => {
-  return Theme.DARK
-}
-
 export const createThemeSlice: StateCreator<IThemeSlice> = (set) => ({
-  theme: getInitialTheme(),
+  theme: Theme.DARK,
   setTheme: (newTheme) => set({ theme: newTheme }),
 })

@@ -1,28 +1,16 @@
 'use client'
 
 import { useRouter } from '@/app/i18n/routing'
-import Image from 'next/image'
 
 import Button from '@/shared/ui/Button/Button'
 
 import styles from './ErrorPage.module.scss'
-
-import BgImage from 'public/assets/svgs/NotFoundPattern.svg'
 
 const ErrorPage = () => {
   const router = useRouter()
 
   return (
     <div className={styles.container}>
-      <div className={styles.bgImageContainer}>
-        <Image
-          src={BgImage}
-          alt='500 Internal Server Error Background'
-          layout='fill'
-          priority
-        />
-      </div>
-
       <div className={styles.contentContainer}>
         <h1>500</h1>
 

@@ -20,6 +20,7 @@ const ThemeWrapper = () => {
       setTheme(storedTheme)
       document.cookie = `app_theme=${storedTheme}; max-age=31536000`
     }
+    setTheme(storedTheme)
   }, [])
 
   return null

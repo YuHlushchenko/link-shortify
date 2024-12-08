@@ -6,11 +6,8 @@ import { useRouter } from 'next/navigation'
 // import { useTranslations } from 'next-intl'
 
 import Link from 'next/link'
-import Image from 'next/image'
 
 import styles from '@/pages/notFound/ui/NotFound.module.scss'
-
-import BgImage from 'public/assets/svgs/NotFoundPattern.svg'
 
 const REDIRECT_TIMER = 10 // Time in seconds before redirect
 const ONE_SECOND = 1000
@@ -40,10 +37,6 @@ const NotFound = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.bgImageContainer}>
-        <Image src={BgImage} alt='404 Not Found Background' layout='fill' />
-      </div>
-
       <div className={styles.contentContainer}>
         <h1>404</h1>
 

@@ -8,12 +8,16 @@
 .container {
   position: relative;
   padding: 0 55px;
-  min-height: 100svh;
   height: 100%;
 }
 
+.bgCoverContainer {
+  // border: 1px solid red;
+  min-height: 100svh;
+  position: fixed;
+}
+
 .bgSwirlContainer {
-  z-index: 0;
   position: fixed;
   inset: 0;
 
@@ -28,7 +32,6 @@
 }
 
 .bgCubesContainer {
-  z-index: 1;
   position: fixed;
   inset: 0;
 }
@@ -83,7 +86,6 @@
   transform: translate(0, -50%);
   top: 50%;
   right: 55px;
-  z-index: 2;
 }
 
 @keyframes rotate-swirl {
