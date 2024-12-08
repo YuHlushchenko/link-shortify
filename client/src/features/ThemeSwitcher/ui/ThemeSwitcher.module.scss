@@ -1,5 +1,58 @@
 .container {
   background-color: var(--secondary-color-2);
   border: 1px solid var(--secondary-color-1);
-  border-radius: 5px;
+  border-radius: 48px;
+  padding: 8px 7px;
+  cursor: pointer;
+  outline: none;
+}
+
+.lightThemeContainer,
+.darkThemeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  background-color: var(--secondary-color-2);
+  transition: background-color 0.5s;
+  border-radius: 48px;
+
+  p {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    color: var(--text-color);
+  }
+}
+
+.lightThemeContainerActive,
+.darkThemeContainerActive {
+  background-color: var(--accent-color-1);
+  padding: 15px 8px;
+
+  p {
+    color: var(--ligth-text-color);
+    font-weight: 700;
+  }
+
+  .iconContainer {
+    svg {
+      path {
+        fill: var(--ligth-text-color);
+      }
+    }
+  }
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  // svg {
+  //   path {
+  //     fill: var(--primary-color-1);
+  //   }
+  // }
 }

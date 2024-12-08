@@ -1,5 +1,8 @@
 {
   "common": {
-    "welcomeTo": "Welcome to"
+    "welcomeTo": "Welcome to",
+    "light": "Light",
+    "dark": "Dark",
+    "theme": "Theme"
   }
 }

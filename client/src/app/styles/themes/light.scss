@@ -1,24 +1,25 @@
 [data-theme='app_light_theme'] {
-  --bg-color: #fff;
-  --text-color: #1a1a1a;
-  --accent-color-1: #144ee3;
-  --accent-color-2: #eb568e;
-  --extra-color: #0b2fc1;
-  --primary-color-1: #c9ced6;
-  --secondary-color-1: #353c4a;
-  --secondary-color-2: #181e29;
+  --bg-color: #fffbf5;
+  --text-color: #2b2b2b;
+  --ligth-text-color: #fff;
+  --accent-color-1: #36f;
+  --accent-color-2: #ff6f91;
+  --extra-color: #5581ff;
+  --primary-color-1: #2b2b2b;
+  --secondary-color-1: #d9e2eb;
+  --secondary-color-2: #e0eaf7;
   --gradient-color: linear-gradient(
     75deg,
-    #144ee3 0%,
-    #eb568e 20%,
-    #a353aa 60%,
-    #144ee3 100%
+    #36f 0%,
+    #ff6f91 20%,
+    #b371c6 60%,
+    #36f 100%
   );
   --webkit-gradient-color: linear-gradient(
     75deg,
-    #144ee3 0%,
-    #eb568e 20%,
-    #a353aa 60%,
-    #144ee3 100%
+    #36f 0%,
+    #ff6f91 20%,
+    #b371c6 60%,
+    #36f 100%
   );
 }
