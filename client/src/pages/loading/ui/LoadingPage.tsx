@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import styles from './LoadingPage.module.scss'
 
-import Logo from 'public/assets/svgs/logo.svg'
+import Logo from 'public/assets/svgs/logo.svg?url'
 import LoadingAnimation from '@/shared/ui/LoadinglAnimation/LoadinglAnimation'
 
 const CIRCLES_COUNT = 100

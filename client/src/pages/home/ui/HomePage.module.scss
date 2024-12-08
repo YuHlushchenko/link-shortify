@@ -23,6 +23,12 @@
     top: -120px;
     right: 155px;
     animation: float-cube 10s infinite ease-in-out;
+
+    svg {
+      rect {
+        fill: var(--bg-color);
+      }
+    }
   }
 
   .cubeTwoContainer {
