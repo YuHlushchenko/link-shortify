@@ -1,1 +1,8 @@
-{}
+{
+  "notFoundPage": {
+    "oopsThePageYouAndAposReLookingForDoesnAndAposTExist": "Oops! The page you&apos;re looking for doesn&apos;t exist.",
+    "youWillBeReturnedToThe": "You will be returned to the",
+    "homePage": "Home Page",
+    "in": "in"
+  }
+}

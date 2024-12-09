@@ -8,6 +8,14 @@
   justify-content: center;
 }
 
+.bgCoverContainer {
+  position: absolute;
+  overflow: hidden;
+  min-height: 100svh;
+  height: 100%;
+  width: 100%;
+}
+
 .contentContainer {
   min-height: 100svh;
   z-index: 1;
@@ -30,6 +38,8 @@
   }
   @include for-phone {
     padding: 40px 60px;
+
+    // padding: 0;
   }
 
   h1 {
@@ -46,7 +56,7 @@
       font-size: 200px;
     }
     @include for-phone {
-      font-size: 150px;
+      font-size: 140px;
     }
   }
 
@@ -66,6 +76,7 @@
     font-size: var(--font-size-xl);
     font-weight: 100;
     text-align: center;
+
     @include for-phone {
       font-size: var(--font-size-lg);
     }

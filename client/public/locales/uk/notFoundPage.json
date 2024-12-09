@@ -1,1 +1,8 @@
-{}
+{
+  "notFoundPage": {
+    "oopsThePageYouAndAposReLookingForDoesnAndAposTExist": "Ой! Сторінки, яку ви шукаєте, не існує.",
+    "youWillBeReturnedToThe": "Ми повернемо Вас на",
+    "homePage": "Головну сторінку",
+    "in": "через"
+  }
+}
