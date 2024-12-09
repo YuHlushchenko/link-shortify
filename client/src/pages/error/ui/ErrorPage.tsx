@@ -2,6 +2,7 @@
 
 import { useRouter } from '@/app/i18n/routing'
 
+import BgCover from '@/shared/ui/BgCover/BgCover'
 import Button from '@/shared/ui/Button/Button'
 
 import styles from './ErrorPage.module.scss'
@@ -11,6 +12,10 @@ const ErrorPage = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.bgCoverContainer}>
+        <BgCover />
+      </div>
+
       <div className={styles.contentContainer}>
         <h1>500</h1>
 

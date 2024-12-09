@@ -21,6 +21,11 @@ const config: Config = {
   //   },
   // щоб працювали абсолютні імпорти в файлах з тестами
   // modulePaths: ['<rootDir>src'],
+  // !
+  // moduleNameMapper: {
+  //   '\\.svg\\?url$': '<rootDir>/__mocks__/fileMock.js', // Мок для SVG з параметром ?url
+  //   '\\.(css|scss|sass)$': 'identity-obj-proxy', // Для CSS модулів
+  // },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

@@ -3,9 +3,11 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-// import { useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import Link from 'next/link'
+
+import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from '@/pages/notFound/ui/NotFound.module.scss'
 
@@ -15,7 +17,7 @@ const ONE_SECOND = 1000
 const NotFound = () => {
   const [remainingTime, setRemainingTime] = useState(REDIRECT_TIMER)
   const router = useRouter()
-  // const t = useTranslations()
+  const t = useTranslations('notFoundPage')
 
   const redirectToHome = () => {
     router.push('/')
@@ -37,19 +39,19 @@ const NotFound = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.bgCoverContainer}>
+        <BgCover />
+      </div>
+
       <div className={styles.contentContainer}>
         <h1>404</h1>
 
-        <h2>Oops! The page you&apos;re looking for doesn&apos;t exist.</h2>
+        <h2>{t('oopsThePageYouAndAposReLookingForDoesnAndAposTExist')}</h2>
 
         <p>
-          You will be returned to the
+          {t('youWillBeReturnedToThe')}
           <br />
-          <Link href='/'>
-            {/* {t('homePage')} */}
-            Home Page
-          </Link>{' '}
-          in{' '}
+          <Link href='/'>{t('homePage')}</Link> {t('in')}{' '}
           <span>
             {remainingTime >= 10 ? '' : 0}
             {remainingTime}
