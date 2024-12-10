@@ -18,6 +18,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
         .default,
       ...(await import(`../../../public/locales/${locale}/notFoundPage.json`))
         .default,
+      ...(await import(`../../../public/locales/${locale}/errorPage.json`))
+        .default,
     },
   }
 })

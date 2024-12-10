@@ -1,3 +1,7 @@
 {
-  "errorPage": {}
+  "errorPage": {
+    "sorryItAndAposSMeNotYou": "Вибачте! Це через мене, а не через Вас.",
+    "letMeHelpYouReturnToThePreviousPage": "Давайте я допоможу Вам повернутися на попередню сторінку.",
+    "goBack": "Повернутися"
+  }
 }

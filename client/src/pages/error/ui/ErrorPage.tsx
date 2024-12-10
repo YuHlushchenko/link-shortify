@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useRouter } from '@/app/i18n/routing'
 
 import BgCover from '@/shared/ui/BgCover/BgCover'
@@ -9,9 +10,23 @@ import styles from './ErrorPage.module.scss'
 
 const ErrorPage = () => {
   const router = useRouter()
+  const t = useTranslations('errorPage')
+
+  // Redirect to the home page if there is no history
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      router.back()
+    } else {
+      router.push('/')
+    }
+  }
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      role='alert'
+      aria-labelledby='error-title'
+    >
       <div className={styles.bgCoverContainer}>
         <BgCover />
       </div>
@@ -19,13 +34,13 @@ const ErrorPage = () => {
       <div className={styles.contentContainer}>
         <h1>500</h1>
 
-        <h2>Sorry! It&apos;s me, not you.</h2>
+        <h2>{t('sorryItAndAposSMeNotYou')}</h2>
 
-        <p>Let me help you return to the previous page.</p>
+        <p>{t('letMeHelpYouReturnToThePreviousPage')}</p>
 
         <div>
-          <Button onClick={router.back} aria-label='Go to the previous page'>
-            Go Back
+          <Button onClick={handleGoBack} aria-label='go-to-the-previous-page'>
+            {t('goBack')}
           </Button>
         </div>
       </div>

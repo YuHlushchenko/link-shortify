@@ -1,7 +1,5 @@
 import { IChildren } from '@/app/types/global'
-// import { ErrorPage } from '@/pages/error'
 
-// import { Footer } from '@/widgets/Footer'
 import { Navbar } from '@/widgets/Navbar'
 
 interface IProps {
@@ -13,8 +11,6 @@ const PageWrapper = ({ children }: Readonly<IProps>) => {
     <>
       <Navbar />
       {children}
-      {/* <ErrorPage /> */}
-      {/* <Footer /> */}
     </>
   )
 }

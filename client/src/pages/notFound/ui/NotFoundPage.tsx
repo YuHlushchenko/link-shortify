@@ -12,7 +12,6 @@ import BgCover from '@/shared/ui/BgCover/BgCover'
 import styles from '@/pages/notFound/ui/NotFound.module.scss'
 
 const REDIRECT_TIMER = 10 // Time in seconds before redirect
-const ONE_SECOND = 1000
 
 const NotFound = () => {
   const [remainingTime, setRemainingTime] = useState(REDIRECT_TIMER)
@@ -24,21 +23,23 @@ const NotFound = () => {
   }
 
   useEffect(() => {
-    if (remainingTime <= 0) {
-      redirectToHome()
-    }
+    const timer = setTimeout(() => {
+      if (remainingTime > 0) {
+        setRemainingTime((prevTime) => prevTime - 1)
+      } else {
+        redirectToHome()
+      }
+    }, 1000)
+
+    return () => clearTimeout(timer)
   }, [remainingTime])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRemainingTime((prevTime) => Math.max(prevTime - 1, 0))
-    }, ONE_SECOND)
-
-    return () => clearInterval(timer)
-  }, [])
-
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      role='alert'
+      aria-labelledby='not-found-title'
+    >
       <div className={styles.bgCoverContainer}>
         <BgCover />
       </div>
@@ -51,8 +52,11 @@ const NotFound = () => {
         <p>
           {t('youWillBeReturnedToThe')}
           <br />
-          <Link href='/'>{t('homePage')}</Link> {t('in')}{' '}
-          <span>
+          <Link href='/' aria-label='home page'>
+            {t('homePage')}
+          </Link>{' '}
+          {t('in')}{' '}
+          <span aria-live='polite'>
             {remainingTime >= 10 ? '' : 0}
             {remainingTime}
           </span>
