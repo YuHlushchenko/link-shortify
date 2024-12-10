@@ -1,3 +1,7 @@
 {
-  "errorPage": {}
+  "errorPage": {
+    "sorryItAndAposSMeNotYou": "Sorry! It's me, not you.",
+    "letMeHelpYouReturnToThePreviousPage": "Let me help you return to the previous page.",
+    "goBack": "Go Back"
+  }
 }
