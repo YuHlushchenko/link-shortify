@@ -1,7 +1,6 @@
 import Image from 'next/image'
 
 import { LangSwitcher } from '@/features/LangSwitcher'
-import Button from '@/shared/ui/Button/Button'
 
 import styles from './Navbar.module.scss'
 
@@ -19,15 +18,6 @@ const Navbar = () => {
         <div className={styles.langSwitcherContainer}>
           <LangSwitcher />
         </div>
-
-        <Button
-          style={{
-            width: '180px',
-            marginRight: '20px',
-          }}
-        >
-          Login
-        </Button>
       </div>
     </div>
   )

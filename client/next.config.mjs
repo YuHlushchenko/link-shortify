@@ -1,6 +1,11 @@
 import createNextIntlPlugin from 'next-intl/plugin'
+import bundleAnalyzer from '@next/bundle-analyzer'
 
 const withNextIntl = createNextIntlPlugin('./src/app/i18n/request.ts')
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -40,13 +45,13 @@ const nextConfig = {
     return config
   },
 
+  // !Experimental features
   // experimental: {
-  //   turbo: {
-  //     loaders: {
-  //       '.svg': ['@svgr/webpack'],
-  //     },
+  //   staleTimes: {
+  //     dynamic: 30,
+  //     static: 180,
   //   },
   // },
 }
 
-export default withNextIntl(nextConfig)
+export default withBundleAnalyzer(withNextIntl(nextConfig))
