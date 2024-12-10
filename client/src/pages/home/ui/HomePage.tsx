@@ -6,7 +6,6 @@ import PageWrapper from '@/app/wrappers/PageWrapper/PageWrapper'
 import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from './HomePage.module.scss'
-import { ErrorPage } from '@/pages/error'
 
 const HomePage = () => {
   // const t = useTranslations('common')
@@ -28,8 +27,6 @@ const HomePage = () => {
           </h3>
         </div>
       </div>
-
-      <ErrorPage />
     </PageWrapper>
   )
 }

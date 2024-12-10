@@ -11,6 +11,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   min-height: 100svh;
+  height: 100%;
 }
 
 body {
@@ -20,4 +21,5 @@ body {
   // font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased; // TODO: Check if this is needed without font-family in body
   -moz-osx-font-smoothing: grayscale; // TODO: Check if this is needed without font-family in body
+  overflow: initial; // for scrollbar
 }
