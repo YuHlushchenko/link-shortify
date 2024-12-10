@@ -14,11 +14,11 @@
 
 .langContainer {
   background-color: var(--secondary-color-2);
-  transition: background-color 0.5s;
   padding: 8px 15px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border-radius: 48px;
 
   p {
     color: var(--text-color);
@@ -27,8 +27,8 @@
 }
 
 .langContainerActive {
+  // transition: background-color 0.5s; // visible when ThemeSwitcher works
   background-color: var(--accent-color-1);
-  border-radius: 48px;
 
   p {
     color: var(--ligth-text-color);

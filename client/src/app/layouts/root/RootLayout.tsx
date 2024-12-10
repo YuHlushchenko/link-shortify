@@ -7,7 +7,7 @@ import { getMessages } from 'next-intl/server'
 import { geistSans, geistMono, monserat } from '@/app/fonts'
 import { IChildren, TLocale } from '@/app/types/global'
 
-import { ThemeWrapper } from '@/app/wrappers'
+import { ThemeWrapper } from '@/app/wrappers/ThemeWrapper'
 
 import { Theme } from '@/shared/const/theme'
 

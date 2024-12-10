@@ -2,7 +2,7 @@
 
 import { ThemeSwitcher } from '@/features/ThemeSwitcher'
 
-import PageWrapper from '@/app/wrappers/PageWrapper/PageWrapper'
+import { PageWrapper } from '@/app/wrappers/PageWrapper/index'
 import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from './HomePage.module.scss'
