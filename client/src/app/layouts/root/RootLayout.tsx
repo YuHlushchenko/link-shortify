@@ -40,7 +40,10 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
     >
       <body data-theme={themeFromCookies}>
         <ThemeWrapper />
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider
+          messages={messages}
+          // locale={locale}
+        >
           <main>{children}</main>
         </NextIntlClientProvider>
       </body>

@@ -24,39 +24,42 @@ export const ThemeSwitcher = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div role='button' tabIndex={0} onClick={toggleThemeHandler}>
-        <div
-          className={
-            theme === Theme.LIGHT
-              ? `${styles.lightThemeContainer} ${styles.lightThemeContainerActive}`
-              : `${styles.lightThemeContainer}`
-          }
-        >
-          <div className={styles.iconContainer}>
-            <Sun />
-          </div>
-          <p>
-            {t('light')}
-            {theme === Theme.LIGHT ? ` ${t('theme')}` : ''}
-          </p>
+    <div
+      className={styles.container}
+      role='button'
+      tabIndex={0}
+      onClick={toggleThemeHandler}
+    >
+      <div
+        className={
+          theme === Theme.LIGHT
+            ? `${styles.lightThemeContainer} ${styles.lightThemeContainerActive}`
+            : `${styles.lightThemeContainer}`
+        }
+      >
+        <div className={styles.iconContainer}>
+          <Sun />
         </div>
+        <p>
+          {t('light')}
+          {theme === Theme.LIGHT ? ` ${t('theme')}` : ''}
+        </p>
+      </div>
 
-        <div
-          className={
-            theme === Theme.DARK
-              ? `${styles.darkThemeContainer} ${styles.darkThemeContainerActive}`
-              : `${styles.darkThemeContainer}`
-          }
-        >
-          <div className={styles.iconContainer}>
-            <Moon />
-          </div>
-          <p>
-            {t('dark')}
-            {theme === Theme.DARK ? ` ${t('theme')}` : ''}
-          </p>
+      <div
+        className={
+          theme === Theme.DARK
+            ? `${styles.darkThemeContainer} ${styles.darkThemeContainerActive}`
+            : `${styles.darkThemeContainer}`
+        }
+      >
+        <div className={styles.iconContainer}>
+          <Moon />
         </div>
+        <p>
+          {t('dark')}
+          {theme === Theme.DARK ? ` ${t('theme')}` : ''}
+        </p>
       </div>
     </div>
   )
