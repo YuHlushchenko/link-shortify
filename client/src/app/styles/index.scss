@@ -21,5 +21,5 @@ body {
   // font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased; // TODO: Check if this is needed without font-family in body
   -moz-osx-font-smoothing: grayscale; // TODO: Check if this is needed without font-family in body
-  overflow: initial; // for scrollbar
+  overflow: initial; // for scrollbar to be visible, even if there is z-index: -1 in the app
 }
