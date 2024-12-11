@@ -8,7 +8,15 @@ const BgCover = () => {
   return (
     <div className={styles.container}>
       <div className={styles.bgSwirlContainer}>
-        <Image priority src={SwirlUrl} alt='swirl' />
+        <Image
+          priority
+          src={SwirlUrl}
+          alt='swirl'
+          width={400}
+          height={400}
+          // placeholder='blur'
+          // blurDataURL={SwirlUrl}
+        />
       </div>
 
       <div className={styles.bgCubesContainer}>
