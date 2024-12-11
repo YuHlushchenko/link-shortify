@@ -62,6 +62,7 @@
     "sass": "^1.81.0",
     "sass-loader": "^16.0.3",
     "storybook": "^8.3.5",
+    "storybook-next-intl": "^1.2.4",
     "stylelint": "^16.9.0",
     "stylelint-config-prettier-scss": "^1.0.0",
     "stylelint-config-standard-scss": "^13.1.0",
