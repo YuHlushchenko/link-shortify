@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 import BgCover from '@/shared/ui/BgCover/BgCover'
 
-import styles from '@/pages/notFound/ui/NotFound.module.scss'
+import styles from '@/pages/notFound/ui/NotFoundPage.module.scss'
 
 const REDIRECT_TIMER = 10 // Time in seconds before redirect
 

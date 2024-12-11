@@ -1,5 +1,8 @@
 import React from 'react'
+import nextIntl from './next-intl'
+
 import type { Preview } from '@storybook/react'
+
 import { ThemeDecorator } from '../../src/shared/config/storybook/ThemeDecorator'
 
 import { monserat } from '../../src/app/fonts/index' // google font
@@ -7,7 +10,21 @@ import { monserat } from '../../src/app/fonts/index' // google font
 import './font.css' //local fonts
 
 const preview: Preview = {
+  initialGlobals: {
+    locale: 'en',
+    locales: {
+      en: {
+        icon: '🇺🇸',
+        title: 'English',
+      },
+      uk: {
+        icon: '🇺🇦',
+        title: 'Українська',
+      },
+    },
+  },
   parameters: {
+    nextIntl,
     layout: 'fullscreen', // removes default padding
     controls: {
       matchers: {
