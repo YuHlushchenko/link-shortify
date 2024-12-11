@@ -6,6 +6,11 @@ import NotFoundPage from './NotFoundPage'
 const meta: Meta<typeof NotFoundPage> = {
   title: 'pages/NotFoundPage',
   component: NotFoundPage,
+  parameters: {
+    loki: {
+      skip: true,
+    },
+  },
 } as Meta<typeof NotFoundPage>
 
 export default meta
