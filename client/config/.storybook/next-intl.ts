@@ -4,6 +4,7 @@ import enErrorPage from '../../public/locales/en/errorPage.json'
 
 // uk
 import ukNotFoundPage from '../../public/locales/uk/notFoundPage.json'
+import ukErrorPage from '../../public/locales/uk/errorPage.json'
 
 const messagesByLocale: Record<string, any> = {
   en: {
@@ -12,6 +13,7 @@ const messagesByLocale: Record<string, any> = {
   },
   uk: {
     ...ukNotFoundPage,
+    ...ukErrorPage,
   },
 }
 
