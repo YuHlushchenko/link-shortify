@@ -10,21 +10,11 @@ import { monserat } from '../../src/app/fonts/index' // google font
 import './font.css' //local fonts
 
 const preview: Preview = {
-  initialGlobals: {
-    locale: 'en',
-    locales: {
-      en: {
-        icon: '🇺🇸',
-        title: 'English',
-      },
-      uk: {
-        icon: '🇺🇦',
-        title: 'Українська',
-      },
-    },
-  },
   parameters: {
     nextIntl,
+    nextjs: {
+      appDirectory: true,
+    },
     layout: 'fullscreen', // removes default padding
     controls: {
       matchers: {
@@ -48,6 +38,19 @@ const preview: Preview = {
       </div>
     ),
   ],
+  initialGlobals: {
+    locale: 'en',
+    locales: {
+      en: {
+        icon: '🇺🇸',
+        title: 'English',
+      },
+      uk: {
+        icon: '🇺🇦',
+        title: 'Українська',
+      },
+    },
+  },
 }
 
 export default preview

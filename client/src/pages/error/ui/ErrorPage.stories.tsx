@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Theme } from '@/shared/const/theme'
 
-import NotFoundPage from './NotFoundPage'
+import ErrorPage from './ErrorPage'
 
-const meta: Meta<typeof NotFoundPage> = {
-  title: 'pages/NotFoundPage',
-  component: NotFoundPage,
-} as Meta<typeof NotFoundPage>
+const meta: Meta<typeof ErrorPage> = {
+  title: 'pages/ErrorPage',
+  component: ErrorPage,
+} as Meta<typeof ErrorPage>
 
 export default meta
 
-type Story = StoryObj<typeof NotFoundPage>
+type Story = StoryObj<typeof ErrorPage>
 
 export const Dark: Story = {}
 

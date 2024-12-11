@@ -6,6 +6,7 @@ import { Theme } from '@/shared/const/theme'
 const meta: Meta<typeof Button> = {
   title: 'Shared/Button',
   component: Button,
+
   argTypes: {
     className: {
       control: 'select',
