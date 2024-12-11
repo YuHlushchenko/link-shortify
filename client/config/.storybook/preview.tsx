@@ -9,6 +9,27 @@ import { monserat } from '../../src/app/fonts/index' // google font
 
 import './font.css' //local fonts
 
+// Додаємо заглушку для оптимізації зображень у Storybook
+// layout='fill' замінюємо його на width='100%' та height='100%'
+// const OriginalNextImage = require('next/image').default
+
+// Object.defineProperty(require('next/image'), 'default', {
+//   configurable: true,
+//   value: (props) => {
+//     // Додаємо заглушку для оптимізації зображень у Storybook
+//     const { width, height, style, ...rest } = props
+//     return (
+//       <OriginalNextImage
+//         {...rest}
+//         width={width || '100%'}
+//         height={height || '100%'}
+//         style={{ ...style, width: width || '100%', height: height || '100%' }}
+//         unoptimized
+//       />
+//     )
+//   },
+// })
+
 const preview: Preview = {
   parameters: {
     nextIntl,

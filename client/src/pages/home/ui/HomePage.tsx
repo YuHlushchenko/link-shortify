@@ -1,6 +1,6 @@
 // import { useTranslations } from 'next-intl'
 
-import { ThemeSwitcher } from '@/features/ThemeSwitcher'
+import { ThemeSwitcher } from '@/features/ThemeSwitcher/index'
 
 import { PageWrapper } from '@/app/wrappers/PageWrapper/index'
 import BgCover from '@/shared/ui/BgCover/BgCover'

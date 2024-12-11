@@ -41,6 +41,43 @@ const config: StorybookConfig = {
       '@': path.resolve(__dirname, '../../src'),
     }
 
+    // svgr
+
+    config.module = config.module || {}
+    config.module.rules = config.module.rules || []
+
+    // // This modifies the existing image rule to exclude .svg files
+    const imageRule = config.module.rules.find(
+      (rule) =>
+        typeof rule === 'object' &&
+        rule?.test instanceof RegExp &&
+        rule.test.test('.png'), // Check for image rules
+    ) as { test: RegExp; exclude?: RegExp[] | RegExp }
+
+    if (imageRule) {
+      imageRule.exclude = /\.svg$/ // Exclude SVG files
+    }
+
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   use: ['@svgr/webpack'], // Використовуємо SVGR для всіх SVG
+    // })
+
+    // Add separate handling for .svg files based on query parameters
+    config.module.rules.push(
+      {
+        test: /\.svg$/,
+        resourceQuery: /url/, // Match `?url`
+        type: 'asset/resource', // Handle as file loader
+      },
+      {
+        test: /\.svg$/,
+        issuer: /\.[jt]sx?$/, // Match JS/TS files
+        resourceQuery: { not: [/url/] }, // Exclude `?url`
+        use: ['@svgr/webpack'], // Handle as React components
+      },
+    )
+
     // Повертаємо змінену конфігурацію
     return config
   },
