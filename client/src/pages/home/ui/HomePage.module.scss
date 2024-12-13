@@ -28,9 +28,17 @@
     line-height: var(--line-height-xxxl);
     font-weight: 700;
     margin-bottom: 25px;
-    background: var(--gradient-color);
+    background: linear-gradient(
+      75deg,
+      #144ee3 0%,
+      #eb568e 20%,
+      #a353aa 60%,
+      #144ee3 100%
+    );
     background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    // animation: gradient 2s infinite linear;
   }
 
   h3 {
@@ -42,3 +50,59 @@
     max-width: 635px;
   }
 }
+
+// @keyframes gradient {
+//   0% {
+//     background: linear-gradient(
+//       75deg,
+//       #144ee3 0%,
+//       #eb568e 20%,
+//       #a353aa 60%,
+//       #144ee3 100%
+//     );
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+
+//   16% {
+//     background: linear-gradient(
+//       75deg,
+//       #144ee3 13%,
+//       #eb568e 62%,
+//       #a353aa 84%,
+//       #144ee3 100%
+//     );
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+
+//   32% {
+//     background: linear-gradient(75deg, #144ee3 50%, #eb568e 73%, #144ee3 100%);
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+
+//   48% {
+//     background: linear-gradient(75deg #144ee3 36%, #eb568e 64%, #144ee3 83%);
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+
+//   65% {
+//     background: linear-gradient(75deg #144ee3 36%, #eb568e 64%, #144ee3 83%);
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+
+//   100% {
+//     background: linear-gradient(
+//       75deg,
+//       #144ee3 0%,
+//       #eb568e 20%,
+//       #a353aa 60%,
+//       #144ee3 100%
+//     );
+//     background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//   }
+// }
