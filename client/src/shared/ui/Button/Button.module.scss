@@ -4,14 +4,31 @@
   font-family: var(--font-monserat);
   width: 100%;
   font-size: var(--font-size-sm);
-  border-radius: 4px;
-  padding: 14px 24px;
+  line-height: var(--line-height-xxxl);
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  border-radius: 48px;
+  padding: 20px 24px;
   cursor: pointer;
   border: 1px solid transparent;
-  background-color: transparent;
   outline: 0;
   transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  background-color: transparent;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  // cuz .iconRightContainer is absolute
+  &:has(.iconRightContainer) {
+    padding-right: 54px;
+  }
+
+  &:has(.iconLeftContainer) {
+    padding-left: 54px;
+  }
 }
 
 .button {
@@ -21,66 +38,133 @@
 .default {
   @extend %button;
 
-  color: var(--text-color-light);
+  background-color: var(--secondary-color-2);
+  border: 1px solid var(--secondary-color-1);
+
+  &:hover {
+    background-color: var(--secondary-color-1);
+  }
+}
+
+.accent {
+  @extend %button;
+
+  color: var(--ligth-text-color);
   background-color: var(--accent-color-1);
-  line-height: var(--line-height-sm);
-  font-weight: 500;
+  box-shadow: 10px 9px 22px var(--accent-color-1-transparent);
+
+  .iconRightContainer,
+  .iconLeftContainer {
+    svg {
+      path {
+        fill: var(--ligth-text-color);
+      }
+    }
+  }
 
   &:hover {
     background-color: var(--extra-color);
   }
 }
 
-.outlined {
-  @extend %button;
-
-  background-color: transparent;
-  border: 1px solid var(--bg-color-inverted);
-  color: var(--bg-color-inverted);
-
-  @include for-tablet {
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xs);
-    padding: 12px 22px;
-  }
-
-  &:hover {
-    background-color: var(--bg-color-inverted);
-    color: var(--bg-color);
-  }
+.circlesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-%transparent {
-  @extend %button;
-
-  color: var(--secondary-color-1);
-  font-weight: 500;
-  padding: 0;
-
-  &:hover {
-    color: var(--primary-color-1);
-  }
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  animation: circle 1.3s infinite linear;
 }
 
-.transparent {
-  @extend %transparent;
-}
-
-.transparentActive {
-  @extend %transparent;
-
-  color: var(--primary-color-1);
-}
-
-.disabled {
+.disabledDefault {
   @extend %button;
 
   cursor: not-allowed;
-  background-color: var(--disabled-color);
-  color: var(--bg-color);
+  background-color: var(--secondary-color-2-transparent);
+  color: var(--text-color);
+
+  // color: var(--bg-color);
 
   &:hover {
-    background-color: var(--disabled-color);
-    color: var(--bg-color);
+    background-color: var(--secondary-color-2-transparent);
+    color: var(--text-color);
+
+    // color: var(--bg-color);
+  }
+}
+
+.disabledAccent {
+  @extend %button;
+
+  cursor: not-allowed;
+  background-color: var(--accent-color-1-transparent);
+  border: 1px solid var(--accent-color-1);
+  color: var(--ligth-text-color);
+
+  &:hover {
+    background-color: var(--accent-color-1-transparent);
+    color: var(--ligth-text-color);
+  }
+}
+
+%icon-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.iconLeftContainer {
+  @extend %icon-container;
+
+  margin-right: 10px;
+  left: 24px;
+
+  // svg {
+  //   path {
+  //     fill: var(--text-color);
+  //   }
+  // }
+}
+
+.iconRightContainer {
+  @extend %icon-container;
+
+  margin-left: 10px;
+  right: 24px;
+
+  // svg {
+  //   path {
+  //     fill: var(--text-color);
+  //   }
+  // }
+}
+
+@keyframes circle {
+  0% {
+    transform: scale(1);
+  }
+
+  33% {
+    transform: scale(0.6);
+  }
+
+  50% {
+    transform: scale(0.3);
+  }
+
+  66% {
+    transform: scale(0.6);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
