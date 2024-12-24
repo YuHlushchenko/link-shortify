@@ -7,7 +7,6 @@ import styles from './Navbar.module.scss'
 import LogoUrl from 'public/assets/svgs/logo.svg?url'
 import Button from '@/shared/ui/Button/Button'
 
-// import Moon from 'public/assets/svgs/dark-theme-icon.svg'
 import Login from 'public/assets/svgs/sign-in.svg'
 
 const Navbar = () => {

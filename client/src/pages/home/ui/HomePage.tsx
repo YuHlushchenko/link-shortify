@@ -6,6 +6,7 @@ import { PageWrapper } from '@/app/wrappers/PageWrapper/index'
 import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from './HomePage.module.scss'
+import { InputLink } from '@/widgets/InputLink'
 
 const HomePage = () => {
   // const t = useTranslations('common')
@@ -25,6 +26,10 @@ const HomePage = () => {
             Link-Shortify is an efficient and easy-to-use URL shortening service
             that streamlines your online experience.
           </h3>
+        </div>
+
+        <div className={styles.linkInputContainer}>
+          <InputLink />
         </div>
       </div>
     </PageWrapper>
