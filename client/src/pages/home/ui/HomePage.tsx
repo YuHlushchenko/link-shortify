@@ -7,6 +7,7 @@ import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from './HomePage.module.scss'
 import { InputLink } from '@/widgets/InputLink'
+import CheckboxCustom from '@/shared/ui/CheckboxCustom/CheckboxCustom'
 
 const HomePage = () => {
   // const t = useTranslations('common')
@@ -30,6 +31,14 @@ const HomePage = () => {
 
         <div className={styles.linkInputContainer}>
           <InputLink />
+        </div>
+
+        <div className={styles.checkboxAutoPasteContainer}>
+          <CheckboxCustom
+            id='autoPasteCheckbox'
+            name='autoPasteCheckbox'
+            label='Auto Paste from Clipboard'
+          />
         </div>
       </div>
     </PageWrapper>
