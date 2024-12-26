@@ -1,27 +1,36 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useRef, useEffect } from 'react'
+import { useStore } from 'zustand'
+
+import { createThemeStore } from '@/app/providers/store/themeStore'
 import { Theme } from '@/shared/const/theme'
-import { useStore } from '@/app/providers/store/createStore'
 
 import styles from './ThemeSwitcher.module.scss'
 
 import Sun from 'public/assets/svgs/light-theme-icon.svg'
 import Moon from 'public/assets/svgs/dark-theme-icon.svg'
 
-export const ThemeSwitcher = () => {
-  const { theme, setTheme } = useStore()
+interface IProps {
+  themeFromCookies: Theme
+}
+
+export const ThemeSwitcher = ({ themeFromCookies }: IProps) => {
+  const themeStore = useRef(createThemeStore(themeFromCookies)).current
+  const { theme, setTheme } = useStore(themeStore)
+
   const t = useTranslations('common')
 
   const toggleThemeHandler = () => {
-    const newTheme =
-      document.body.getAttribute('data-theme') === Theme.DARK
-        ? Theme.LIGHT
-        : Theme.DARK
-    document.body.setAttribute('data-theme', newTheme)
-    document.cookie = `app_theme=${newTheme}; max-age=31536000`
+    const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
     setTheme(newTheme)
   }
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme)
+    document.cookie = `app_theme=${theme}; max-age=31536000`
+  }, [theme])
 
   return (
     <div
