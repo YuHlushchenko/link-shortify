@@ -1,22 +1,25 @@
-'use client'
-
-import { useState, useCallback } from 'react'
-
-import styles from './CheckboxCustom.module.scss'
+import styles from './Checkbox.module.scss'
 
 interface IProps {
   id: string
   name: string
   label: string
-  checked?: boolean
+  isChecked?: boolean
+  toggleCheck: () => void
 }
 
-const CheckboxCustom = ({ id, name, checked = false, label }: IProps) => {
-  const [isChecked, setChecked] = useState(checked)
+const Checkbox = ({
+  id,
+  name,
+  label,
+  isChecked = false,
+  toggleCheck,
+}: IProps) => {
+  // const [isChecked, setChecked] = useState(checked)
 
-  const handleCheckboxChange = useCallback(() => {
-    setChecked((prevChecked) => !prevChecked)
-  }, [])
+  // const handleCheckboxChange = useCallback(() => {
+  // setChecked((prevChecked) => !prevChecked)
+  // }, [])
 
   return (
     <div className={styles.container}>
@@ -31,7 +34,7 @@ const CheckboxCustom = ({ id, name, checked = false, label }: IProps) => {
           id={id}
           name={name}
           checked={isChecked}
-          onChange={handleCheckboxChange}
+          onChange={toggleCheck}
         />
         {label}
       </label>
@@ -39,4 +42,4 @@ const CheckboxCustom = ({ id, name, checked = false, label }: IProps) => {
   )
 }
 
-export default CheckboxCustom
+export default Checkbox

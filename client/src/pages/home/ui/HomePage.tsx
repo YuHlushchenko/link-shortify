@@ -1,16 +1,20 @@
 // import { useTranslations } from 'next-intl'
 
+import { cookies } from 'next/headers'
 import { ThemeSwitcher } from '@/features/ThemeSwitcher/index'
+import { Theme } from '@/shared/const/theme'
 
 import { PageWrapper } from '@/app/wrappers/PageWrapper/index'
 import BgCover from '@/shared/ui/BgCover/BgCover'
+import { InputLinkWithAutoPaste } from '@/features/InputLinkWithAutoPaste'
 
 import styles from './HomePage.module.scss'
-import { InputLink } from '@/widgets/InputLink'
-import CheckboxCustom from '@/shared/ui/CheckboxCustom/CheckboxCustom'
 
-const HomePage = () => {
+const HomePage = async () => {
   // const t = useTranslations('common')
+
+  const themeFromCookies =
+    ((await cookies()).get('app_theme')?.value as Theme) || Theme.DARK
 
   return (
     <PageWrapper>
@@ -18,7 +22,7 @@ const HomePage = () => {
         <BgCover />
 
         <div className={styles.themeSwitcherContainer}>
-          <ThemeSwitcher />
+          <ThemeSwitcher themeFromCookies={themeFromCookies} />
         </div>
 
         <div className={styles.contentContainer}>
@@ -29,15 +33,11 @@ const HomePage = () => {
           </h3>
         </div>
 
-        <div className={styles.linkInputContainer}>
-          <InputLink />
-        </div>
-
-        <div className={styles.checkboxAutoPasteContainer}>
-          <CheckboxCustom
-            id='autoPasteCheckbox'
-            name='autoPasteCheckbox'
-            label='Auto Paste from Clipboard'
+        <div className={styles.inputLinkWithAutoPasteContainer}>
+          <InputLinkWithAutoPaste
+            checkboxId='autoPasteCheckbox'
+            checkboxName='autoPasteCheckbox'
+            checkboxLabel='Auto Paste from Clipboard'
           />
         </div>
       </div>
