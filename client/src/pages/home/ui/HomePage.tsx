@@ -22,7 +22,7 @@ const HomePage = async () => {
         <BgCover />
 
         <div className={styles.themeSwitcherContainer}>
-          <ThemeSwitcher themeFromCookies={themeFromCookies} />
+          <ThemeSwitcher initialTheme={themeFromCookies} />
         </div>
 
         <div className={styles.contentContainer}>

@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import styles from './Checkbox.module.scss'
 
 interface IProps {
@@ -8,38 +10,31 @@ interface IProps {
   toggleCheck: () => void
 }
 
-const Checkbox = ({
+const Checkbox: FC<IProps> = ({
   id,
   name,
   label,
   isChecked = false,
   toggleCheck,
-}: IProps) => {
-  // const [isChecked, setChecked] = useState(checked)
+}) => (
+  <div className={styles.container}>
+    <div
+      className={`${styles.circle} ${isChecked ? styles.circleChecked : ''}`}
+    />
 
-  // const handleCheckboxChange = useCallback(() => {
-  // setChecked((prevChecked) => !prevChecked)
-  // }, [])
-
-  return (
-    <div className={styles.container}>
-      <div
-        className={
-          isChecked ? `${styles.circle} ${styles.circleChecked}` : styles.circle
-        }
+    <label htmlFor={id}>
+      <input
+        aria-label='auto paste checkbox'
+        type='checkbox'
+        id={id}
+        name={name}
+        checked={isChecked}
+        onChange={toggleCheck}
+        onKeyDown={(e) => e.key === 'Enter' && toggleCheck()}
       />
-      <label htmlFor={id}>
-        <input
-          type='checkbox'
-          id={id}
-          name={name}
-          checked={isChecked}
-          onChange={toggleCheck}
-        />
-        {label}
-      </label>
-    </div>
-  )
-}
+      {label}
+    </label>
+  </div>
+)
 
 export default Checkbox
