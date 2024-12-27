@@ -7,8 +7,6 @@ import { getMessages } from 'next-intl/server'
 import { geistSans, geistMono, monserat } from '@/app/fonts'
 import { IChildren, TLocale } from '@/app/types/global'
 
-// import { ThemeWrapper } from '@/app/wrappers/ThemeWrapper'
-
 import { Theme } from '@/shared/const/theme'
 
 import '@/app/styles/index.scss'
@@ -39,7 +37,6 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
       // suppressHydrationWarning
     >
       <body data-theme={themeFromCookies}>
-        {/* <ThemeWrapper /> */}
         <NextIntlClientProvider messages={messages}>
           <main>{children}</main>
         </NextIntlClientProvider>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { useStore } from 'zustand'
 
 import { createThemeStore } from '@/app/providers/store/themeStore'
@@ -13,23 +13,23 @@ import Sun from 'public/assets/svgs/light-theme-icon.svg'
 import Moon from 'public/assets/svgs/dark-theme-icon.svg'
 
 interface IProps {
-  themeFromCookies: Theme
+  initialTheme: Theme
 }
 
-export const ThemeSwitcher = ({ themeFromCookies }: IProps) => {
-  const themeStore = useRef(createThemeStore(themeFromCookies)).current
+export const ThemeSwitcher = ({ initialTheme }: IProps) => {
+  const themeStore = useRef(createThemeStore(initialTheme)).current
   const { theme, setTheme } = useStore(themeStore)
 
   const t = useTranslations('common')
 
-  const toggleThemeHandler = () => {
+  const toggleThemeHandler = useCallback(() => {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
     setTheme(newTheme)
-  }
+  }, [theme, setTheme])
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme)
-    document.cookie = `app_theme=${theme}; max-age=31536000`
+    document.body.setAttribute('data-theme', theme) // <body data-theme='app_dark_theme'></body>
+    document.cookie = `app_theme=${theme}; max-age=2592000 path=/` // 30 days
   }, [theme])
 
   return (
@@ -38,6 +38,8 @@ export const ThemeSwitcher = ({ themeFromCookies }: IProps) => {
       role='button'
       tabIndex={0}
       onClick={toggleThemeHandler}
+      aria-label='Toggle theme'
+      onKeyDown={(e) => e.key === 'Enter' && toggleThemeHandler()}
     >
       <div
         className={
