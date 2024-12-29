@@ -10,7 +10,60 @@ import LinkIcon from 'public/assets/svgs/link.svg'
 
 const text = 'example text to copy'
 
-const InputLink = () => {
+interface IProps {
+  dataFromClipboard: string
+}
+
+const copyToClipboard = () => {
+  if (navigator.clipboard) {
+    // Use the Clipboard API if it's available
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log('Text copied to clipboard')
+        // showToastSuccess({
+        //   title: 'Номер скопійовано',
+        //   description: 'Чекаємо Вашого дзвінка!',
+        // })
+      })
+      .catch((err) => {
+        console.error('Failed to copy: ', err)
+        // showToastError({
+        //   title: 'Помилка',
+        //   description: 'Не вдалося скопіювати номер',
+        // })
+      })
+  } else {
+    // Fallback to document.execCommand('copy')
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+    document.body.appendChild(textarea)
+    textarea.select()
+
+    try {
+      document.execCommand('copy')
+      console.log('Text copied to clipboard')
+      // showToastSuccess({
+      //   title: 'Номер скопійовано',
+      //   description: 'Чекаємо Вашого дзвінка!',
+      // })
+    } catch (err) {
+      console.error('Failed to copy: ', err)
+      // showToastError({
+      //   title: 'Помилка',
+      //   description: 'Не вдалося скопіювати номер',
+      // })
+    } finally {
+      document.body.removeChild(textarea)
+    }
+  }
+}
+
+// const copylink = (e) => {
+//   navigator.clipboard.writeText(links)
+// }
+
+const InputLink = ({ dataFromClipboard }: IProps) => {
   const [isPlaceholder, setPlaceholder] = useState(true)
   const [inputValue, setInputValue] = useState('')
 
@@ -23,54 +76,13 @@ const InputLink = () => {
     setInputValue(e.target.value)
   }
 
-  const copyToClipboard = () => {
-    if (navigator.clipboard) {
-      // Use the Clipboard API if it's available
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          // showToastSuccess({
-          //   title: 'Номер скопійовано',
-          //   description: 'Чекаємо Вашого дзвінка!',
-          // })
-          console.log('Link copied to clipboard')
-        })
-        .catch((err) => {
-          // showToastError({
-          //   title: 'Помилка',
-          //   description: 'Не вдалося скопіювати номер',
-          // })
-          console.error('Failed to copy to clipboard', err)
-        })
-    } else {
-      // Fallback to document.execCommand('copy')
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      document.body.appendChild(textarea)
-      textarea.select()
-
-      try {
-        document.execCommand('copy')
-        console.log('Link copied to clipboard')
-        // showToastSuccess({
-        //   title: 'Номер скопійовано',
-        //   description: 'Чекаємо Вашого дзвінка!',
-        // })
-      } catch (err) {
-        // showToastError({
-        //   title: 'Помилка',
-        //   description: 'Не вдалося скопіювати номер',
-        // })
-        console.error('Failed to copy to clipboard', err)
-      } finally {
-        document.body.removeChild(textarea)
-      }
-    }
-  }
-
   useEffect(() => {
     console.log(inputValue, 'inputValue')
   }, [inputValue])
+
+  useEffect(() => {
+    console.log(dataFromClipboard, 'dataFromClipboard')
+  }, [])
 
   return (
     <div className={styles.container}>
