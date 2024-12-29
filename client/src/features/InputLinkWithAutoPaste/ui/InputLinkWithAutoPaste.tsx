@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
+import { useStore } from '@/app/providers/store/createStore'
 
 import { InputLink } from '@/widgets/InputLink'
 import Checkbox from '@/shared/ui/Checkbox/Checkbox'
@@ -18,36 +20,57 @@ const InputLinkWithAutoPaste = ({
   checkboxName,
   checkboxLabel,
 }: IProps) => {
-  const [isAutoPaste, setAutoPaste] = useState<boolean>(true)
+  const isAutoPaste = useStore((state) => state.isAutoPaste)
+  const setAutoPaste = useStore((state) => state.setAutoPaste)
+  const [isPending, setPending] = useState(true)
+
+  // const getDataFromClipboard = () => {
+  //   if (navigator.clipboard) {
+  //     window.focus() // Ensure the window is focused
+  //     navigator.clipboard
+  //       .read()
+  //       .then((text) => {
+  //         console.log('Text from clipboard:', text)
+  //       })
+  //       .catch((err) => {
+  //         console.error('Failed to read clipboard contents:', err)
+  //       })
+  //   } else {
+  //     console.warn('Clipboard API not supported')
+  //   }
+  // }
+
+  const setAutoPasteToLocalStorage = (
+    isAutoPasteLocal: boolean = isAutoPaste,
+  ) => {
+    localStorage.setItem('isAutoPaste', JSON.stringify(isAutoPasteLocal))
+  }
+
+  const getAutoPasteFromLocalStorage = () => {
+    const storedAutoPaste = localStorage.getItem('isAutoPaste')
+
+    if (storedAutoPaste) {
+      setAutoPaste(JSON.parse(storedAutoPaste))
+    }
+  }
 
   const toggleAutoPaste = () => {
-    setAutoPaste((prev) => !prev)
-  }
-
-  const setToLocalStorage = () => {
-    localStorage.setItem('isAutoPaste', JSON.stringify(isAutoPaste))
-  }
-
-  const getFromLocalStorage = () => {
-    const isAutoPaste = localStorage.getItem('isAutoPaste')
-
-    if (isAutoPaste) {
-      setAutoPaste(JSON.parse(isAutoPaste))
+    if (!isPending) {
+      setAutoPaste(!isAutoPaste)
+      setAutoPasteToLocalStorage(!isAutoPaste)
     }
   }
 
   useEffect(() => {
-    setToLocalStorage()
-  }, [isAutoPaste])
-
-  useEffect(() => {
-    getFromLocalStorage()
+    getAutoPasteFromLocalStorage()
+    setPending(false)
+    // getDataFromClipboard()
   }, [])
 
   return (
     <div className={styles.container}>
       <div className={styles.linkInputContainer}>
-        <InputLink />
+        <InputLink dataFromClipboard='example text from clipboard' />
       </div>
 
       <div className={styles.checkboxAutoPasteContainer}>
@@ -57,6 +80,7 @@ const InputLinkWithAutoPaste = ({
           label={checkboxLabel}
           isChecked={isAutoPaste}
           toggleCheck={toggleAutoPaste}
+          isPending={isPending}
         />
       </div>
     </div>

@@ -18,7 +18,8 @@ interface IProps {
 
 export const ThemeSwitcher = ({ initialTheme }: IProps) => {
   const themeStore = useRef(createThemeStore(initialTheme)).current
-  const { theme, setTheme } = useStore(themeStore)
+  const theme = useStore(themeStore).theme
+  const setTheme = useStore(themeStore).setTheme
 
   const t = useTranslations('common')
 
