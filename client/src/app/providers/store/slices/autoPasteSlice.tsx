@@ -6,6 +6,6 @@ export interface IAutoPasteSlice {
 }
 
 export const createAutoPasteSlice: StateCreator<IAutoPasteSlice> = (set) => ({
-  isAutoPaste: true,
+  isAutoPaste: false,
   setAutoPaste: (isAutoPaste) => set({ isAutoPaste }),
 })

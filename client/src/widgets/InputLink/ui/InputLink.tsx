@@ -1,72 +1,30 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import Button from '@/shared/ui/Button/Button'
 
 import styles from './InputLink.module.scss'
 
-import LinkIcon from 'public/assets/svgs/link.svg'
-
-const text = 'example text to copy'
+import PasteIcon from 'public/assets/svgs/paste.svg'
 
 interface IProps {
-  dataFromClipboard: string
+  pasteFromClipboard: () => void
+  isAutoPaste: boolean
+  inputValue: string
+  setInputValue: React.Dispatch<React.SetStateAction<string>>
+  isPlaceholder: boolean
+  setPlaceholder: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const copyToClipboard = () => {
-  if (navigator.clipboard) {
-    // Use the Clipboard API if it's available
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        console.log('Text copied to clipboard')
-        // showToastSuccess({
-        //   title: 'Номер скопійовано',
-        //   description: 'Чекаємо Вашого дзвінка!',
-        // })
-      })
-      .catch((err) => {
-        console.error('Failed to copy: ', err)
-        // showToastError({
-        //   title: 'Помилка',
-        //   description: 'Не вдалося скопіювати номер',
-        // })
-      })
-  } else {
-    // Fallback to document.execCommand('copy')
-    const textarea = document.createElement('textarea')
-    textarea.value = text
-    document.body.appendChild(textarea)
-    textarea.select()
-
-    try {
-      document.execCommand('copy')
-      console.log('Text copied to clipboard')
-      // showToastSuccess({
-      //   title: 'Номер скопійовано',
-      //   description: 'Чекаємо Вашого дзвінка!',
-      // })
-    } catch (err) {
-      console.error('Failed to copy: ', err)
-      // showToastError({
-      //   title: 'Помилка',
-      //   description: 'Не вдалося скопіювати номер',
-      // })
-    } finally {
-      document.body.removeChild(textarea)
-    }
-  }
-}
-
-// const copylink = (e) => {
-//   navigator.clipboard.writeText(links)
-// }
-
-const InputLink = ({ dataFromClipboard }: IProps) => {
-  const [isPlaceholder, setPlaceholder] = useState(true)
-  const [inputValue, setInputValue] = useState('')
-
+const InputLink: FC<IProps> = ({
+  pasteFromClipboard,
+  isAutoPaste,
+  inputValue,
+  setInputValue,
+  isPlaceholder,
+  setPlaceholder,
+}) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(inputValue, 'inputValue submited')
@@ -76,25 +34,26 @@ const InputLink = ({ dataFromClipboard }: IProps) => {
     setInputValue(e.target.value)
   }
 
+  const handleOnFocus = () => {
+    setPlaceholder(false)
+    if (inputValue === '' && isAutoPaste) pasteFromClipboard()
+  }
+
   useEffect(() => {
     console.log(inputValue, 'inputValue')
   }, [inputValue])
 
-  useEffect(() => {
-    console.log(dataFromClipboard, 'dataFromClipboard')
-  }, [])
-
   return (
     <div className={styles.container}>
-      <div className={styles.copyBtnContainer}>
+      <div className={styles.pasteBtnContainer}>
         <button
           type='button'
-          className={styles.copyBtn}
-          aria-label='copy'
-          title='copy'
-          onClick={copyToClipboard}
+          className={styles.pasteBtn}
+          aria-label='paste'
+          title='paste'
+          onClick={pasteFromClipboard}
         >
-          <LinkIcon />
+          <PasteIcon />
         </button>
       </div>
 
@@ -109,7 +68,7 @@ const InputLink = ({ dataFromClipboard }: IProps) => {
           )}
           <input
             type='url'
-            onFocus={() => setPlaceholder(false)}
+            onFocus={handleOnFocus}
             onBlur={(e) => {
               if (e.target.value === '') {
                 setPlaceholder(true)

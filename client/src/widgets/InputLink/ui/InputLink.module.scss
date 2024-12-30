@@ -11,16 +11,35 @@
   width: 100%;
 }
 
-.copyBtnContainer {
+.pasteBtnContainer {
   button {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 20px;
+    margin: 0 10px 0 3px;
     background: none;
     border: none;
     outline: none;
     cursor: pointer;
+    background-color: var(--secondary-color-3);
+    border-radius: 50%;
+    padding: 5px;
+    width: 58px;
+    height: 58px;
+    transition: background-color 0.3s;
+
+    svg {
+      width: 24px;
+      height: 24px;
+
+      path {
+        fill: var(--text-color);
+      }
+    }
+
+    &:hover {
+      background-color: var(--secondary-color-1);
+    }
   }
 }
 
@@ -41,7 +60,6 @@
     color: var(--text-color);
     font-weight: 300;
     font-size: var(--font-size-md);
-    height: 28px;
   }
 }
 
