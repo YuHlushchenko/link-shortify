@@ -3,9 +3,7 @@
 import React, { FC, useEffect } from 'react'
 
 import Button from '@/shared/ui/Button/Button'
-
 import styles from './InputLink.module.scss'
-
 import PasteIcon from 'public/assets/svgs/paste.svg'
 
 interface IProps {
@@ -27,7 +25,7 @@ const InputLink: FC<IProps> = ({
 }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(inputValue, 'inputValue submited')
+    console.log(inputValue, 'inputValue submitted')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +35,12 @@ const InputLink: FC<IProps> = ({
   const handleOnFocus = () => {
     setPlaceholder(false)
     if (inputValue === '' && isAutoPaste) pasteFromClipboard()
+  }
+
+  const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value === '') {
+      setPlaceholder(true)
+    }
   }
 
   useEffect(() => {
@@ -49,8 +53,8 @@ const InputLink: FC<IProps> = ({
         <button
           type='button'
           className={styles.pasteBtn}
-          aria-label='paste'
-          title='paste'
+          aria-label='Paste'
+          title='Paste'
           onClick={pasteFromClipboard}
         >
           <PasteIcon />
@@ -62,18 +66,13 @@ const InputLink: FC<IProps> = ({
           {isPlaceholder && (
             <div className={styles.placeholderContainer}>
               <p>Enter the link here</p>
-
               <span>|</span>
             </div>
           )}
           <input
             type='url'
             onFocus={handleOnFocus}
-            onBlur={(e) => {
-              if (e.target.value === '') {
-                setPlaceholder(true)
-              }
-            }}
+            onBlur={handleOnBlur}
             value={inputValue}
             onChange={handleChange}
           />

@@ -12,20 +12,30 @@ import Login from 'public/assets/svgs/sign-in.svg'
 const Navbar = () => {
   return (
     <div className={styles.container}>
-      <header className={styles.logoContainer}>
-        <Image priority src={LogoUrl} alt='logo' />
-        <h1 className={styles.logo}>Link-Shortify</h1>
-      </header>
+      <div className={styles.contentContainer}>
+        <header className={styles.logoContainer}>
+          <Image priority src={LogoUrl} alt='logo' />
+          <h1 className={styles.logo}>Link-Shortify</h1>
+        </header>
 
-      <div className={styles.btnsContainer}>
-        <div className={styles.langSwitcherContainer}>
-          <LangSwitcher />
-        </div>
+        <div className={styles.btnsContainer}>
+          <div className={styles.langSwitcherContainer}>
+            <LangSwitcher />
+          </div>
 
-        <div className={styles.loginBtnContainer}>
-          <Button href='/login' iconRight={<Login />} className='accent'>
-            login
-          </Button>
+          {/* for destop */}
+          <div className={styles.loginBtnContainer}>
+            <Button href='/login' iconRight={<Login />} className='accent'>
+              login
+            </Button>
+          </div>
+
+          {/* for mobile */}
+          <div className={styles.loginBtnContainerMobile}>
+            <Button href='/login' className='accent' isRounded={true}>
+              <Login />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

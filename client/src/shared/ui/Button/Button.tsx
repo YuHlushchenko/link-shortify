@@ -18,6 +18,7 @@ interface IProps {
   isLoading?: boolean
   iconRight?: IChildren
   iconLeft?: IChildren
+  isRounded?: boolean
 }
 
 const defaultStyle = {
@@ -45,14 +46,11 @@ const ButtonComponent = ({
   isLoading = false,
   iconRight = false,
   iconLeft = false,
+  isRounded = false,
 }: IProps) => (
   <button
     type={type}
-    className={
-      disabled || isLoading
-        ? `${defaultStyle[className]} ${defaultStyle.disabled(className)}`
-        : `${defaultStyle[className]}`
-    }
+    className={`${defaultStyle[className]} ${disabled || isLoading ? defaultStyle.disabled(className) : ''} ${isRounded ? styles.rounded : ''}`}
     disabled={disabled}
     style={style}
     onClick={onClick}
@@ -98,6 +96,7 @@ const Button = ({
   isLoading = false,
   iconRight = false,
   iconLeft = false,
+  isRounded = false,
 }: IProps) => {
   return href ? (
     <Link href={href}>
@@ -110,6 +109,7 @@ const Button = ({
         isLoading={isLoading}
         iconRight={iconRight}
         iconLeft={iconLeft}
+        isRounded={isRounded}
       >
         {children}
       </ButtonComponent>
@@ -124,6 +124,7 @@ const Button = ({
       isLoading={isLoading}
       iconRight={iconRight}
       iconLeft={iconLeft}
+      isRounded={isRounded}
     >
       {children}
     </ButtonComponent>

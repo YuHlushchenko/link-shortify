@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins.scss' as *;
+
 .container {
   position: relative;
   min-height: 100svh;
@@ -12,10 +14,20 @@
   transform: translate(0, -50%);
   top: 50%;
   right: 55px;
+
+  @include for-small-desktop {
+    right: 45px;
+  }
+
+  @include for-tablet {
+    right: 35px;
+  }
 }
 
 .contentContainer {
-  padding: 0 55px;
+  // padding-top: 200px;
+  min-height: 100svh;
+  padding: 0 120px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,10 +62,58 @@
     text-align: center;
     max-width: 635px;
   }
+
+  @include for-small-desktop {
+    padding: 0 45px;
+  }
+
+  @include for-tablet {
+    padding: 0 35px;
+
+    h2 {
+      font-size: var(--font-size-xxl);
+      line-height: var(--line-height-xxl);
+    }
+
+    h3 {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-md);
+    }
+  }
 }
 
 .inputLinkWithAutoPasteContainer {
   margin-top: 46px;
+}
+
+.linksLeftContainer {
+  margin-top: 25px;
+
+  p {
+    color: var(--text-color);
+    font-weight: 300;
+    font-size: var(--font-size-sm);
+    text-align: center;
+
+    span {
+      color: var(--accent-color-2);
+      font-weight: 700;
+    }
+
+    a {
+      color: var(--text-color);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  }
+
+  @include for-tablet {
+    margin-top: 20px;
+
+    p {
+      font-size: var(--font-size-xs);
+    }
+  }
 }
 
 @keyframes gradient-move {
