@@ -21,13 +21,30 @@
   justify-content: center;
   position: relative;
 
+  @include for-tablet {
+    padding: 15px 18px;
+  }
+
+  @include for-phone {
+    // padding: 10px 12px;
+    font-size: var(--font-size-xs);
+  }
+
   // cuz .iconRightContainer is absolute
   &:has(.iconRightContainer) {
     padding-right: 54px;
+
+    @include for-tablet {
+      padding-right: 52px;
+    }
   }
 
   &:has(.iconLeftContainer) {
     padding-left: 54px;
+
+    @include for-tablet {
+      padding-left: 52px;
+    }
   }
 }
 
@@ -53,18 +70,26 @@
   background-color: var(--accent-color-1);
   box-shadow: 10px 9px 22px var(--accent-color-1-transparent);
 
-  .iconRightContainer,
-  .iconLeftContainer {
-    svg {
-      path {
-        fill: var(--ligth-text-color);
-      }
+  // .iconRightContainer,
+  // .iconLeftContainer {
+  svg {
+    path {
+      fill: var(--ligth-text-color);
     }
+
+    // }
   }
 
   &:hover {
     background-color: var(--extra-color);
   }
+}
+
+.rounded {
+  @extend %button;
+
+  border-radius: 50%;
+  padding: 20px;
 }
 
 .circlesContainer {
