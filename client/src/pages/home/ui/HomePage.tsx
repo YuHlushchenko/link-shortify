@@ -9,7 +9,7 @@ import BgCover from '@/shared/ui/BgCover/BgCover'
 // import { InputLinkWithAutoPaste } from '@/features/InputLinkWithAutoPaste'
 
 import styles from './HomePage.module.scss'
-// import { Link } from '@/app/i18n/routing'
+import { Link } from '@/app/i18n/routing'
 
 const HomePage = async () => {
   // const t = useTranslations('common')
@@ -26,20 +26,20 @@ const HomePage = async () => {
           <ThemeSwitcher initialTheme={themeFromCookies} />
         </div>
 
-        {/* <div className={styles.contentContainer}>
+        <div className={styles.contentContainer}>
           <h2>Shorten Your Loooong Links :)</h2>
           <h3>
             Link-Shortify is an efficient and easy-to-use URL shortening service
             that streamlines your online experience.
           </h3>
 
-          <div className={styles.inputLinkWithAutoPasteContainer}>
+          {/* <div className={styles.inputLinkWithAutoPasteContainer}>
             <InputLinkWithAutoPaste
               checkboxId='autoPasteCheckbox'
               checkboxName='autoPasteCheckbox'
               checkboxLabel='Auto Paste from Clipboard'
             />
-          </div>
+          </div> */}
 
           <div className={styles.linksLeftContainer}>
             <p>
@@ -49,7 +49,7 @@ const HomePage = async () => {
               Unlimited usage
             </p>
           </div>
-        </div> */}
+        </div>
       </div>
     </PageWrapper>
   )
