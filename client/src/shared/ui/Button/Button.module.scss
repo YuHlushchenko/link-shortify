@@ -90,6 +90,14 @@
 
   border-radius: 50%;
   padding: 20px;
+
+  @include for-tablet-portrait {
+    padding: 15px;
+  }
+
+  @include for-phone {
+    padding: 12px;
+  }
 }
 
 .circlesContainer {

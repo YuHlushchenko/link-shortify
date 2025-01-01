@@ -38,26 +38,20 @@
 
   @include for-small-desktop {
     padding: 35px 45px 0;
-
-    // height: 150px;
+    height: 170px;
   }
 
   @include for-tablet {
     padding: 30px 35px 0;
-
-    // height: 100px;
   }
 
   @include for-tablet-portrait {
     padding: 25px 30px 0;
-
-    // height: 100px;
   }
 
   @include for-phone {
-    padding: 15px 20px 0;
-
-    // height: 100px;
+    padding: 20px 20px 0;
+    height: 140px; // TODO: check this
   }
 }
 
@@ -98,6 +92,18 @@
       font-size: var(--font-size-lg);
     }
   }
+
+  @include for-phone {
+    img {
+      display: none;
+    }
+
+    h1 {
+      max-width: min-content;
+      line-height: var(--line-height-xxxl);
+      margin-left: 0;
+    }
+  }
 }
 
 .btnsContainer {
@@ -107,6 +113,14 @@
 
 .langSwitcherContainer {
   margin-right: 20px;
+
+  @include for-tablet-portrait {
+    margin-right: 15px;
+  }
+
+  @include for-phone {
+    margin-right: 10px;
+  }
 }
 
 .loginBtnContainer {
@@ -120,14 +134,5 @@
 
   @include for-tablet-portrait {
     display: flex;
-
-    // align-items: center;
-    // justify-content: center;
   }
-
-  // @include for-phone {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  // }
 }

@@ -43,11 +43,7 @@ export const ThemeSwitcher = ({ initialTheme }: IProps) => {
       onKeyDown={(e) => e.key === 'Enter' && toggleThemeHandler()}
     >
       <div
-        className={
-          theme === Theme.LIGHT
-            ? `${styles.lightThemeContainer} ${styles.lightThemeContainerActive}`
-            : `${styles.lightThemeContainer}`
-        }
+        className={`${styles.lightThemeContainer} ${theme === Theme.LIGHT ? styles.lightThemeContainerActive : ''}`}
       >
         <div className={styles.iconContainer}>
           <Sun />
@@ -59,11 +55,7 @@ export const ThemeSwitcher = ({ initialTheme }: IProps) => {
       </div>
 
       <div
-        className={
-          theme === Theme.DARK
-            ? `${styles.darkThemeContainer} ${styles.darkThemeContainerActive}`
-            : `${styles.darkThemeContainer}`
-        }
+        className={`${styles.darkThemeContainer} ${theme === Theme.DARK ? styles.darkThemeContainerActive : ''}`}
       >
         <div className={styles.iconContainer}>
           <Moon />

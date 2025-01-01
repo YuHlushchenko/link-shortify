@@ -11,6 +11,10 @@
   @include for-tablet {
     padding: 5px 6px;
   }
+
+  @include for-phone {
+    padding: 4px 5px;
+  }
 }
 
 .langSwitcherBtn {
@@ -67,17 +71,14 @@
   @include for-tablet {
     img {
       margin-right: 6px;
-      width: 18px;
-      height: 17px;
+      width: 19px;
+      height: 18px;
     }
   }
 
   @include for-phone {
     img {
       margin-right: 0;
-
-      // width: 16px;
-      // height: 15px;
     }
   }
 }
