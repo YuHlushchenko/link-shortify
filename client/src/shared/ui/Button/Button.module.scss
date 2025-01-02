@@ -70,14 +70,10 @@
   background-color: var(--accent-color-1);
   box-shadow: 10px 9px 22px var(--accent-color-1-transparent);
 
-  // .iconRightContainer,
-  // .iconLeftContainer {
   svg {
     path {
       fill: var(--ligth-text-color);
     }
-
-    // }
   }
 
   &:hover {
@@ -159,12 +155,6 @@
 
   margin-right: 10px;
   left: 24px;
-
-  // svg {
-  //   path {
-  //     fill: var(--text-color);
-  //   }
-  // }
 }
 
 .iconRightContainer {
@@ -172,12 +162,6 @@
 
   margin-left: 10px;
   right: 24px;
-
-  // svg {
-  //   path {
-  //     fill: var(--text-color);
-  //   }
-  // }
 }
 
 @keyframes circle {

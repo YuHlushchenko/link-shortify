@@ -5,6 +5,7 @@ import React, { FC, useEffect } from 'react'
 import Button from '@/shared/ui/Button/Button'
 import styles from './InputLink.module.scss'
 import PasteIcon from 'public/assets/svgs/paste.svg'
+import ArrowRight from 'public/assets/svgs/arrow-right.svg'
 
 interface IProps {
   pasteFromClipboard: () => void
@@ -81,6 +82,11 @@ const InputLink: FC<IProps> = ({
         <div className={styles.btnContainer}>
           <Button className='accent' type='submit'>
             Shorten
+          </Button>
+        </div>
+        <div className={styles.btnContainerMobile}>
+          <Button className='accent' type='submit' isRounded>
+            <ArrowRight />
           </Button>
         </div>
       </form>

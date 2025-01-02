@@ -11,6 +11,7 @@
 
 .themeSwitcherContainer {
   position: fixed;
+  z-index: 1;
   transform: translate(0, -50%);
   top: 50%;
   right: 55px;
@@ -28,8 +29,9 @@
   }
 
   @include for-phone {
-    top: 160px;
+    top: auto;
     right: 20px;
+    bottom: -20px;
   }
 }
 
