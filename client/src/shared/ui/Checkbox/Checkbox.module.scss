@@ -1,15 +1,20 @@
+@use '@/app/styles/mixins.scss' as *;
+
 .container {
   position: relative;
 
   label {
+    display: flex;
+    min-width: 250px;
+    padding-left: 60px;
     font-weight: 300;
     font-size: var(--font-size-sm);
     cursor: pointer;
 
     input {
       position: absolute;
-      top: -4px;
-      left: -55px;
+      top: -2px;
+      left: 0;
       cursor: pointer;
       height: 0;
       width: 0;
@@ -27,24 +32,78 @@
       }
     }
   }
+
+  @include for-small-desktop {
+    label {
+      min-width: 248px;
+
+      input {
+        top: -1px;
+
+        &::before {
+          width: 42px;
+          height: 22px;
+        }
+      }
+    }
+  }
+
+  @include for-phone {
+    label {
+      font-size: var(--font-size-xs);
+      padding-left: 50px;
+      min-width: 222px;
+
+      input {
+        top: -2px;
+
+        &::before {
+          width: 36px;
+          height: 20px;
+        }
+      }
+    }
+  }
 }
 
 .circle {
   pointer-events: none;
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: -50px;
+  top: 2px;
+  left: 6px;
   transition: all 0.3s;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   background-color: var(--secondary-color-1);
+
+  @include for-small-desktop {
+    top: 3px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+  }
+
+  @include for-phone {
+    top: 2px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+  }
 }
 
 .circleChecked {
-  left: -32px;
+  left: 22px;
   background-color: var(--accent-color-1);
+
+  @include for-small-desktop {
+    left: 24px;
+  }
+
+  @include for-phone {
+    left: 20px;
+  }
 }
 
 .skeleton {
@@ -52,9 +111,9 @@
   pointer-events: none;
   position: absolute;
   z-index: 1;
-  top: -3px;
-  left: -54px;
-  width: 44px;
+  top: -1px;
+  left: 0;
+  width: 46px;
   height: 24px;
   border-radius: 48px;
   background: linear-gradient(
@@ -66,6 +125,19 @@
   background-size: 200% 200%;
   background-position: 100% 50%;
   animation: skeleton 0.8s infinite linear;
+
+  @include for-small-desktop {
+    top: -1px;
+    width: 44px;
+    height: 24px;
+  }
+
+  @include for-phone {
+    top: -1px;
+    left: 0;
+    width: 38px;
+    height: 22px;
+  }
 }
 
 @keyframes skeleton {

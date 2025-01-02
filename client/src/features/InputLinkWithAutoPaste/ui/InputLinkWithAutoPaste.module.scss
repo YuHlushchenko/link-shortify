@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins.scss' as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,4 +9,12 @@
 
 .checkboxAutoPasteContainer {
   margin-top: 32px;
+
+  @include for-tablet-portrait {
+    margin-top: 24px;
+  }
+
+  @include for-phone {
+    margin-top: 16px;
+  }
 }
