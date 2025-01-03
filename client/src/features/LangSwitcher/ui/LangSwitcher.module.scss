@@ -1,4 +1,5 @@
 @use '@/app/styles/mixins.scss' as *;
+@use '@/app/styles/skeleton.scss' as *;
 
 .container {
   background-color: var(--secondary-color-2);
@@ -83,5 +84,23 @@
     img {
       margin-right: 0;
     }
+  }
+}
+
+.skeleton {
+  height: 53px;
+  width: 182px;
+  border: 1px solid var(--secondary-color-1);
+  border-radius: 48px;
+  @include skeleton;
+
+  @include for-tablet {
+    height: 45px;
+    width: 156px;
+  }
+
+  @include for-phone {
+    height: 40px;
+    width: 98px;
   }
 }

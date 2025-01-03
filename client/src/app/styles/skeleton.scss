@@ -1,0 +1,21 @@
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--secondary-color-1),
+    var(--secondary-color-2),
+    var(--secondary-color-1)
+  );
+  background-size: 200% 200%;
+  background-position: 100% 50%;
+  animation: skeleton 0.8s infinite linear;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 150% 50%;
+  }
+
+  100% {
+    background-position: -50% 50%;
+  }
+}
