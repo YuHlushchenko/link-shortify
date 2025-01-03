@@ -52,33 +52,34 @@ const LangSwitcher: FC = () => {
   )
 
   return isPending ? (
-    // TODO: Add skeleton loader
-    <div>Loading...</div>
+    <div className={styles.skeleton} />
   ) : (
-    <div
-      className={styles.container}
-      role='button'
-      tabIndex={0}
-      aria-label='Toggle language'
-      onKeyDown={(e) => e.key === 'Enter' && toggleLangHandler()}
-      onClick={toggleLangHandler}
-    >
-      <div className={styles.langSwitcherBtn}>
-        {renderBtn({
-          locale: 'uk',
-          flagUrl: UAFlagUrl,
-          alt: 'Ukrainian flag',
-          lang: 'ua',
-        })}
+    <>
+      <div
+        className={styles.container}
+        role='button'
+        tabIndex={0}
+        aria-label='Toggle language'
+        onKeyDown={(e) => e.key === 'Enter' && toggleLangHandler()}
+        onClick={toggleLangHandler}
+      >
+        <div className={styles.langSwitcherBtn}>
+          {renderBtn({
+            locale: 'uk',
+            flagUrl: UAFlagUrl,
+            alt: 'Ukrainian flag',
+            lang: 'ua',
+          })}
 
-        {renderBtn({
-          locale: 'en',
-          flagUrl: ENFlagUrl,
-          alt: 'English flag',
-          lang: 'en',
-        })}
+          {renderBtn({
+            locale: 'en',
+            flagUrl: ENFlagUrl,
+            alt: 'English flag',
+            lang: 'en',
+          })}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
