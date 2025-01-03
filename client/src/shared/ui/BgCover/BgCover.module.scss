@@ -31,6 +31,8 @@
     width: 100%;
     height: 100%;
     overflow: visible;
+
+    // overflow: hidden;
     object-fit: cover;
     object-position: center;
     animation: rotate-swirl 30s infinite linear;
@@ -40,6 +42,7 @@
 .bgCubesContainer {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
 .cubeOneContainer {

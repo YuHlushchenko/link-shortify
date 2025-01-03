@@ -7,6 +7,12 @@
   justify-content: center;
 }
 
+.linkInputContainer {
+  @include for-phone {
+    width: 100%;
+  }
+}
+
 .checkboxAutoPasteContainer {
   margin-top: 32px;
 

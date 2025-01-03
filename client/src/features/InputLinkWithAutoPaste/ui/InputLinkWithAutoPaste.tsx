@@ -80,6 +80,8 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
           setPlaceholder={setInputPlaceholder}
           pasteFromClipboard={pasteFromClipboard}
           isAutoPaste={isAutoPaste}
+          isAutoPastePending={isAutoPastePending}
+          // isAutoPastePending
         />
       </div>
 
