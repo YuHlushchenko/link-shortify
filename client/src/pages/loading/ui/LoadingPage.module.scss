@@ -17,8 +17,18 @@
 
   h1 {
     font-family: var(--font-geist-mono);
+    font-weight: 700;
     font-size: var(--font-size-xl);
-    color: var(--primary-color-1);
+    background: linear-gradient(
+      75deg,
+      #144ee3 0%,
+      #eb568e 30%,
+      #a353aa 60%,
+      #144ee3 100%
+    );
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-left: 40px;
   }
   @include for-tablet {

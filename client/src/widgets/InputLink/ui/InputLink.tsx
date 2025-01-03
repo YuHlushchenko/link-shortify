@@ -14,6 +14,7 @@ interface IProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>
   isPlaceholder: boolean
   setPlaceholder: React.Dispatch<React.SetStateAction<boolean>>
+  isAutoPastePending?: boolean
 }
 
 const InputLink: FC<IProps> = ({
@@ -23,6 +24,7 @@ const InputLink: FC<IProps> = ({
   setInputValue,
   isPlaceholder,
   setPlaceholder,
+  isAutoPastePending,
 }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -50,10 +52,12 @@ const InputLink: FC<IProps> = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.pasteBtnContainer}>
+      {/* navigator doesn't exist until client has been rendered */}
+      <div
+        className={`${styles.pasteBtnContainer} ${isAutoPastePending ? styles.pasteSkeleton : ''}`}
+      >
         <button
           type='button'
-          className={styles.pasteBtn}
           aria-label='Paste'
           title='Paste'
           onClick={pasteFromClipboard}
