@@ -28,6 +28,7 @@ const HomePage = async () => {
 
         <div className={styles.contentContainer}>
           <h2>Shorten Your Loooong Links :)</h2>
+
           <h3>
             Link-Shortify is an efficient and easy-to-use URL shortening service
             that streamlines your online experience.

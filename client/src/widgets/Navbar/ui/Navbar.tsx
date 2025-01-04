@@ -23,7 +23,7 @@ const Navbar = () => {
             <LangSwitcher />
           </div>
 
-          {/* for destop */}
+          {/* for desktop */}
           <div className={styles.loginBtnContainer}>
             <Button href='/login' iconRight={<Login />} className='accent'>
               login
