@@ -17,20 +17,18 @@ const LoadingAnimation = ({ circlesCount, scale = 1 }: IProps) => {
           <div
             className={styles.circleLeft}
             style={{
-              animationDelay: `${index * 0.01}s`,
-              opacity: 1 - index / circlesCount,
-              backgroundColor: `hsl(${(index * 360) / circlesCount}, 100%, 50%)`,
-              // backgroundColor: `hsl(${160 + (index * 60) / circlesCount}, 100%, 50%)`,
+              animationDelay: `${index * -0.01}s`,
+              opacity: index / circlesCount,
+              backgroundColor: `hsl(${227 + (index * (338 - 227)) / circlesCount}, 84%, 50%)`,
             }}
             data-testid='circle'
           />
           <div
             className={styles.circleRight}
             style={{
-              animationDelay: `${index * 0.01}s`,
-              opacity: 1 - index / circlesCount,
-              backgroundColor: `hsl(${(index * 360) / circlesCount}, 100%, 50%)`,
-              // backgroundColor: `hsl(${160 + (index * 60) / circlesCount}, 100%, 50%)`,
+              animationDelay: `${index * -0.01}s`,
+              backgroundColor: `hsl(${227 + (index * (338 - 227)) / circlesCount}, 84%, 50%)`,
+              opacity: index / circlesCount,
             }}
             data-testid='circle'
           />
