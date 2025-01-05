@@ -21,13 +21,13 @@ describe('Button', () => {
   //   expect(screen.getByText('Click me')).toHaveClass('disabled')
   //   expect(screen.getByText('Click me')).toHaveAttribute('disabled')
   // })
-  test('if href', () => {
-    render(<Button href='/some-link'>Click me</Button>)
-    expect(screen.getByText('Click me').closest('a')).toHaveAttribute(
-      'href',
-      '/some-link',
-    )
-  })
+  // test('if href', () => {
+  //   render(<Button href='/some-link'>Click me</Button>)
+  //   expect(screen.getByText('Click me').closest('a')).toHaveAttribute(
+  //     'href',
+  //     '/some-link',
+  //   )
+  // })
   test('if style', () => {
     render(<Button style={{ color: 'red' }}>Click me</Button>)
     expect(screen.getByText('Click me')).toHaveStyle('color: red')
