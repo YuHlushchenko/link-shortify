@@ -5,7 +5,8 @@ import { useParams } from 'next/navigation'
 import Image from 'next/image'
 
 import { usePathname, useRouter } from '@/app/i18n/routing'
-import { TLocale } from '@/app/types/global'
+// import { ISvgUrl } from 'types'
+import { ISvgUrl, TLocale } from '@/app/types/global'
 
 import styles from './LangSwitcher.module.scss'
 
@@ -14,7 +15,7 @@ import ENFlagUrl from 'public/assets/svgs/en-flag.svg?url'
 
 interface IRenderBtnProps {
   locale: TLocale
-  flagUrl: string
+  flagUrl: ISvgUrl
   alt: string
   lang: string
 }

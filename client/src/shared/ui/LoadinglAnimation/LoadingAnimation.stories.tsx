@@ -8,6 +8,9 @@ const meta: Meta<typeof LoadingAnimation> = {
     circlesCount: {
       control: 'number',
     },
+    scale: {
+      control: 'number',
+    },
   },
   parameters: {
     controls: { expanded: true },
@@ -20,5 +23,12 @@ type Story = StoryObj<typeof LoadingAnimation>
 export const Default: Story = {
   args: {
     circlesCount: 100,
+  },
+}
+
+export const Scaled: Story = {
+  args: {
+    circlesCount: 100,
+    scale: 0.2,
   },
 }

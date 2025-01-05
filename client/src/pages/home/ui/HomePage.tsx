@@ -1,5 +1,6 @@
 // import { useTranslations } from 'next-intl'
 
+import { Link } from '@/app/i18n/routing'
 import { cookies } from 'next/headers'
 import { ThemeSwitcher } from '@/features/ThemeSwitcher/index'
 import { Theme } from '@/shared/const/theme'
@@ -9,7 +10,6 @@ import BgCover from '@/shared/ui/BgCover/BgCover'
 import { InputLinkWithAutoPaste } from '@/features/InputLinkWithAutoPaste'
 
 import styles from './HomePage.module.scss'
-import { Link } from '@/app/i18n/routing'
 
 const HomePage = async () => {
   // const t = useTranslations('common')

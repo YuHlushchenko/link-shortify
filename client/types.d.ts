@@ -1,5 +1,13 @@
+interface ISvgUrl {
+  src: string
+  height: number
+  width: number
+  blurWidth: number
+  blurHeight: number
+}
+
 declare module '*.svg?url' {
-  const content: string
+  const content: ISvgUrl
 
   export default content
 }

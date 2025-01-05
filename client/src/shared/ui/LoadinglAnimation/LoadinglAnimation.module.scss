@@ -10,9 +10,7 @@
   animation-timing-function: linear;
   top: calc(50% - 20px);
   left: calc(50% - 120px);
-  visibility: hidden;
 
-  // transform: rotate(0deg) translateX(100px);
   @include for-tablet {
     animation: animation-left-phone 2s forwards infinite;
     animation-timing-function: linear;
@@ -33,9 +31,8 @@
   animation-timing-function: linear;
   top: calc(50% - 20px);
   left: calc(50% + 80px);
+  scale: 1;
 
-  // visibility: hidden;
-  // transform: rotate(-180deg) translateX(100px);
   @include for-tablet {
     animation: animation-right-phone 2s forwards infinite;
     animation-timing-function: linear;
