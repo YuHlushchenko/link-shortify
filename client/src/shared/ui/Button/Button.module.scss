@@ -23,6 +23,12 @@
 
   // overflow: hidden;
 
+  svg {
+    path {
+      fill: var(--text-color);
+    }
+  }
+
   @include for-tablet {
     padding: 15px 18px;
   }
@@ -177,21 +183,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: absolute; // !for incon to NOT affect the button HEIGHT
 }
 
 .iconLeftContainer {
   @extend %icon-container;
 
-  margin-right: 10px;
-  left: 24px;
+  left: 20px;
+
+  svg {
+    // border: 1px solid red;
+    width: 100%;
+  }
 }
 
 .iconRightContainer {
   @extend %icon-container;
 
-  margin-left: 10px;
-  right: 24px;
+  right: 20px;
+
+  svg {
+    width: 100%;
+  }
 }
 
 @keyframes circle {

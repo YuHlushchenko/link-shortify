@@ -93,6 +93,13 @@
         "deviceScaleFactor": 1,
         "mobile": false
       },
+      "chrome.tablet": {
+        "target": "chrome.docker",
+        "width": 768,
+        "height": 1024,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
       "chrome.iphone7": {
         "target": "chrome.docker",
         "preset": "iPhone 7"

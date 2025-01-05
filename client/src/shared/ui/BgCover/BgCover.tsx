@@ -14,8 +14,7 @@ const BgCover = () => {
           alt='swirl'
           width={400}
           height={400}
-          // placeholder='blur'
-          // blurDataURL={SwirlUrl}
+          quality={10}
         />
       </div>
 

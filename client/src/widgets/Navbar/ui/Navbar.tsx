@@ -1,12 +1,11 @@
 import Image from 'next/image'
 
 import { LangSwitcher } from '@/features/LangSwitcher'
+import Button from '@/shared/ui/Button/Button'
 
 import styles from './Navbar.module.scss'
 
 import LogoUrl from 'public/assets/svgs/logo.svg?url'
-import Button from '@/shared/ui/Button/Button'
-
 import Login from 'public/assets/svgs/sign-in.svg'
 
 const Navbar = () => {
@@ -25,7 +24,12 @@ const Navbar = () => {
 
           {/* for desktop */}
           <div className={styles.loginBtnContainer}>
-            <Button href='/login' iconRight={<Login />} className='accent'>
+            <Button
+              href='/login'
+              iconRight={<Login />}
+              className='accent'
+              iconRightContainerStyle={{ right: '24px' }}
+            >
               login
             </Button>
           </div>

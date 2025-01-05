@@ -2,6 +2,8 @@ import { Meta, StoryObj } from '@storybook/react'
 import Button, { TButtonClassName } from './Button'
 import { Theme } from '@/shared/const/theme'
 
+import LinkSvg from 'public/assets/svgs/link.svg'
+
 // Storybook meta-інформація про компонент
 const meta: Meta<typeof Button> = {
   title: 'Shared/Button',
@@ -15,9 +17,10 @@ const meta: Meta<typeof Button> = {
     onClick: { action: 'clicked' },
     disabled: { control: 'boolean' },
     isLoading: { control: 'boolean' },
+    isRounded: { control: 'boolean' },
+    iconLeftContainerStyle: { control: 'object' },
+    iconRightContainerStyle: { control: 'object' },
     // href: { control: 'text' },
-    // iconLeft: { control: 'text' },
-    // iconRight: { control: 'text' },
   },
   parameters: {
     actions: {
@@ -143,7 +146,7 @@ export const IconLeft: Story = {
   args: {
     children: 'Icon Left Button',
     className: 'default' as TButtonClassName,
-    iconLeft: '👈',
+    iconLeft: <LinkSvg />,
   },
 }
 
@@ -152,7 +155,7 @@ export const IconLeftAccent: Story = {
   args: {
     children: 'Icon Left Accent Button',
     className: 'accent' as TButtonClassName,
-    iconLeft: '👈',
+    iconLeft: <LinkSvg />,
   },
 }
 
@@ -161,7 +164,7 @@ export const IconRight: Story = {
   args: {
     children: 'Icon Right Button LIGHT',
     className: 'default' as TButtonClassName,
-    iconRight: '👉',
+    iconRight: <LinkSvg />,
   },
   globals: {
     theme: Theme.LIGHT,
@@ -173,9 +176,17 @@ export const IconRightAccent: Story = {
   args: {
     children: 'Icon Right Accent Button LIGHT',
     className: 'accent' as TButtonClassName,
-    iconRight: '👉',
+    iconRight: <LinkSvg />,
   },
   globals: {
     theme: Theme.LIGHT,
+  },
+}
+
+export const Rounded: Story = {
+  args: {
+    children: <LinkSvg />,
+    className: 'default' as TButtonClassName,
+    isRounded: true,
   },
 }

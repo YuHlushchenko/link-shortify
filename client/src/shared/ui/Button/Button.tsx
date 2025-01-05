@@ -1,4 +1,6 @@
-import Link from 'next/link' //TODO: change to next-intl
+/* eslint-disable indent */
+import React from 'react'
+import { Link } from '@/app/i18n/routing'
 import { IChildren } from '@/app/types/global'
 
 import styles from './Button.module.scss'
@@ -19,6 +21,8 @@ interface IProps {
   iconRight?: IChildren
   iconLeft?: IChildren
   isRounded?: boolean
+  iconLeftContainerStyle?: React.CSSProperties // *for positioning and svg size
+  iconRightContainerStyle?: React.CSSProperties
 }
 
 const defaultStyle = {
@@ -36,40 +40,49 @@ const defaultStyle = {
   },
 }
 
-const ButtonComponent = ({
-  children = '',
+const Component = ({
+  href,
+  children,
   style,
   className = 'default',
   onClick,
-  type = 'button',
-  disabled = false,
-  isLoading = false,
-  iconRight = false,
-  iconLeft = false,
-  isRounded = false,
-}: IProps) => (
-  <button
-    type={type}
-    className={`${defaultStyle[className]} ${disabled || isLoading ? defaultStyle.disabled(className) : ''} ${isRounded ? styles.rounded : ''}`}
-    disabled={disabled}
-    style={style}
-    onClick={onClick}
-  >
-    {iconLeft && (
-      <div className={styles.iconLeftContainer}>
+  type,
+  disabled,
+  isLoading,
+  iconRight,
+  iconLeft,
+  isRounded,
+  iconLeftContainerStyle,
+  iconRightContainerStyle,
+}: IProps) =>
+  React.createElement(
+    href ? 'span' : 'button',
+    {
+      type: href ? null : type,
+      className: `${defaultStyle[className]} ${
+        disabled || isLoading ? defaultStyle.disabled(className) : ''
+      } ${isRounded ? styles.rounded : ''}`,
+      disabled: href ? null : disabled,
+      style,
+      onClick: disabled ? null : onClick,
+    },
+    iconLeft && (
+      <div className={styles.iconLeftContainer} style={iconLeftContainerStyle}>
         <span className={styles.iconLeft}>{iconLeft}</span>
       </div>
-    )}
+    ),
 
-    {isLoading ? <ButtonLoading /> : children}
+    isLoading ? <ButtonLoading /> : children,
 
-    {iconRight && (
-      <div className={styles.iconRightContainer}>
+    iconRight && (
+      <div
+        className={styles.iconRightContainer}
+        style={iconRightContainerStyle}
+      >
         <span className={styles.iconRight}>{iconRight}</span>
       </div>
-    )}
-  </button>
-)
+    ),
+  )
 
 const ButtonLoading = () => (
   <div className={styles.circlesContainer}>
@@ -85,50 +98,14 @@ const ButtonLoading = () => (
   </div>
 )
 
-const Button = ({
-  href,
-  children = '',
-  style,
-  className = 'default',
-  onClick,
-  type = 'button',
-  disabled = false,
-  isLoading = false,
-  iconRight = false,
-  iconLeft = false,
-  isRounded = false,
-}: IProps) => {
-  return href ? (
-    <Link href={href}>
-      <ButtonComponent
-        type={type}
-        style={style}
-        className={className}
-        onClick={onClick}
-        disabled={disabled}
-        isLoading={isLoading}
-        iconRight={iconRight}
-        iconLeft={iconLeft}
-        isRounded={isRounded}
-      >
-        {children}
-      </ButtonComponent>
-    </Link>
-  ) : (
-    <ButtonComponent
-      type={type}
-      style={style}
-      className={className}
-      onClick={onClick}
-      disabled={disabled}
-      isLoading={isLoading}
-      iconRight={iconRight}
-      iconLeft={iconLeft}
-      isRounded={isRounded}
-    >
+const Button = ({ href, children = '', ...props }: IProps) => {
+  const ComponentContent = (
+    <Component {...props} href={href}>
       {children}
-    </ButtonComponent>
+    </Component>
   )
+
+  return href ? <Link href={href}>{ComponentContent}</Link> : ComponentContent
 }
 
 export default Button
