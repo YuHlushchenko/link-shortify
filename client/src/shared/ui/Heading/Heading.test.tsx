@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/shared/config/jest/NextIntlProviderUtils'
 import Heading from './Heading'
 import { HeadingColor } from './Heading.type'
 

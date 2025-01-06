@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/shared/config/jest/NextIntlProviderUtils'
 import LoadingAnimation from './LoadinglAnimation'
 
 describe('LoadingAnimation Component', () => {
