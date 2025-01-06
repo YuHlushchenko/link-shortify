@@ -21,7 +21,7 @@ interface IProps {
   iconRight?: IChildren
   iconLeft?: IChildren
   isRounded?: boolean
-  iconLeftContainerStyle?: React.CSSProperties // *for positioning and svg size
+  iconLeftContainerStyle?: React.CSSProperties // *for positioning and svg size (delete width and height inside svg for changing its size)
   iconRightContainerStyle?: React.CSSProperties
 }
 
@@ -56,7 +56,8 @@ const Component = ({
   iconRightContainerStyle,
 }: IProps) =>
   React.createElement(
-    href ? 'span' : 'button',
+    href ? 'span' : 'button', // *tag
+    // *props
     {
       type: href ? null : type,
       className: `${defaultStyle[className]} ${
@@ -66,6 +67,7 @@ const Component = ({
       style,
       onClick: disabled ? null : onClick,
     },
+    // *children
     iconLeft && (
       <div className={styles.iconLeftContainer} style={iconLeftContainerStyle}>
         <span className={styles.iconLeft}>{iconLeft}</span>
@@ -85,7 +87,7 @@ const Component = ({
   )
 
 const ButtonLoading = () => (
-  <div className={styles.circlesContainer}>
+  <div className={styles.circlesContainer} data-testid='btn-loading'>
     {Array.from({ length: CIRCLES_COUNT }).map((_, i) => (
       <div
         key={i}

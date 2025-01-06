@@ -1,4 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import {
+  render,
+  screen,
+  fireEvent,
+} from '@/shared/config/jest/NextIntlProviderUtils'
 import Checkbox from './Checkbox'
 
 describe('Checkbox Component', () => {
