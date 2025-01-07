@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation'
 import Image from 'next/image'
 
 import { usePathname, useRouter } from '@/app/i18n/routing'
-// import { ISvgUrl } from 'types'
 import { ISvgUrl, TLocale } from '@/app/types/global'
 
 import styles from './LangSwitcher.module.scss'
@@ -26,18 +25,22 @@ const LangSwitcher: FC = () => {
   const params = useParams()
   const [isPending, startTransition] = useTransition()
 
+  // Handle undefined or invalid locale gracefully
+  const currentLocale =
+    params?.locale === 'uk' || params?.locale === 'en' ? params.locale : 'en'
+
   const toggleLangHandler = useCallback(() => {
-    const nextLocale = params?.locale === 'uk' ? 'en' : 'uk'
+    const nextLocale = currentLocale === 'uk' ? 'en' : 'uk'
 
     startTransition(() => {
       router.replace({ pathname }, { locale: nextLocale })
     })
-  }, [params?.locale, router, pathname])
+  }, [currentLocale, router, pathname])
 
   const getLangContainerClass = useCallback(
     (lang: TLocale) =>
-      `${styles.langContainer} ${params?.locale === lang ? styles.langContainerActive : ''}`,
-    [params?.locale],
+      `${styles.langContainer} ${currentLocale === lang ? styles.langContainerActive : ''}`,
+    [currentLocale],
   )
 
   const renderBtn = useCallback(
@@ -53,34 +56,32 @@ const LangSwitcher: FC = () => {
   )
 
   return isPending ? (
-    <div className={styles.skeleton} />
+    <div className={styles.skeleton} data-testid='lang-switcher-skeleton' />
   ) : (
-    <>
-      <div
-        className={styles.container}
-        role='button'
-        tabIndex={0}
-        aria-label='Toggle language'
-        onKeyDown={(e) => e.key === 'Enter' && toggleLangHandler()}
-        onClick={toggleLangHandler}
-      >
-        <div className={styles.langSwitcherBtn}>
-          {renderBtn({
-            locale: 'uk',
-            flagUrl: UAFlagUrl,
-            alt: 'Ukrainian flag',
-            lang: 'ua',
-          })}
+    <div
+      className={styles.container}
+      role='button'
+      tabIndex={0}
+      aria-label='Toggle language'
+      onKeyDown={(e) => e.key === 'Enter' && toggleLangHandler()}
+      onClick={toggleLangHandler}
+    >
+      <div className={styles.langSwitcherBtn}>
+        {renderBtn({
+          locale: 'uk',
+          flagUrl: UAFlagUrl,
+          alt: 'Ukrainian flag',
+          lang: 'ua',
+        })}
 
-          {renderBtn({
-            locale: 'en',
-            flagUrl: ENFlagUrl,
-            alt: 'English flag',
-            lang: 'en',
-          })}
-        </div>
+        {renderBtn({
+          locale: 'en',
+          flagUrl: ENFlagUrl,
+          alt: 'English flag',
+          lang: 'en',
+        })}
       </div>
-    </>
+    </div>
   )
 }
 

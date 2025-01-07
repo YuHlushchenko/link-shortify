@@ -15,7 +15,11 @@ interface IProps {
   href?: string
   style?: React.CSSProperties
   className?: TButtonClassName
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
+  ) => void
   disabled?: boolean
   isLoading?: boolean
   iconRight?: IChildren

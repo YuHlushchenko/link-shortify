@@ -24,10 +24,14 @@ const messagesByLocale: Record<string, any> = {
 const nextIntl = {
   defaultLocale: 'en',
   messagesByLocale,
-  //   formats: {/* your settings */},
-  //   defaultTranslationValues: {/* your settings */},
-  //   onError: (error) => console.error(error),
-  // getMessageFallback: ({namespace, key}) => `${namespace}.${key}`,
+  // formats: {
+  //   /* your settings */
+  // },
+  // defaultTranslationValues: {
+  //   /* your settings */
+  // },
+  // onError: (error) => console.error(error),
+  // getMessageFallback: ({ namespace, key }) => `${namespace}.${key}`,
 }
 
 export default nextIntl

@@ -1,4 +1,5 @@
-import { render, screen } from '@/shared/config/jest/NextIntlProviderUtils'
+import { render, screen } from '@/shared/config/jest/AllTheProviders'
+
 import Heading from './Heading'
 import { HeadingColor } from './Heading.type'
 

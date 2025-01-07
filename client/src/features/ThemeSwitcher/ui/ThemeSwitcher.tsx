@@ -16,7 +16,7 @@ interface IProps {
   initialTheme: Theme
 }
 
-export const ThemeSwitcher = ({ initialTheme }: IProps) => {
+const ThemeSwitcher = ({ initialTheme }: IProps) => {
   const themeStore = useRef(createThemeStore(initialTheme)).current
   const theme = useStore(themeStore).theme
   const setTheme = useStore(themeStore).setTheme
@@ -68,3 +68,5 @@ export const ThemeSwitcher = ({ initialTheme }: IProps) => {
     </div>
   )
 }
+
+export default ThemeSwitcher

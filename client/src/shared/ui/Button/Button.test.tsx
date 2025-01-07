@@ -1,8 +1,4 @@
-import {
-  render,
-  screen,
-  fireEvent,
-} from '@/shared/config/jest/NextIntlProviderUtils'
+import { render, screen, fireEvent } from '@/shared/config/jest/AllTheProviders'
 
 import Button from './Button'
 
