@@ -20,7 +20,7 @@ const meta: Meta<typeof Button> = {
     isRounded: { control: 'boolean' },
     iconLeftContainerStyle: { control: 'object' },
     iconRightContainerStyle: { control: 'object' },
-    // href: { control: 'text' },
+    href: { control: 'text' },
   },
   parameters: {
     actions: {
@@ -39,7 +39,6 @@ export default meta
 
 type Story = StoryObj<typeof Button>
 
-// Приклад кнопки за замовчуванням
 export const Default: Story = {
   args: {
     children: 'Default Button',
@@ -48,7 +47,6 @@ export const Default: Story = {
   },
 }
 
-// Приклад кнопки за замовчуванням для світлої теми
 export const DefaultLIGHT: Story = {
   args: {
     children: 'Default Button LIGHT',
@@ -60,7 +58,6 @@ export const DefaultLIGHT: Story = {
   },
 }
 
-// Приклад акцентної кнопки
 export const Accent: Story = {
   args: {
     children: 'Accent Button',
@@ -69,7 +66,6 @@ export const Accent: Story = {
   },
 }
 
-// Приклад акцентної кнопки для світлої теми
 export const AccentLIGHT: Story = {
   args: {
     children: 'Accent Button LIGHT',
@@ -81,7 +77,6 @@ export const AccentLIGHT: Story = {
   },
 }
 
-// Приклад заблокованої кнопки
 export const Disabled: Story = {
   args: {
     children: 'Disabled Button',
@@ -90,7 +85,6 @@ export const Disabled: Story = {
   },
 }
 
-// Приклад заблокованої кнопки для світлої теми
 export const DisabledLIGHT: Story = {
   args: {
     children: 'Disabled Button LIGHT',
@@ -102,7 +96,6 @@ export const DisabledLIGHT: Story = {
   },
 }
 
-// Приклад акцентної заблокованої кнопки
 export const DisabledAccent: Story = {
   args: {
     children: 'Disabled Accent Button',
@@ -111,7 +104,6 @@ export const DisabledAccent: Story = {
   },
 }
 
-// Приклад акцентної заблокованої кнопки для світлої теми
 export const DisabledAccentLIGHT: Story = {
   args: {
     children: 'Disabled Accent Button LIGHT',
@@ -123,7 +115,6 @@ export const DisabledAccentLIGHT: Story = {
   },
 }
 
-// Приклад кнопки з загрузкою
 export const Loading: Story = {
   args: {
     children: 'Loading Button',
@@ -132,7 +123,17 @@ export const Loading: Story = {
   },
 }
 
-// Приклад акцентної кнопки з загрузкою
+export const LoadingLIGHT: Story = {
+  args: {
+    children: 'Loading Button LIGHT',
+    className: 'default' as TButtonClassName,
+    isLoading: true,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
 export const LoadingAccent: Story = {
   args: {
     children: 'Loading Accent Button',
@@ -141,7 +142,17 @@ export const LoadingAccent: Story = {
   },
 }
 
-// Приклад кнопки з лівою іконкою
+export const LoadingAccentLIGHT: Story = {
+  args: {
+    children: 'Loading Accent Button LIGHT',
+    className: 'accent' as TButtonClassName,
+    isLoading: true,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
 export const IconLeft: Story = {
   args: {
     children: 'Icon Left Button',
@@ -150,7 +161,17 @@ export const IconLeft: Story = {
   },
 }
 
-// Приклад акцентної кнопки з лівою іконкою
+export const IconLeftLIGHT: Story = {
+  args: {
+    children: 'Icon Left Button LIGHT',
+    className: 'default' as TButtonClassName,
+    iconLeft: <LinkSvg />,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
 export const IconLeftAccent: Story = {
   args: {
     children: 'Icon Left Accent Button',
@@ -159,7 +180,17 @@ export const IconLeftAccent: Story = {
   },
 }
 
-// Приклад кнопки з правою іконкою світла теми
+export const IconLeftAccentLIGHT: Story = {
+  args: {
+    children: 'Icon Left Accent Button LIGHT',
+    className: 'accent' as TButtonClassName,
+    iconLeft: <LinkSvg />,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
 export const IconRight: Story = {
   args: {
     children: 'Icon Right Button LIGHT',
@@ -171,8 +202,29 @@ export const IconRight: Story = {
   },
 }
 
-// Приклад акцентної кнопки з правою іконкою світла теми
+export const IconRightLIGHT: Story = {
+  args: {
+    children: 'Icon Right Button LIGHT',
+    className: 'default' as TButtonClassName,
+    iconRight: <LinkSvg />,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
 export const IconRightAccent: Story = {
+  args: {
+    children: 'Icon Right Accent Button LIGHT',
+    className: 'accent' as TButtonClassName,
+    iconRight: <LinkSvg />,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
+export const IconRightAccentLIGHT: Story = {
   args: {
     children: 'Icon Right Accent Button LIGHT',
     className: 'accent' as TButtonClassName,
@@ -188,5 +240,35 @@ export const Rounded: Story = {
     children: <LinkSvg />,
     className: 'default' as TButtonClassName,
     isRounded: true,
+  },
+}
+
+export const RoundedLIGHT: Story = {
+  args: {
+    children: <LinkSvg />,
+    className: 'default' as TButtonClassName,
+    isRounded: true,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
+export const RoundedAccent: Story = {
+  args: {
+    children: <LinkSvg />,
+    className: 'accent' as TButtonClassName,
+    isRounded: true,
+  },
+}
+
+export const RoundedAccentLIGHT: Story = {
+  args: {
+    children: <LinkSvg />,
+    className: 'accent' as TButtonClassName,
+    isRounded: true,
+  },
+  globals: {
+    theme: Theme.LIGHT,
   },
 }
