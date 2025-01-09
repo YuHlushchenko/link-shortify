@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BgCover matches snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="bgSwirlContainer"
+    >
+      <img
+        alt="swirl"
+        height="400"
+        quality="10"
+        src="test-file-stub"
+        width="400"
+      />
+    </div>
+    <div
+      class="bgCubesContainer"
+    >
+      <div
+        class="cubeOneContainer"
+      >
+        <div
+          class="cubeOne"
+        />
+      </div>
+      <div
+        class="cubeTwoContainer"
+      >
+        <div
+          class="cubeTwo"
+        />
+      </div>
+      <div
+        class="cubeThreeContainer"
+      >
+        <div
+          class="cubeThree"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

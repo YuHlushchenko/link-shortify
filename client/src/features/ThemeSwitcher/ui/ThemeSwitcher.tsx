@@ -10,7 +10,7 @@ import { Theme } from '@/shared/const/theme'
 import styles from './ThemeSwitcher.module.scss'
 
 import Sun from 'public/assets/svgs/light-theme-icon.svg'
-import Moon from 'public/assets/svgs/dark-theme-icon.svg'
+// import Moon from 'public/assets/svgs/dark-theme-icon.svg'
 
 interface IProps {
   initialTheme: Theme
@@ -46,7 +46,7 @@ const ThemeSwitcher = ({ initialTheme }: IProps) => {
         className={`${styles.lightThemeContainer} ${theme === Theme.LIGHT ? styles.lightThemeContainerActive : ''}`}
       >
         <div className={styles.iconContainer}>
-          <Sun />
+          <Sun data-testid='light-theme-icon' />
         </div>
         <p>
           {t('light')}
@@ -57,9 +57,7 @@ const ThemeSwitcher = ({ initialTheme }: IProps) => {
       <div
         className={`${styles.darkThemeContainer} ${theme === Theme.DARK ? styles.darkThemeContainerActive : ''}`}
       >
-        <div className={styles.iconContainer}>
-          <Moon />
-        </div>
+        <div className={styles.iconContainer}>{/* <Moon /> */}</div>
         <p>
           {t('dark')}
           {theme === Theme.DARK ? ` ${t('theme')}` : ''}

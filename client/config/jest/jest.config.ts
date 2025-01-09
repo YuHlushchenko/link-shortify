@@ -22,7 +22,8 @@ const config: Config = {
   // modulePaths: ['<rootDir>src'],
 
   moduleNameMapper: {
-    // '\\.svg$': '<rootDir>/src/shared/config/jest/__mocks__/svg.jsx', // Мок для SVG як React компонента
+    // '^.+\\.(svg)$': 'jest-transformer-svg', // Мок для SVG як React компонента
+    '^.+\\.(svg)$': '<rootDir>/src/shared/config/jest/__mocks__/fileMock.ts', // Мок для SVG як React компонента
     '\\.svg\\?url$': '<rootDir>/src/shared/config/jest/__mocks__/fileMock.ts', // Мок для SVG з параметром ?url
     'next/image': '<rootDir>/src/shared/config/jest/__mocks__/next/image.ts',
     '^@/(.*)$': '<rootDir>/src/$1', // absolute imports

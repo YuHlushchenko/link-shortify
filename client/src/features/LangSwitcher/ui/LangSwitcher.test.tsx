@@ -9,15 +9,8 @@ const mockReplace = jest.fn()
 jest.mock('@/app/i18n/routing', () => ({
   usePathname: () => '/',
   useRouter: () => ({
-    back: jest.fn(),
-    forward: jest.fn(),
-    refresh: jest.fn(),
-    push: jest.fn(),
-    prefetch: jest.fn(),
     replace: mockReplace,
   }),
-  useParams: () => ({ locale: 'en' }),
-  useSelectedLayoutSegment: () => ({ locale: 'en' }),
 }))
 
 afterEach(() => {
