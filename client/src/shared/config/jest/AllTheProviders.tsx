@@ -1,49 +1,49 @@
 import React, { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
+import fs from 'fs'
+import path from 'path'
 
-import commonEn from 'public/locales/en/common.json'
-import commonUk from 'public/locales/uk/common.json'
+import { IChildren, TLocale } from '@/app/types/global'
 
-jest.mock('next/navigation', () => ({
-  usePathname: () => '/',
-  useRouter: () => ({
-    back: jest.fn(),
-    forward: jest.fn(),
-    refresh: jest.fn(),
-    push: jest.fn(),
-    prefetch: jest.fn(),
-    replace: jest.fn(),
-  }),
-  useParams: () => ({ locale: 'en' }),
-  useSelectedLayoutSegment: () => ({ locale: 'en' }),
-}))
+//* func for dynamic loading of all localization files for a specific language
+const loadLocaleMessages = (locale: TLocale) => {
+  const messages: Record<string, string> = {}
+  const localePath = path.join(process.cwd(), 'public', 'locales', locale)
+
+  // Read all files from the folder of the corresponding language
+  const files = fs.readdirSync(localePath)
+
+  files.forEach((file) => {
+    if (file.endsWith('.json')) {
+      const filePath = path.join(localePath, file)
+      const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+      Object.assign(messages, fileContent) // Join all files into one object
+    }
+  })
+
+  return messages
+}
 
 const AllTheProviders = ({
   children,
   locale = 'en',
 }: {
-  children: React.ReactNode
-  locale?: string
-}) => (
-  <NextIntlClientProvider
-    locale={locale}
-    messages={{
-      en: {
-        common: commonEn,
-      },
-      uk: {
-        common: commonUk,
-      },
-    }}
-  >
-    {children}
-  </NextIntlClientProvider>
-)
+  children: IChildren
+  locale?: TLocale
+}) => {
+  const messages = loadLocaleMessages(locale)
+
+  return (
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+    </NextIntlClientProvider>
+  )
+}
 
 const customRender = (
   ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'> & { locale?: string },
+  options?: Omit<RenderOptions, 'wrapper'> & { locale?: TLocale },
 ) => {
   const { locale = 'en', ...renderOptions } = options || {}
   return render(ui, {
