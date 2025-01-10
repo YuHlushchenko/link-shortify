@@ -10,10 +10,7 @@ exports[`BgCover matches snapshot 1`] = `
     >
       <img
         alt="swirl"
-        height="400"
-        quality="10"
         src="test-file-stub"
-        width="400"
       />
     </div>
     <div
