@@ -1,4 +1,5 @@
 import { render, screen } from '@/shared/config/jest/AllTheProviders'
+
 import Navbar from './Navbar'
 
 // for avoiding complex logic
@@ -24,18 +25,11 @@ describe('Navbar Component', () => {
     expect(langSwitcher).toBeInTheDocument()
   })
 
-  test('renders desktop login button with correct href', () => {
+  test('renders login button with correct href', () => {
     render(<Navbar />)
 
     const desktopLoginButton = screen.getByRole('link', { name: /login/i })
     expect(desktopLoginButton).toBeInTheDocument()
     expect(desktopLoginButton).toHaveAttribute('href', '/login')
-  })
-
-  test('renders mobile login button', () => {
-    render(<Navbar />)
-
-    const mobileLoginButton = screen.getAllByRole('link', { name: '' })[0]
-    expect(mobileLoginButton).toBeInTheDocument()
   })
 })

@@ -21,10 +21,23 @@ describe('Button', () => {
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 
-  test('disables button when disabled prop is true', () => {
+  test('disables default button when disabled prop is true', () => {
     render(<Button disabled>Click me</Button>)
     const buttonElement = screen.getByText('Click me').closest('button')
     expect(buttonElement).toBeDisabled()
+    expect(buttonElement).toHaveClass('disabledDefault')
+  })
+
+  test('disables accent button when disabled prop is true', () => {
+    render(
+      <Button className='accent' disabled>
+        Go to test
+      </Button>,
+    )
+
+    const buttonElement = screen.getByText('Go to test').closest('button')
+    expect(buttonElement).toBeDisabled()
+    expect(buttonElement).toHaveClass('disabledAccent')
   })
 
   test('does not call onClick when disabled', () => {

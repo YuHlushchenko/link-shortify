@@ -5,7 +5,7 @@ import { IChildren } from '@/app/types/global'
 
 import styles from './Button.module.scss'
 
-const CIRCLES_COUNT = 3
+const LOADING_CIRCLES_COUNT = 3
 
 export type TButtonClassName = 'default' | 'accent'
 
@@ -92,7 +92,7 @@ const Component = ({
 
 const ButtonLoading = () => (
   <div className={styles.circlesContainer} data-testid='btn-loading'>
-    {Array.from({ length: CIRCLES_COUNT }).map((_, i) => (
+    {Array.from({ length: LOADING_CIRCLES_COUNT }).map((_, i) => (
       <div
         key={i}
         className={styles.circle}
