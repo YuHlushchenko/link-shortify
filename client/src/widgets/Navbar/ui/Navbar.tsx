@@ -13,7 +13,7 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.contentContainer}>
         <header className={styles.logoContainer}>
-          <Image priority src={LogoUrl} alt='logo' />
+          <Image priority src={LogoUrl} alt='logo' width='30' height='30' />
           <h1 className={styles.logo}>Link-Shortify</h1>
         </header>
 
