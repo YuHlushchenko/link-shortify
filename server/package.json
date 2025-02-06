@@ -4,18 +4,36 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "nodemon",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "lint:prettier": "prettier --check \"src/**/*.{ts,js,json}\"",
+    "lint:prettier:fix": "prettier --write \"src/**/*.{ts,js,json}\""
   },
   "dependencies": {
-    "@types/express": "^5.0.0",
-    "@types/mongoose": "^5.11.97",
-    "@types/node": "^22.7.4",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mongoose": "^8.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^22.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
   }
 }
