@@ -14,7 +14,9 @@
       "@dto/*": ["dto/*"],
       "@services/*": ["services/*"],
       "@middlewares/*": ["middlewares/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@dtos/*": ["dtos/*"]
     }
   },
   "include": ["src/**/*.ts"],

@@ -16,7 +16,7 @@ app.use(express.json()) // Middleware for parsing JSON
 app.use(cookieParser())
 app.use(cors())
 
-app.use('/api/users', userRoutes)
+app.use('/api/user', userRoutes)
 
 const startServer = async () => {
   try {

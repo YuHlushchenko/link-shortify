@@ -1,14 +1,9 @@
-// // src/routes/userRoutes.ts
 import { Router } from 'express'
-// import User from '@models/User'
+import UserController from '@controllers/user.controller'
 
 const router = Router()
 
-// router.post('/register', async (req, res) => {})
-// router.post('/login', async (req, res) => {})
-// router.post('/logout', async (req, res) => {})
-// router.get('/activate:link', async (req, res) => {})
-// router.get('/refresh', async (req, res) => {})
-
+router.post('/register', UserController.register)
+// router.get('/', UserController.getAllUsers)
 
 export default router
