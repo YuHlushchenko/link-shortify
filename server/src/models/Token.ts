@@ -1,10 +1,17 @@
-import mongoose, { Schema, InferSchemaType } from 'mongoose'
+import mongoose, { Schema, InferSchemaType, ObjectId, Document } from 'mongoose'
 
-const TokenSchema = new Schema({
+export interface IToken {
+  user: ObjectId
+  refreshToken: string
+}
+
+interface ITokenDocument extends IToken, Document {}
+
+const TokenSchema = new Schema<ITokenDocument>({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   refreshToken: { type: String, required: true },
 })
 
-type IToken = InferSchemaType<typeof TokenSchema>
+type ITokenSchema = InferSchemaType<typeof TokenSchema>
 
-export default mongoose.model<IToken>('Token', TokenSchema)
+export default mongoose.model<ITokenSchema>('Token', TokenSchema)

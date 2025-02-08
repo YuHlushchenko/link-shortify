@@ -1,50 +1,24 @@
-// // user controller
+import { NextFunction, Request, Response } from 'express'
 
-// import { Request, Response } from "express";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-// import User from "../models/User";
-// import Token from "../models/Token";
-// import { validationResult } from "express-validator";
-// import { generateTokens } from "../utils/generateTokens";
-// import { sendEmail } from "../utils/sendEmail";
+import userService from '@services/user.service'
 
-// // Register
+class UserController {
+  async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username, email, password } = req.body
 
-// export const register = async (req: Request, res: Response) => {
-//   try {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ message: "Registration error", errors });
-//     }
+      const userData = await userService.register(username, email, password)
 
-//     const { username, email, password } = req.body;
+      res.cookie('refreshToken', userData.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        httpOnly: true, // for cookie not to be available for client-side JS
+        // secure: true, // TODO: for https
+      })
+      res.status(201).json(userData)
+    } catch (error) {
+      res.status(500).json({ message: 'Помилка сервера', error })
+    }
+  }
+}
 
-//     const candidate = await User.findOne({ email });
-
-//     if (candidate) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
-
-//     const hashPassword = await bcrypt.hash(password, 8);
-
-//     const activationLink = jwt.sign({ email }, process.env.JWT_SECRET || "", {
-//       expiresIn: "24h",
-//     });
-
-//     const user = new User({
-//       username,
-//       email,
-//       password: hashPassword,
-//       activationLink,
-//     });
-
-//     await user.save();
-
-//     await sendEmail(email, activationLink);
-
-//     return res.status(201).json({ message: "User has been created" });
-//   } catch (error) {
-//     return res.status(500).json({ message: "Registration error" });
-//   }
-// };
+export default new UserController()
