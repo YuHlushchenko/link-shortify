@@ -16,7 +16,8 @@ class UserController {
       })
       res.status(201).json(userData)
     } catch (error) {
-      res.status(500).json({ message: 'Помилка сервера', error })
+      console.log(error)
+      res.status(500).json({ message: 'Помилка сервера222', error })
     }
   }
 }
