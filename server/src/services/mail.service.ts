@@ -1,37 +1,38 @@
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
+import { envVariables } from '@configs/env'
 
 class MailService {
+  // TODO: rewrite this class and its methods
   private transporter: nodemailer.Transporter
   private OAuth2Client = new google.auth.OAuth2(
-    process.env.EMAIL_CLIENT_ID,
-    process.env.EMAIL_CLIENT_SECRET,
-    process.env.EMAIL_REDIRECT_URI,
+    envVariables.EMAIL_CLIENT_ID,
+    envVariables.EMAIL_CLIENT_SECRET,
+    envVariables.EMAIL_REDIRECT_URI,
   )
 
   constructor() {
     this.OAuth2Client.setCredentials({
-      refresh_token: process.env.EMAIL_REFRESH_TOKEN,
+      refresh_token: envVariables.EMAIL_REFRESH_TOKEN,
     })
-
     this.transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587, // Використовуємо порт 465 (SSL)
-      secure: false, // Обов’язково true для 465
+      host: envVariables.SMTP_HOST,
+      port: envVariables.SMTP_PORT, //? 465 for SSL, 587 for TLS
+      secure: false, //? true for 465, false for other ports
       auth: {
         type: 'OAuth2',
-        user: process.env.EMAIL_USER,
-        clientId: process.env.EMAIL_CLIENT_ID,
-        clientSecret: process.env.EMAIL_CLIENT_SECRET,
-        refreshToken: process.env.EMAIL_REFRESH_TOKEN,
+        user: envVariables.EMAIL_USER,
+        clientId: envVariables.EMAIL_CLIENT_ID,
+        clientSecret: envVariables.EMAIL_CLIENT_SECRET,
+        refreshToken: envVariables.EMAIL_REFRESH_TOKEN,
         accessToken: async () => {
           try {
             const { token } = await this.OAuth2Client.getAccessToken()
-            if (!token) throw new Error('❌ Не вдалося отримати accessToken')
-            console.log('✅ Отримано accessToken:', token)
+            if (!token) throw new Error('❌ Error while getting accessToken')
+            console.log('✅ accessToken has been successfully received:', token)
             return token
           } catch (error) {
-            console.error('❌ Помилка отримання accessToken:', error)
+            console.error('❌ Error while getting accessToken:', error)
             throw error
           }
         },
@@ -41,12 +42,13 @@ class MailService {
 
   async sendActivationMail(to: string, link: string) {
     try {
-      console.log(`📩 Надсилаємо email на ${to}...`)
+      console.log(`📩 Sending email to ${to}...`)
 
       const mailOptions = {
-        from: `"Support" <${process.env.EMAIL_USER}>`, // Відправник
+        from: `"Support" <${process.env.EMAIL_USER}>`, // sender address
         to,
-        subject: `Account Activation on ${process.env.CLIENT_DOMAIN}`,
+        // subject: `Account Activation on ${process.env.CLIENT_DOMAIN}`,
+        subject: `Account Activation on ${process.env.API_URL}`,
         html: `
           <p>To activate your account, please click the link below:</p>
           <a href="${link}" style="display:inline-block; padding:10px 20px; color:white; background-color:#007bff; text-decoration:none; border-radius:5px;">
