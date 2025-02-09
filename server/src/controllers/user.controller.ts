@@ -1,23 +1,21 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import userService from '@services/user.service'
 
 class UserController {
-  async register(req: Request, res: Response, next: NextFunction) {
+  // async getUsers(req: Request, res: Response) {}
+  // async getUserById(req: Request, res: Response) {}
+//   async updateUser(req: Request, res: Response) {}
+  // async deleteUser(req: Request, res: Response) {}
+  async activateUser(req: Request, res: Response) {
     try {
-      const { username, email, password } = req.body
+      const { link } = req.params
+      console.log('link:', link)
+      await userService.activateEmail(link)
 
-      const userData = await userService.register(username, email, password)
-
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-        httpOnly: true, // for cookie not to be available for client-side JS
-        // secure: true, // TODO: for https
-      })
-      res.status(201).json(userData)
+      res.redirect(`${process.env.CLIENT_DOMAIN}`)
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ message: 'Помилка сервера222', error })
+      res.status(500).json({ message: 'Server error', error })
     }
   }
 }

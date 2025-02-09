@@ -11,12 +11,12 @@
       "@models/*": ["models/*"],
       "@controllers/*": ["controllers/*"],
       "@routes/*": ["routes/*"],
-      "@dto/*": ["dto/*"],
       "@services/*": ["services/*"],
       "@middlewares/*": ["middlewares/*"],
       "@utils/*": ["utils/*"],
       "@interfaces/*": ["interfaces/*"],
-      "@dtos/*": ["dtos/*"]
+      "@dtos/*": ["dtos/*"],
+      "@configs/*": ["configs/*"],
     }
   },
   "include": ["src/**/*.ts"],
