@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-export const envVariables = {
+export const ENV_VARIABLES = {
   PORT: process.env.PORT || 3001,
   DEV_MODE: process.env.DEV_MODE || 'development',
 
@@ -21,7 +21,7 @@ export const envVariables = {
   SMTP_PORT: process.env.SMTP_PORT || 587,
   SMTP_USER: process.env.SMTP_USER,
 
-  API_URL: process.env.API_URL || 'http://localhost:3001', 
+  API_URL: process.env.API_URL || 'http://localhost:3001',
   CLIENT_DOMAIN: process.env.CLIENT_DOMAIN || 'http://localhost:3000',
 
   EMAIL_USER: process.env.EMAIL_USER,
@@ -34,18 +34,18 @@ export const envVariables = {
 }
 
 const createMongoUri = (): void => {
-  envVariables.MONGO_DB_URI = `${envVariables.MONGO_DB_PROTOCOL}://${
-    envVariables.MONGO_DB_HOST
-  }:${envVariables.MONGO_DB_PORT}/${envVariables.MONGO_DB_NAME}`
+  ENV_VARIABLES.MONGO_DB_URI = `${ENV_VARIABLES.MONGO_DB_PROTOCOL}://${
+    ENV_VARIABLES.MONGO_DB_HOST
+  }:${ENV_VARIABLES.MONGO_DB_PORT}/${ENV_VARIABLES.MONGO_DB_NAME}`
 }
 
 createMongoUri()
 
 // TODO: add validation for env variables
 
-// const validateEnvVariables = (): void => {
-//     const envVariableEntries = Object.entries(envVariables)
-    
+// const validateENV_VARIABLES = (): void => {
+//     const envVariableEntries = Object.entries(ENV_VARIABLES)
+
 //     envVariableEntries.forEach(([key, value]) => {
 //         if (!value) {
 //         throw new Error(`❌ ${key} is not defined in .env file`)

@@ -1,4 +1,4 @@
-import { IUser } from '@models/User'
+import { IUser } from '@models/User.model'
 
 export interface ICreateUser extends Omit<IUser, '_id'> {}
 

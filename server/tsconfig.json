@@ -17,6 +17,7 @@
       "@interfaces/*": ["interfaces/*"],
       "@dtos/*": ["dtos/*"],
       "@configs/*": ["configs/*"],
+      "@exeptions/*": ["exeptions/*"],
     }
   },
   "include": ["src/**/*.ts"],
