@@ -1,14 +1,17 @@
 import bcrypt from 'bcrypt'
 import { v4 } from 'uuid'
 
-import User from '@models/User'
+import User from '@models/User.model'
+
 import { UserDto } from '@dtos/user.dto'
+
+import ApiError from '@exeptions/apiError'
 
 class UserService {
   async createUser(username: string, email: string, password: string) {
     const candidate = await User.findOne({ email })
     if (candidate) {
-      throw new Error('User with this email already exists')
+      throw ApiError.BadRequest('User with this email already exists')
     }
 
     const hashedPassword = await bcrypt.hash(password, 5)
@@ -32,10 +35,10 @@ class UserService {
     const user = await User.findOne({ activationLink })
 
     if (!user) {
-      throw new Error('Wrong activation link')
+      throw ApiError.BadRequest('Incorrect activation link')
     }
 
-    user.isActivated = true    
+    user.isActivated = true
     await user.save()
   }
 }

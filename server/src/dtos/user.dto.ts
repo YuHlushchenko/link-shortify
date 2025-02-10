@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose'
 
-import { IUser } from '@models/User'
+import { IUser } from '@models/User.model'
 
 export class UserDto {
   _id: ObjectId

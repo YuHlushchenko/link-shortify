@@ -1,40 +1,34 @@
 import jwt, { SignOptions } from 'jsonwebtoken'
-
-import Token from '@models/Token'
 import { ObjectId } from 'mongoose'
+
+import { ENV_VARIABLES } from '@configs/envSettings'
+
+import Token from '@models/Token.model'
 
 class TokenService {
   generateToken(payload: object): {
     accessToken: string
     refreshToken: string
   } {
-    if (!process.env.JWT_ACCESS_SECRET) {
-      throw new Error('JWT_ACCESS_SECRET не визначено в змінних середовища.')
-    }
-
-    if (!process.env.JWT_REFRESH_SECRET) {
-      throw new Error('JWT_REFRESH_SECRET не визначено в змінних середовища.')
-    }
-
     const signAccessOptions: SignOptions = {
       expiresIn:
-        (process.env.JWT_EXPIRES_IN as SignOptions['expiresIn']) ?? '1h',
+        (ENV_VARIABLES.JWT_EXPIRES_IN as SignOptions['expiresIn']) ?? '1h',
     }
 
     const signRefreshOptions: SignOptions = {
       expiresIn:
-        (process.env.JWT_REFRESH_EXPIRES_IN as SignOptions['expiresIn']) ??
+        (ENV_VARIABLES.JWT_REFRESH_EXPIRES_IN as SignOptions['expiresIn']) ??
         '30d',
     }
 
     const accessToken = jwt.sign(
       payload,
-      process.env.JWT_ACCESS_SECRET,
+      ENV_VARIABLES.JWT_ACCESS_SECRET as string,
       signAccessOptions,
     )
     const refreshToken = jwt.sign(
       payload,
-      process.env.JWT_REFRESH_SECRET,
+      ENV_VARIABLES.JWT_REFRESH_SECRET as string,
       signRefreshOptions,
     )
 
@@ -42,6 +36,30 @@ class TokenService {
       accessToken,
       refreshToken,
     }
+  }
+  validateAccessToken(token: string) {
+    const userData = jwt.verify(
+      token,
+      ENV_VARIABLES.JWT_ACCESS_SECRET as string,
+    )
+
+    if (!userData) {
+      return null
+    }
+
+    return userData as jwt.JwtPayload
+  }
+  validateRefreshToken(token: string) {
+    const userData = jwt.verify(
+      token,
+      ENV_VARIABLES.JWT_REFRESH_SECRET as string,
+    )
+
+    if (!userData) {
+      return null
+    }
+
+    return userData
   }
   async saveToken(userId: ObjectId, refreshToken: string) {
     const tokenData = await Token.findOne({ user: userId })
@@ -52,6 +70,18 @@ class TokenService {
     }
 
     const token = await Token.create({ user: userId, refreshToken })
+    return token
+  }
+  async removeToken(refreshToken: string) {
+    const tokenData = await Token.deleteOne({ refreshToken })
+
+    return tokenData
+  }
+  async findToken(refreshToken: string) {
+    const token = await Token.findOne({
+      refreshToken,
+    })
+
     return token
   }
 }
