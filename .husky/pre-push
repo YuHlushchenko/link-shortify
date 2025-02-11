@@ -1,4 +1,5 @@
 cd client || exit 1
 yarn test:unit && yarn build
-# cd ../server || exit 1
-# yarn lint
+
+cd ../server || exit 1
+yarn build
