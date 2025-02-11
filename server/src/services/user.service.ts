@@ -41,6 +41,11 @@ class UserService {
     user.isActivated = true
     await user.save()
   }
+  async getAllUsers() {
+    const users = await User.find()
+
+    return users
+  }
 }
 
 export default new UserService()
