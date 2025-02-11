@@ -63,7 +63,10 @@ class AuthController {
         // secure: true, // TODO: for https
       })
 
-      res.status(200).json(userData)
+      res.status(200).json({
+        user: userData,
+        tokens, // TODO: remove in production
+      })
     } catch (error) {
       next(error)
     }

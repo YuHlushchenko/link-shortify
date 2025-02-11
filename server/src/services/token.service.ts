@@ -4,6 +4,7 @@ import { ObjectId } from 'mongoose'
 import { ENV_VARIABLES } from '@configs/envSettings'
 
 import Token from '@models/Token.model'
+import { UserPayload } from '@interfaces/user.type'
 
 class TokenService {
   generateToken(payload: object): {
@@ -47,7 +48,7 @@ class TokenService {
       return null
     }
 
-    return userData as jwt.JwtPayload
+    return userData as UserPayload
   }
   validateRefreshToken(token: string) {
     const userData = jwt.verify(
