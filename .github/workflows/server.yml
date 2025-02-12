@@ -43,14 +43,18 @@ jobs:
       - name: Lint code
         run: |
           cd server
-          echo "No linting yet"
+          yarn lint
+          yarn lint:prettier
 
       - name: Start app with pm2
         env:
-          MONGO_URI: mongodb://localhost:27017/APP-DB
+          MONGO_DB_PROTOCOL: mongodb
+          MONGO_DB_HOST: localhost
+          MONGO_DB_PORT: 27017
+          MONGO_DB_NAME: link-shortify
         run: |
           cd server
-          pm2 start yarn --name "my-app" -- start
+          pm2 start yarn --name "server" -- start
 
       - name: Run tests
         run: |
@@ -59,7 +63,7 @@ jobs:
 
       - name: Stop pm2 app
         run: |
-          pm2 stop "my-app"
+          pm2 stop "server"
 
       - name: Build TypeScript
         run: |
