@@ -1,14 +1,14 @@
 [data-theme='app_dark_theme'] {
   --bg-color: #0b101b;
-  --text-color: #c9ced6;
+  --text-color: rgb(201 206 214);
   --ligth-text-color: #fff;
   --accent-color-1: #144ee3;
   --accent-color-1-transparent: rgb(20 78 227 / 50%);
   --accent-color-2: #eb568e;
-  --extra-color: #0b2fc1;
+  --extra-color: rgb(11 47 193);
   --primary-color-1: #c9ced6;
-  --secondary-color-1: #353c4a;
-  --secondary-color-2: #181e29;
+  --secondary-color-1: rgb(53 60 74);
+  --secondary-color-2: rgb(24 30 41);
   --secondary-color-2-transparent: rgb(24 30 41 / 50%);
   --gradient-color: linear-gradient(
     75deg,
@@ -24,5 +24,7 @@
     #a353aa 60%,
     #144ee3 100%
   );
-  --shadow-color: #040406;
+  --shadow-color: rgb(4 4 6);
+  --modal-z-index: 100;
+  --modal-bg-color: rgb(53 60 74 / 50%);
 }

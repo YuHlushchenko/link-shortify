@@ -1,0 +1,165 @@
+@use '@/app/styles/mixins.scss' as *;
+
+// if you want to change the duration of the animations, change ANIMATION_DELAY in Modal.tsx too
+// $OVERLAY-LINE-ANIMATION-DURATION: 0.3s;
+// $OVERLAY-GROWING-ANIMATION-DURATION: 0.2s;
+// $CONTENT-ANIMATION-DURATION: 0.2s;
+
+%container {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerShown {
+  @extend %container;
+
+  opacity: 1;
+  pointer-events: auto;
+  z-index: var(--modal-z-index);
+}
+
+.containerIsHidding {
+  @extend %container;
+}
+
+.overlay {
+  width: 0;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--modal-bg-color);
+  backdrop-filter: blur(4px);
+}
+
+.overlayIsShowing {
+  width: 100%;
+  height: 100%;
+
+  // ? 1) showing the overlay
+  // ? 2) then growing the overlay
+  // ? 3) then showing the content
+//   animation:
+//     overlay-line-appearing $OVERLAY-LINE-ANIMATION-DURATION linear,
+//     overlay-growing $OVERLAY-GROWING-ANIMATION-DURATION linear
+//       $OVERLAY-LINE-ANIMATION-DURATION;
+
+  //   .contentContainer {
+  //     animation: content-appearing $CONTENT-ANIMATION-DURATION ease-out
+  //       calc(
+  //         $OVERLAY-LINE-ANIMATION-DURATION + $OVERLAY-GROWING-ANIMATION-DURATION
+  //       )
+  //       forwards;
+
+  // border: 1px solid red;
+  //   }
+}
+
+.overlayIsHidding {
+  width: 100%;
+  height: 100%;
+
+  // ? 1) hiding the content
+  // ? 2) then shrinking the overlay
+  // ? 3) then hiding the overlay
+//   animation:
+//     overlay-shrinking $OVERLAY-GROWING-ANIMATION-DURATION linear
+//       $CONTENT-ANIMATION-DURATION,
+//     overlay-line-disappearing $OVERLAY-LINE-ANIMATION-DURATION linear
+//       calc($OVERLAY-GROWING-ANIMATION-DURATION + $CONTENT-ANIMATION-DURATION);
+
+  //   .contentContainer {
+  //     animation: content-disappearing $CONTENT-ANIMATION-DURATION ease-out;
+  //   }
+}
+
+.contentContainer {
+  padding: 30px 20px;
+  border-radius: 12px;
+  background-color: var(--bg-color);
+  transform: scale(0);
+  max-width: 60%;
+  box-shadow: 0 0 10px var(--shadow-color);
+
+  @include for-tablet-portrait {
+    max-width: 75%;
+  }
+
+  @include for-phone {
+    max-width: 85%;
+  }
+}
+
+@keyframes overlay-line-appearing {
+  0% {
+    width: 0;
+    height: 2px;
+  }
+
+  100% {
+    width: 100%;
+    height: 2px;
+  }
+}
+
+@keyframes overlay-line-disappearing {
+  0% {
+    width: 100%;
+    height: 2px;
+  }
+
+  100% {
+    width: 0;
+    height: 2px;
+  }
+}
+
+@keyframes overlay-growing {
+  0% {
+    height: 2px;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes overlay-shrinking {
+  0% {
+    height: 100%;
+  }
+
+  100% {
+    height: 2px;
+  }
+}
+
+@keyframes content-appearing {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes content-disappearing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
