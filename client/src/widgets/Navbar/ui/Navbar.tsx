@@ -1,5 +1,9 @@
-import Image from 'next/image'
+'use client'
 
+import Image from 'next/image'
+// import { useCallback, useState } from 'react'
+
+// import { LoginModal } from '@/features/AuthByUsername'
 import { LangSwitcher } from '@/features/LangSwitcher'
 import Button from '@/shared/ui/Button/Button'
 
@@ -9,6 +13,16 @@ import LogoUrl from 'public/assets/svgs/logo.svg?url'
 import Login from 'public/assets/svgs/sign-in.svg'
 
 const Navbar = () => {
+  // const [isAuthModal, setAuthModal] = useState(false)
+
+  // const closeModalHandler = useCallback(() => {
+  //   setAuthModal(false)
+  // }, [])
+
+  // const showModalHandler = useCallback(() => {
+  //   setAuthModal(true)
+  // }, [])
+
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
@@ -25,10 +39,10 @@ const Navbar = () => {
           {/* for desktop */}
           <div className={styles.loginBtnContainer}>
             <Button
-              href='/login'
               iconRight={<Login />}
               className='accent'
               iconRightContainerStyle={{ right: '24px' }}
+              // onClick={showModalHandler}
             >
               login
             </Button>
@@ -36,12 +50,18 @@ const Navbar = () => {
 
           {/* for mobile */}
           <div className={styles.loginBtnContainerMobile}>
-            <Button href='/login' className='accent' isRounded={true}>
+            <Button
+              className='accent'
+              isRounded={true}
+              // onClick={showModalHandler}
+            >
               <Login />
             </Button>
           </div>
         </div>
       </div>
+
+      {/* <LoginModal isOpen={isAuthModal} onClose={() => closeModalHandler()} /> */}
     </div>
   )
 }
