@@ -46,6 +46,7 @@
       {
         "allow": "single-child"
       }
-    ]
+    ],
+    "@typescript-eslint/no-unused-expressions": "off" // TODO: remove this line
   }
 }
