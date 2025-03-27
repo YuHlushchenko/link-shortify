@@ -1,16 +1,15 @@
-import { render, screen } from '@/shared/config/jest/AllTheProviders'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@/shared/config/jest/AllTheProviders'
 
 import Navbar from './Navbar'
 
 // for avoiding complex logic
 jest.mock('@/features/LangSwitcher', () => ({
   LangSwitcher: () => <div data-testid='lang-switcher'>LangSwitcher</div>,
-}))
-
-// mock LoginModal to test open/close behaviour
-jest.mock('@/features/AuthByUsername', () => ({
-  LoginModal: ({ isOpen }: { isOpen: boolean }) =>
-    isOpen ? <div data-testid='login-modal'>LoginModal</div> : null,
 }))
 
 describe('Navbar Component', () => {
@@ -31,11 +30,34 @@ describe('Navbar Component', () => {
     expect(langSwitcher).toBeInTheDocument()
   })
 
-  test('renders login button with correct href', () => {
+  test('opens and closes login modal on button click', async () => {
     render(<Navbar />)
 
-    const desktopLoginButton = screen.getByRole('link', { name: /login/i })
-    expect(desktopLoginButton).toBeInTheDocument()
-    expect(desktopLoginButton).toHaveAttribute('href', '/login')
+    // Check that the login modal is not visible initially
+    const modal = screen.queryByTestId('modal')
+    expect(modal).not.toBeInTheDocument()
+
+    const loginModal = screen.queryByTestId('login-form-modal')
+    expect(loginModal).not.toBeInTheDocument()
+
+    // Simulate clicking the login button (desktop view)
+    const loginButtonDesktop = screen.getByRole('button', { name: /login/i })
+    fireEvent.click(loginButtonDesktop)
+
+    // Wait for the login modal to appear after clicking the button
+    await waitFor(() => {
+      expect(screen.getByTestId('modal')).toBeInTheDocument()
+      expect(screen.getByTestId('login-form-modal')).toBeInTheDocument()
+    })
+
+    // Simulate clicking the close button inside the modal
+    const closeButton = screen.getByTestId('close-modal')
+    fireEvent.click(closeButton)
+
+    // // Wait for the modal to be closed
+    await waitFor(() => {
+      expect(screen.queryByTestId('modal')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('login-form-modal')).not.toBeInTheDocument()
+    })
   })
 })

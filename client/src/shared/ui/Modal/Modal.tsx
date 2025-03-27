@@ -65,6 +65,7 @@ export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
     <Portal>
       {isOpen && (
         <div
+          data-testid='modal'
           className={
             isOpen ? `${styles.containerShown}` : `${styles.containerIsHidding}`
           }
@@ -84,7 +85,7 @@ export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
                 <div className={styles.childrenContainer}>{children}</div>
 
                 <div className={styles.closeBtnContainer}>
-                  <button onClick={closeHandler}>
+                  <button data-testid='close-modal' onClick={closeHandler}>
                     <CloseIcon />
                   </button>
                 </div>

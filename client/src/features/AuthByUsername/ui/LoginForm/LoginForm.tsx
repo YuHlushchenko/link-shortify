@@ -5,7 +5,7 @@ import styles from './LoginForm.module.scss'
 
 export const LoginForm = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid='login-form-modal'>
       <form action=''>
         {/* <Input type='text' /> */}
         <input type='text' style={{ width: '400px', maxWidth: '100%' }} />

@@ -61,7 +61,11 @@ const Navbar = () => {
         </div>
       </div>
 
-      <LoginModal isOpen={isAuthModal} onClose={() => closeModalHandler()} />
+      <LoginModal
+        data-testid='login-modal'
+        isOpen={isAuthModal}
+        onClose={() => closeModalHandler()}
+      />
     </div>
   )
 }
