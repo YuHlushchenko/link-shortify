@@ -27,8 +27,14 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
   const { locale } = await params
   const messages = await getMessages({ locale })
 
-  const themeFromCookies =
-    (await cookies()).get('app_theme')?.value || Theme.DARK
+  // for cookie "data_theme" always to be one of the available themes,
+  // even if it was tampered with by the user
+  const availableThemes = Object.values(Theme)
+  const rawTheme = (await cookies()).get('app_theme')?.value
+
+  const themeFromCookies = availableThemes.includes(rawTheme as Theme)
+    ? (rawTheme as Theme)
+    : Theme.DARK
 
   return (
     <html

@@ -5,11 +5,12 @@
   --accent-color-1: #144ee3;
   --accent-color-1-transparent: rgb(20 78 227 / 50%);
   --accent-color-2: #eb568e;
+  --accent-color-2-transparent: rgb(235 86 142 / 50%);
   --extra-color: rgb(11 47 193);
   --primary-color-1: #c9ced6;
-  --secondary-color-1: rgb(53 60 74);
-  --secondary-color-2: rgb(24 30 41);
-  --secondary-color-2-transparent: rgb(24 30 41 / 50%);
+  --secondary-color-1: #353c4a;
+  --secondary-color-2: #181e29;
+  --secondary-color-2-transparent: rgb(25 31 42 / 83%);
   --gradient-color: linear-gradient(
     75deg,
     #144ee3 0%,
@@ -26,5 +27,5 @@
   );
   --shadow-color: rgb(4 4 6);
   --modal-z-index: 100;
-  --modal-bg-color: rgb(53 60 74 / 50%);
+  --modal-bg-color: #353c4a80;
 }

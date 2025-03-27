@@ -1,15 +1,16 @@
 [data-theme='app_light_theme'] {
-  // --bg-color: #fffbf5;
   --bg-color: #c5d9e6;
   --text-color: #2b2b2b;
   --ligth-text-color: #fff;
   --accent-color-1: #36f;
   --accent-color-1-transparent: rgb(54 111 255 / 50%);
   --accent-color-2: #ff6f91;
+  --accent-color-2-transparent: rgb(255 111 145 / 50%);
   --extra-color: #5581ff;
   --primary-color-1: #2b2b2b;
   --secondary-color-1: #d9e2eb;
   --secondary-color-2: #e0eaf7;
+  --secondary-color-2-transparent: hsl(210deg 100% 95% / 83%);
   --gradient-color: linear-gradient(
     75deg,
     #36f 0%,
@@ -26,4 +27,5 @@
   );
   --shadow-color: #bfd1e6;
   --modal-z-index: 100;
+  --modal-bg-color: rgb(177 183 189 / 50%);
 }

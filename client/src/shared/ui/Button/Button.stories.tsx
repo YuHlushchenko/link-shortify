@@ -197,9 +197,6 @@ export const IconRight: Story = {
     className: 'default' as TButtonClassName,
     iconRight: <LinkSvg />,
   },
-  globals: {
-    theme: Theme.LIGHT,
-  },
 }
 
 export const IconRightLIGHT: Story = {
@@ -218,9 +215,6 @@ export const IconRightAccent: Story = {
     children: 'Icon Right Accent Button LIGHT',
     className: 'accent' as TButtonClassName,
     iconRight: <LinkSvg />,
-  },
-  globals: {
-    theme: Theme.LIGHT,
   },
 }
 

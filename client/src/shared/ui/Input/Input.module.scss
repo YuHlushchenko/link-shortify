@@ -1,0 +1,8 @@
+@use '@/app/styles/mixins.scss' as *;
+
+.input {
+  width: 100%;
+  background-color: transparent;
+  border: 3px solid var(--secondary-color-1);
+  border-radius: 48px;
+}

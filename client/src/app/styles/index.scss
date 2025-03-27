@@ -29,14 +29,14 @@ body {
   overflow: initial; // for scrollbar to be visible, even if there is z-index: -1 in the app
 }
 
-button:focus,
-a:focus {
-  // outline: 1px solid var(--primary-color-1);
-  // outline: 2px dashed rgba(255, 165, 0, 0.7); /* Кастомна рамка для кнопок та лінків */
-  // outline-offset: 4px; /* Відступ рамки для кращої видимості */
-  // background-color: rgba(255, 165, 0, 0.1); /* Легке підсвічування */
-  // border-radius: 4px; /* Згладжені кути */
-}
+// button:focus,
+// a:focus {
+// outline: 1px solid var(--primary-color-1);
+// outline: 2px dashed rgba(255, 165, 0, 0.7); /* Кастомна рамка для кнопок та лінків */
+// outline-offset: 4px; /* Відступ рамки для кращої видимості */
+// background-color: rgba(255, 165, 0, 0.1); /* Легке підсвічування */
+// border-radius: 4px; /* Згладжені кути */
+// }
 
 // /* Інші елементи за потреби */
 // input:focus {
