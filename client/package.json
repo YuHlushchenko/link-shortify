@@ -11,21 +11,20 @@
     "lint:fix": "next lint --fix",
     "lint:prettier": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-    "lint:style": "stylelint '**/*.{css,scss}'",
-    "lint:style:fix": "stylelint '**/*.{css,scss}' --fix",
+    "lint:style": "stylelint 'src/**/*.{css,scss}'",
+    "lint:style:fix": "stylelint 'src/**/*.{css,scss}' --fix",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
     "test:unit:ok": "jest --config ./config/jest/jest.config.ts --updateSnapshot",
+    "storybook": "storybook dev -p 6006 --config-dir config/.storybook",
+    "storybook:build": "storybook build --config-dir config/.storybook",
     "test:ui": "loki test",
     "test:ui:ok": "loki approve",
     "test:ui:ci": "loki --requireReference --reactUri file:./storybook-static",
     "test:ui:report": "npm run test:ui:json && npm run test:ui:html",
     "test:ui:json": "node scripts/generate-visual-json-report.js",
-    "test:ui:html": "reg-cli --from .loki/report.json --report .loki/report.html",
-    "storybook": "storybook dev -p 6006 --config-dir config/.storybook",
-    "storybook:build": "storybook build --config-dir config/.storybook"
+    "test:ui:html": "reg-cli --from .loki/report.json --report .loki/report.html"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^15.0.4",
     "next": "^15.0.3",
     "next-intl": "^3.20.0",
     "react": "^18.3.1",
@@ -33,6 +32,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.0.4",
     "@chromatic-com/storybook": "^1.9.0",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",

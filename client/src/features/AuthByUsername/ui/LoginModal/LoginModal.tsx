@@ -10,7 +10,7 @@ interface LoginModalProps {
 
 const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} title='sign in'>
       <LoginForm />
     </Modal>
   )

@@ -6,17 +6,20 @@ import { Portal } from '../Portal/Portal'
 
 import styles from './Modal.module.scss'
 
+import CloseIcon from 'public/assets/svgs/cross-colored.svg'
+
 interface IProps {
   className?: string
   children?: React.ReactNode | React.ReactNode[]
   isOpen?: boolean
   onClose?: () => void
+  title?: string
 }
 
-// ANIMATION_DELAY should be equal to the sum of the animations duration variables in the scss file
+// ? ANIMATION_DELAY should be equal to the sum of the animations duration variables in the scss file
 const ANIMATION_DELAY = 700
 
-export const Modal = ({ children, isOpen, onClose }: IProps) => {
+export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
   const [isClosing, setClosing] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
@@ -70,8 +73,22 @@ export const Modal = ({ children, isOpen, onClose }: IProps) => {
             className={`${styles.overlay} ${isOpen && !isClosing ? styles.overlayIsShowing : ''} ${isClosing ? styles.overlayIsHidding : ''}`}
             onClick={closeHandler}
           >
-            <div className={styles.contentContainer} onClick={onContentClick}>
-              {children}
+            <div className={styles.modalContainer} onClick={onContentClick}>
+              <div className={styles.contentContainer}>
+                {title && (
+                  <div className={styles.titleContainer}>
+                    <h6>{title}</h6>
+                  </div>
+                )}
+
+                <div className={styles.childrenContainer}>{children}</div>
+
+                <div className={styles.closeBtnContainer}>
+                  <button onClick={closeHandler}>
+                    <CloseIcon />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

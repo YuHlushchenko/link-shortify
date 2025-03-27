@@ -1,9 +1,9 @@
 @use '@/app/styles/mixins.scss' as *;
 
-// if you want to change the duration of the animations, change ANIMATION_DELAY in Modal.tsx too
-// $OVERLAY-LINE-ANIMATION-DURATION: 0.3s;
-// $OVERLAY-GROWING-ANIMATION-DURATION: 0.2s;
-// $CONTENT-ANIMATION-DURATION: 0.2s;
+// ? if you want to change the duration of the animations, change ANIMATION_DELAY in Modal.tsx too
+$OVERLAY-LINE-ANIMATION-DURATION: 0.3s;
+$OVERLAY-GROWING-ANIMATION-DURATION: 0.2s;
+$CONTENT-ANIMATION-DURATION: 0.2s;
 
 %container {
   position: fixed;
@@ -38,6 +38,45 @@
   backdrop-filter: blur(4px);
 }
 
+.modalContainer {
+  position: relative;
+  transform: scale(0);
+  max-width: 60%;
+  background-color: var(--secondary-color-2-transparent);
+  backdrop-filter: blur(100px);
+  border-radius: 50px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow:
+      -3px -2px 10px var(--accent-color-2-transparent),
+      3px 2px 20px var(--accent-color-1-transparent);
+    pointer-events: none;
+    border-radius: 50px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow:
+      -1px -1px 1px var(--accent-color-2),
+      1px 1px 1px var(--accent-color-1);
+    pointer-events: none;
+    border-radius: 50px;
+  }
+
+  @include for-tablet-portrait {
+    max-width: 75%;
+  }
+
+  @include for-phone {
+    max-width: 85%;
+  }
+}
+
 .overlayIsShowing {
   width: 100%;
   height: 100%;
@@ -45,20 +84,18 @@
   // ? 1) showing the overlay
   // ? 2) then growing the overlay
   // ? 3) then showing the content
-//   animation:
-//     overlay-line-appearing $OVERLAY-LINE-ANIMATION-DURATION linear,
-//     overlay-growing $OVERLAY-GROWING-ANIMATION-DURATION linear
-//       $OVERLAY-LINE-ANIMATION-DURATION;
+  animation:
+    overlay-line-appearing $OVERLAY-LINE-ANIMATION-DURATION linear,
+    overlay-growing $OVERLAY-GROWING-ANIMATION-DURATION linear
+      $OVERLAY-LINE-ANIMATION-DURATION;
 
-  //   .contentContainer {
-  //     animation: content-appearing $CONTENT-ANIMATION-DURATION ease-out
-  //       calc(
-  //         $OVERLAY-LINE-ANIMATION-DURATION + $OVERLAY-GROWING-ANIMATION-DURATION
-  //       )
-  //       forwards;
-
-  // border: 1px solid red;
-  //   }
+  .modalContainer {
+    animation: content-appearing $CONTENT-ANIMATION-DURATION ease-out
+      calc(
+        $OVERLAY-LINE-ANIMATION-DURATION + $OVERLAY-GROWING-ANIMATION-DURATION
+      )
+      forwards;
+  }
 }
 
 .overlayIsHidding {
@@ -68,31 +105,92 @@
   // ? 1) hiding the content
   // ? 2) then shrinking the overlay
   // ? 3) then hiding the overlay
-//   animation:
-//     overlay-shrinking $OVERLAY-GROWING-ANIMATION-DURATION linear
-//       $CONTENT-ANIMATION-DURATION,
-//     overlay-line-disappearing $OVERLAY-LINE-ANIMATION-DURATION linear
-//       calc($OVERLAY-GROWING-ANIMATION-DURATION + $CONTENT-ANIMATION-DURATION);
+  animation:
+    overlay-shrinking $OVERLAY-GROWING-ANIMATION-DURATION linear
+      $CONTENT-ANIMATION-DURATION,
+    overlay-line-disappearing $OVERLAY-LINE-ANIMATION-DURATION linear
+      calc($OVERLAY-GROWING-ANIMATION-DURATION + $CONTENT-ANIMATION-DURATION);
 
-  //   .contentContainer {
-  //     animation: content-disappearing $CONTENT-ANIMATION-DURATION ease-out;
-  //   }
+  .modalContainer {
+    animation: content-disappearing $CONTENT-ANIMATION-DURATION ease-out;
+  }
 }
 
 .contentContainer {
-  padding: 30px 20px;
-  border-radius: 12px;
-  background-color: var(--bg-color);
-  transform: scale(0);
-  max-width: 60%;
-  box-shadow: 0 0 10px var(--shadow-color);
+  padding: 81px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  @include for-tablet-portrait {
-    max-width: 75%;
+  @include for-phone {
+    padding: 60px 25px 16px;
+  }
+}
+
+.titleContainer {
+  margin-bottom: 26px;
+
+  h6 {
+    font-size: var(--font-size-xxl);
+    text-transform: capitalize;
+
+    @include for-small-desktop {
+      font-size: var(--font-size-xl);
+    }
+
+    @include for-phone {
+      font-size: var(--font-size-lg);
+    }
   }
 
   @include for-phone {
-    max-width: 85%;
+    margin-bottom: 16px;
+  }
+}
+
+.childrenContainer {
+  width: 100%;
+}
+
+.closeBtnContainer {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border-radius: 50%;
+
+  button {
+    transition: all 0.3s;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  &:hover {
+    button {
+      transform: rotate(180deg);
+    }
+  }
+
+  @include for-phone {
+    top: 35px;
+    right: 35px;
+
+    button {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }
 
