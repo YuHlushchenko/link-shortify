@@ -12,6 +12,7 @@ export type TButtonClassName = 'default' | 'accent'
 interface IProps {
   children?: IChildren
   type?: 'button' | 'submit' | 'reset'
+  name?: string
   href?: string
   style?: React.CSSProperties
   className?: TButtonClassName
@@ -47,6 +48,7 @@ const defaultStyle = {
 const Component = ({
   href,
   children,
+  name,
   style,
   className = 'default',
   onClick,
@@ -70,6 +72,7 @@ const Component = ({
       disabled: href ? null : disabled,
       style,
       onClick: disabled ? null : onClick,
+      name,
     },
     // *children
     iconLeft && (
