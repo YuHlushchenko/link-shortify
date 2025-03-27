@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { createAutoPasteSlice, IAutoPasteSlice } from './slices/autoPasteSlice'
+import { IAutoPasteSlice, createAutoPasteSlice } from './slices/autoPasteSlice'
 
 type StoreState = IAutoPasteSlice
 

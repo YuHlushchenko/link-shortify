@@ -76,6 +76,12 @@ export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
           >
             <div className={styles.modalContainer} onClick={onContentClick}>
               <div className={styles.contentContainer}>
+                <div className={styles.closeBtnContainer}>
+                  <button data-testid='close-modal' onClick={closeHandler}>
+                    <CloseIcon />
+                  </button>
+                </div>
+
                 {title && (
                   <div className={styles.titleContainer}>
                     <h6>{title}</h6>
@@ -83,12 +89,6 @@ export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
                 )}
 
                 <div className={styles.childrenContainer}>{children}</div>
-
-                <div className={styles.closeBtnContainer}>
-                  <button data-testid='close-modal' onClick={closeHandler}>
-                    <CloseIcon />
-                  </button>
-                </div>
               </div>
             </div>
           </div>

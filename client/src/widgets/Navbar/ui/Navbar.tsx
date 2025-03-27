@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
-import { LoginModal } from '@/features/AuthByUsername'
+import { AuthModal } from '@/features/AuthByUsername'
 import { LangSwitcher } from '@/features/LangSwitcher'
 import Button from '@/shared/ui/Button/Button'
 
@@ -61,8 +61,8 @@ const Navbar = () => {
         </div>
       </div>
 
-      <LoginModal
-        data-testid='login-modal'
+      <AuthModal
+        data-testid='auth-modal'
         isOpen={isAuthModal}
         onClose={() => closeModalHandler()}
       />

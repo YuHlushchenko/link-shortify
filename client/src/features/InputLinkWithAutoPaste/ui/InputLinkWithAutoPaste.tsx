@@ -2,7 +2,7 @@
 
 import { FC, useEffect, useState } from 'react'
 
-import { useStore } from '@/app/providers/store/createStore'
+import { useStore } from '@/app/providers/store/store'
 
 import { InputLink } from '@/widgets/InputLink'
 import Checkbox from '@/shared/ui/Checkbox/Checkbox'
