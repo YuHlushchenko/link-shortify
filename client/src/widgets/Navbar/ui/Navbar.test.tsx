@@ -54,7 +54,7 @@ describe('Navbar Component', () => {
     const closeButton = screen.getByTestId('close-modal')
     fireEvent.click(closeButton)
 
-    // // Wait for the modal to be closed
+    // Wait for the modal to be closed
     await waitFor(() => {
       expect(screen.queryByTestId('modal')).not.toBeInTheDocument()
       expect(screen.queryByTestId('login-form-modal')).not.toBeInTheDocument()
