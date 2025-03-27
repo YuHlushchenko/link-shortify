@@ -7,6 +7,12 @@ jest.mock('@/features/LangSwitcher', () => ({
   LangSwitcher: () => <div data-testid='lang-switcher'>LangSwitcher</div>,
 }))
 
+// mock LoginModal to test open/close behaviour
+jest.mock('@/features/AuthByUsername', () => ({
+  LoginModal: ({ isOpen }: { isOpen: boolean }) =>
+    isOpen ? <div data-testid='login-modal'>LoginModal</div> : null,
+}))
+
 describe('Navbar Component', () => {
   test('renders logo and title', () => {
     render(<Navbar />)

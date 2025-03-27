@@ -39,7 +39,6 @@ const Navbar = () => {
           {/* for desktop */}
           <div className={styles.loginBtnContainer}>
             <Button
-              // href='/login'
               iconRight={<Login />}
               className='accent'
               iconRightContainerStyle={{ right: '24px' }}
@@ -52,7 +51,6 @@ const Navbar = () => {
           {/* for mobile */}
           <div className={styles.loginBtnContainerMobile}>
             <Button
-              // href='/login'
               className='accent'
               isRounded={true}
               onClick={showModalHandler}
