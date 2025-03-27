@@ -8,7 +8,7 @@ interface LoginModalProps {
   onClose: () => void
 }
 
-const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+const AuthModal = ({ isOpen, onClose }: LoginModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title='sign in'>
       <LoginForm />
@@ -16,4 +16,4 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   )
 }
 
-export default LoginModal
+export default AuthModal
