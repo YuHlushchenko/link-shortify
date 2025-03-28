@@ -5,6 +5,7 @@ import { useRef, useEffect, useCallback } from 'react'
 import { useStore } from 'zustand'
 
 import { createThemeStore } from '@/app/providers/store/themeStore'
+// import useThemeStore from '@/app/providers/store/themeStore'
 import { Theme } from '@/shared/const/theme'
 
 import styles from './ThemeSwitcher.module.scss'
@@ -20,6 +21,9 @@ const ThemeSwitcher = ({ initialTheme }: IProps) => {
   const themeStore = useRef(createThemeStore(initialTheme)).current
   const theme = useStore(themeStore).theme
   const setTheme = useStore(themeStore).setTheme
+
+  // const theme = useThemeStore.use.theme()
+  // const setTheme = useThemeStore.use.setTheme()
 
   const t = useTranslations('common')
 

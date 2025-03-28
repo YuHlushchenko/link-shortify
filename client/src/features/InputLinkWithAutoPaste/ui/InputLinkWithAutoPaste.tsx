@@ -2,7 +2,8 @@
 
 import { FC, useEffect, useState } from 'react'
 
-import { useStore } from '@/app/providers/store/store'
+// import { useStore } from '@/app/providers/store/store'
+import useAutoPasteStore from '../store/useAutoPasteStore'
 
 import { InputLink } from '@/widgets/InputLink'
 import Checkbox from '@/shared/ui/Checkbox/Checkbox'
@@ -23,8 +24,10 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
   const [inputValue, setInputValue] = useState('')
   const [isInputPlaceholder, setInputPlaceholder] = useState(true)
 
-  const isAutoPaste = useStore((state) => state.isAutoPaste)
-  const setAutoPaste = useStore((state) => state.setAutoPaste)
+  // const isAutoPaste = useStore((state) => state.isAutoPaste)
+  // const setAutoPaste = useStore((state) => state.setAutoPaste)
+  const isAutoPaste = useAutoPasteStore.use.isAutoPaste()
+  const setAutoPaste = useAutoPasteStore.use.setAutoPaste()
   const [isAutoPastePending, setAutoPastePending] = useState(true)
 
   const pasteFromClipboard = () => {
