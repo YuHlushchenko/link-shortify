@@ -9,8 +9,8 @@ import Button from '@/shared/ui/Button/Button'
 
 import styles from './Navbar.module.scss'
 
-import LogoUrl from 'public/assets/svgs/logo.svg?url'
-import Login from 'public/assets/svgs/sign-in.svg'
+import LogoUrl from 'public/assets/svgs/logo.svg?url' // ! more optimized option
+import Login from 'public/assets/svgs/sign-in.svg' // ! will be added to bundle as a React component, will be rendered in a client-side cuz of 'use client'
 
 const Navbar = () => {
   const [isAuthModal, setAuthModal] = useState(false)
@@ -27,7 +27,14 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.contentContainer}>
         <header className={styles.logoContainer}>
-          <Image priority src={LogoUrl} alt='logo' width='30' height='30' />
+          {/* ! more optimized option */}
+          <Image
+            priority
+            src={LogoUrl}
+            alt='logo'
+            width='30'
+            height='30'
+          />{' '}
           <h1 className={styles.logo}>Link-Shortify</h1>
         </header>
 

@@ -28,22 +28,20 @@ const startServer = async () => {
         // useUnifiedTopology: true,
       })
       .then(() => {
-        // eslint-disable-next-line no-console
-        console.log(`✅ Connected to MongoDB (${ENV_VARIABLES.MONGO_DB_URI})`)
+        // console.log(`✅ Connected to MongoDB (${ENV_VARIABLES.MONGO_DB_URI})`)
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('❌ Error connecting to MongoDB:', error)
-      })
+    // TODO: add logging
+    // .catch((error) => {
+    // console.error('❌ Error connecting to MongoDB:', error)
+    // })
 
     app.listen(PORT, () => {
-      // eslint-disable-next-line no-console
-      console.log(
-        `🚀 Server is running on port ${PORT} in ${ENV_VARIABLES.DEV_MODE} mode`,
-      )
+      // console.log(
+      // `🚀 Server is running on port ${PORT} in ${ENV_VARIABLES.DEV_MODE} mode`,
+      // )
     })
   } catch (error) {
-    // eslint-disable-next-line no-console
+    // TODO: add logging
     console.error('❌ Error starting server:', error)
   }
 }

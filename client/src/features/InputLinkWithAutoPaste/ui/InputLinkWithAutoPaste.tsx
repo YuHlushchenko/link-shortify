@@ -32,18 +32,17 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
 
   const pasteFromClipboard = () => {
     if (navigator.clipboard) {
-      navigator.clipboard
-        .readText()
-        .then((text) => {
-          setInputValue(text)
-          setInputPlaceholder(false)
-          console.log('Text from clipboard:', text)
-        })
-        .catch((err) => {
-          console.error('Failed to read clipboard contents:', err)
-        })
+      navigator.clipboard.readText().then((text) => {
+        setInputValue(text)
+        setInputPlaceholder(false)
+        // console.log('Text from clipboard:', text)
+      })
+      // TODO: add error handling (toast)
+      // .catch((err) => {
+      // console.error('Failed to read clipboard contents:', err)
+      // })
     } else {
-      console.warn('Clipboard API not supported')
+      // console.warn('Clipboard API not supported')
     }
   }
 

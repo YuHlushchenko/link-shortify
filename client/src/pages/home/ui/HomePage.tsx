@@ -2,17 +2,20 @@
 
 import { Link } from '@/app/i18n/routing'
 import { cookies } from 'next/headers'
-import { ThemeSwitcher } from '@/features/ThemeSwitcher/index'
-import { Theme } from '@/shared/const/theme'
 
 import { PageWrapper } from '@/app/wrappers/PageWrapper/index'
-import BgCover from '@/shared/ui/BgCover/BgCover'
+
+import { ThemeSwitcher } from '@/features/ThemeSwitcher/index'
 import { InputLinkWithAutoPaste } from '@/features/InputLinkWithAutoPaste'
+
+import { Theme } from '@/shared/const/theme'
+import BgCover from '@/shared/ui/BgCover/BgCover'
 
 import styles from './HomePage.module.scss'
 
 const HomePage = async () => {
   // const t = useTranslations('common')
+  // console.log('HomePage') // REALY WORKS IN SERVER-SIDE
 
   const themeFromCookies =
     ((await cookies()).get('app_theme')?.value as Theme) || Theme.DARK

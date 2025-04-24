@@ -30,5 +30,12 @@
     ".next/types/**/*.ts",
     "src/shared/config/jest/__mocks__/svg.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    // "**/*.test.ts",
+    // "**/*.test.tsx",
+    // "**/*.stories.ts",
+    // "**/*.stories.tsx",
+    "coverage"
+  ]
 }
