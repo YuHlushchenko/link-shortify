@@ -7,6 +7,8 @@ import { getMessages } from 'next-intl/server'
 import { geistSans, geistMono, monserat } from '@/app/fonts'
 import { IChildren, TLocale } from '@/app/types/global'
 
+import { CustomToaster } from '@/shared/ui/CustomToaster/CustomToaster'
+
 import { Theme } from '@/shared/const/theme'
 
 import '@/app/styles/index.scss'
@@ -45,6 +47,8 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
         <NextIntlClientProvider messages={messages}>
           <main>{children}</main>
         </NextIntlClientProvider>
+
+        <CustomToaster />
       </body>
     </html>
   )
