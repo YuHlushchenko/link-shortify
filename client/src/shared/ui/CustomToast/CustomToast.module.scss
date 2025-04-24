@@ -1,0 +1,116 @@
+.container {
+  width: 350px;
+  border-radius: 12px;
+  background: var(--bg-color);
+  border: 1px solid var(--secondary-color-2);
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px var(--secondary-color-2-transparent);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  box-sizing: border-box;
+}
+
+.closing {
+  opacity: 0;
+}
+
+.topContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.iconContainer {
+  width: 60px;
+  height: 60px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+
+    rect {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.contentContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.titleContainer {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  color: var(--light-text-color);
+  font-weight: 600;
+}
+
+.messageContainer {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-sm);
+  color: var(--text-color);
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      stroke: var(--secondary-color-1);
+      transition: stroke 0.2s ease;
+    }
+  }
+
+  &:hover {
+    svg {
+      path {
+        stroke: var(--text-color);
+      }
+    }
+  }
+}
+
+.progressBarContainer {
+  margin-top: 0.75rem;
+  height: 4px;
+  background: var(--secondary-color-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--secondary-color-2);
+  transform-origin: left;
+  transform: scaleX(1);
+  transition: transform 0.1s linear;
+}
+
+.success .progressBar {
+  background: var(--toast-success);
+}
+
+.error .progressBar {
+  background: var(--toast-error);
+}
+
+.warning .progressBar {
+  background: var(--toast-warning);
+}
+
+.info .progressBar {
+  background: var(--toast-info);
+}

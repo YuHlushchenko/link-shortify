@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 
 import Button from '@/shared/ui/Button/Button'
 
@@ -8,6 +8,8 @@ import styles from './InputLink.module.scss'
 
 import PasteIcon from 'public/assets/svgs/paste.svg'
 import ArrowRight from 'public/assets/svgs/arrow-right.svg'
+import { notify } from '@/shared/lib/utils/notify'
+import { ToastType } from '@/shared/const/toast'
 
 interface IProps {
   pasteFromClipboard: () => void
@@ -48,9 +50,9 @@ const InputLink: FC<IProps> = ({
     }
   }
 
-  useEffect(() => {
-    // console.log(inputValue, 'inputValue')
-  }, [inputValue])
+  // useEffect(() => {
+  // console.log(inputValue, 'inputValue')
+  // }, [inputValue])
 
   return (
     <div className={styles.container}>
@@ -87,7 +89,17 @@ const InputLink: FC<IProps> = ({
 
         {/* for desktop */}
         <div className={styles.btnContainer}>
-          <Button className='accent' type='submit'>
+          <Button
+            className='accent'
+            type='submit'
+            onClick={() =>
+              notify({
+                title: 'Notification Example',
+                description: 'Successfully notification description',
+                type: ToastType.SUCCESS,
+              })
+            }
+          >
             Shorten
           </Button>
         </div>
