@@ -1,5 +1,20 @@
-// import { create } from 'zustand'
 import { createStore } from 'zustand'
+
+import { Theme } from '@/shared/const/theme'
+
+interface IThemeStore {
+  theme: Theme
+  setTheme: (newTheme: Theme) => void
+}
+
+export const createThemeStore = (initialTheme: Theme = Theme.DARK) => {
+  return createStore<IThemeStore>((set) => ({
+    theme: initialTheme,
+    setTheme: (newTheme) => set({ theme: newTheme }),
+  }))
+}
+
+// import { create } from 'zustand'
 
 // allows pushing new value without spreading the state (state) => ({ ...state.users, name: username })
 // just use set(state => state.users.push({ name: username }))
@@ -10,13 +25,6 @@ import { createStore } from 'zustand'
 // } from 'zustand/middleware' // devtools work with redux devtools
 
 // import createSelectors from '../../../features/InputLinkWithAutoPaste/store/selectors'
-
-import { Theme } from '@/shared/const/theme'
-
-interface IThemeStore {
-  theme: Theme
-  setTheme: (newTheme: Theme) => void
-}
 
 // const useThemeStore = create<IThemeStore>()(
 //   persist(
@@ -31,10 +39,3 @@ interface IThemeStore {
 // )
 
 // export default createSelectors(useThemeStore)
-
-export const createThemeStore = (initialTheme: Theme = Theme.DARK) => {
-  return createStore<IThemeStore>((set) => ({
-    theme: initialTheme,
-    setTheme: (newTheme) => set({ theme: newTheme }),
-  }))
-}

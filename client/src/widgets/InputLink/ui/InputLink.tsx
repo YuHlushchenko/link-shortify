@@ -30,7 +30,7 @@ const InputLink: FC<IProps> = ({
 }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(inputValue, 'inputValue submitted')
+    // console.log(inputValue, 'inputValue submitted')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +49,7 @@ const InputLink: FC<IProps> = ({
   }
 
   useEffect(() => {
-    console.log(inputValue, 'inputValue')
+    // console.log(inputValue, 'inputValue')
   }, [inputValue])
 
   return (

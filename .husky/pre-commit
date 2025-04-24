@@ -1,3 +1,8 @@
+
+# Check if the 'client' directory exists
+# If it exists, navigate to the 'client' directory, run lint-staged, and then return to the root directory
 [ -d client ] && cd client && yarn lint-staged && cd .. || exit 1
 
+# Check if the 'server' directory exists
+# If it exists, navigate to the 'server' directory, run lint, and lint:prettier
 [ -d server ] && cd server && yarn lint && yarn lint:prettier || exit 1

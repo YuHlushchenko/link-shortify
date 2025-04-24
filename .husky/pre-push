@@ -1,5 +1,11 @@
-cd client || exit 1
-yarn test:unit && yarn build
+# Go to client if it exists
+[ -d client ] && cd client || exit 1
 
-cd ../server || exit 1
-yarn build
+# Run unit tests and build client in one line
+yarn test:unit && yarn build || exit 1
+
+# Go to server if it exists
+[ -d ../server ] && cd ../server || exit 1
+
+# Build server
+yarn build || exit 1

@@ -7,8 +7,7 @@ import {
   devtools,
   // persist // persist the store in localstorage
 } from 'zustand/middleware' // devtools work with redux devtools
-
-import createSelectors from './selectors'
+import createSelectors from '@/shared/lib/zustand/selectors'
 
 interface IAutoPasteStore {
   isAutoPaste: boolean
