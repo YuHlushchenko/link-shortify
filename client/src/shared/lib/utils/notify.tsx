@@ -2,7 +2,7 @@ import { toast } from 'react-hot-toast'
 
 import { ToastType } from '@/shared/const/toast'
 
-import Toast from '@/shared/ui/CustomToast/CustomToast'
+import CustomToast from '@/shared/ui/CustomToast/CustomToast'
 
 interface ShowToastParams {
   title: string
@@ -16,6 +16,6 @@ export const notify = ({
   type = ToastType.INFO,
 }: ShowToastParams) => {
   toast.custom((t) => (
-    <Toast t={t} title={title} message={description} variant={type} />
+    <CustomToast t={t} title={title} message={description} variant={type} />
   ))
 }

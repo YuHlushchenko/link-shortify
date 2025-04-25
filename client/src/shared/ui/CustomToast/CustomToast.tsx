@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { Toast as ReactToastType, toast } from 'react-hot-toast'
 
 import { ToastType } from '@/shared/const/toast'
@@ -35,29 +35,24 @@ const getIcon = (type: ToastType): JSX.Element => {
   }
 }
 
-const areEqual = (prev: ToastProps, next: ToastProps) => {
-  return (
-    prev.title === next.title &&
-    prev.message === next.message &&
-    prev.variant === next.variant &&
-    prev.t.id === next.t.id
-  )
-}
-
-const Toast = ({ t, title, message, variant = ToastType.INFO }: ToastProps) => {
+const CustomToast = ({
+  t,
+  title,
+  message,
+  variant = ToastType.INFO,
+}: ToastProps) => {
   const duration = t.duration || 5000
-  const [progress, setProgress] = useState(1)
+  const progressRef = useRef<HTMLDivElement | null>(null)
+  const currentRef = useRef(1)
   const [isPaused, setIsPaused] = useState(false)
   const [closing, setClosing] = useState(false)
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setClosing(true)
     setTimeout(() => toast.dismiss(t.id), 300)
-  }
+  }, [t.id])
 
   useEffect(() => {
-    if (isPaused || closing) return
-
     let frameId: number
     let last = Date.now()
 
@@ -66,22 +61,25 @@ const Toast = ({ t, title, message, variant = ToastType.INFO }: ToastProps) => {
       const delta = now - last
       last = now
 
-      setProgress((prev) => {
-        const next = prev - delta / duration
-        if (next <= 0) {
+      if (!isPaused && !closing) {
+        currentRef.current -= delta / duration
+
+        if (currentRef.current <= 0) {
           handleClose()
-          return 0
+          return
         }
-        return next
-      })
+
+        if (progressRef.current) {
+          progressRef.current.style.transform = `scaleX(${currentRef.current})`
+        }
+      }
 
       frameId = requestAnimationFrame(tick)
     }
 
     frameId = requestAnimationFrame(tick)
-
     return () => cancelAnimationFrame(frameId)
-  }, [isPaused, closing, duration, t.id])
+  }, [isPaused, closing, duration, handleClose])
 
   return (
     <div
@@ -110,14 +108,15 @@ const Toast = ({ t, title, message, variant = ToastType.INFO }: ToastProps) => {
 
       <div className={styles.progressBarContainer}>
         <div
+          ref={progressRef}
           className={styles.progressBar}
-          style={{ transform: `scaleX(${progress})` }}
+          style={{ transform: 'scaleX(1)' }}
         />
       </div>
     </div>
   )
 }
 
-Toast.displayName = 'CustomToast'
+CustomToast.displayName = 'CustomToast'
 
-export default React.memo(Toast, areEqual)
+export default CustomToast

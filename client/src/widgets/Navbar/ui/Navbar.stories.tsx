@@ -7,7 +7,7 @@ import Navbar from './Navbar'
 const meta: Meta<typeof Navbar> = {
   title: 'Widgets/Navbar',
   component: Navbar,
-  // TODO: add 'decorators' to 'Navbar' component
+  // TODO: fix loki bug and remove skip
   parameters: {
     loki: { skip: true },
   },
