@@ -13,6 +13,8 @@ import LogoUrl from 'public/assets/svgs/logo.svg?url' // ! more optimized option
 import Login from 'public/assets/svgs/sign-in.svg' // ! will be added to bundle as a React component, will be rendered in a client-side cuz of 'use client'
 
 const Navbar = () => {
+  // shared/lib/isLokiTest.ts
+
   const [isAuthModal, setAuthModal] = useState(false)
 
   const closeModalHandler = useCallback(() => {
