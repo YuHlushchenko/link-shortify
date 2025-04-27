@@ -16,7 +16,7 @@ import CrossIcon from 'public/assets/svgs/x.svg'
 
 interface ToastProps {
   t: ReactToastType
-  title: string
+  title?: string
   message?: string
   variant?: ToastType
 }
@@ -91,7 +91,7 @@ const CustomToast = ({
         <div className={styles.iconContainer}>{getIcon(variant)}</div>
 
         <div className={styles.contentContainer}>
-          <p className={styles.titleContainer}>{title}</p>
+          {title && <p className={styles.titleContainer}>{title}</p>}
           {message && (
             <span className={styles.messageContainer}>{message}</span>
           )}
@@ -116,7 +116,5 @@ const CustomToast = ({
     </div>
   )
 }
-
-CustomToast.displayName = 'CustomToast'
 
 export default CustomToast
