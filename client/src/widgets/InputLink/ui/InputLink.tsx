@@ -106,7 +106,18 @@ const InputLink: FC<IProps> = ({
 
         {/* for mobile */}
         <div className={styles.btnContainerMobile}>
-          <Button className='accent' type='submit' isRounded>
+          <Button
+            className='accent'
+            type='submit'
+            isRounded
+            onClick={() =>
+              notify({
+                title: 'Notification Example',
+                description: 'Successfully notification description',
+                type: ToastType.SUCCESS,
+              })
+            }
+          >
             <ArrowRight />
           </Button>
         </div>

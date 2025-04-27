@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins.scss' as *;
+
 .container {
   width: 350px;
   border-radius: 12px;
@@ -10,6 +12,11 @@
   opacity: 1;
   transition: opacity 0.3s ease;
   box-sizing: border-box;
+
+  @include for-small-desktop {
+    width: 300px;
+    padding: 12px;
+  }
 }
 
 .closing {
@@ -21,6 +28,10 @@
   align-items: center;
   gap: 10px;
   position: relative;
+
+  @include for-small-desktop {
+    gap: 8px;
+  }
 }
 
 .iconContainer {
@@ -36,6 +47,11 @@
       height: 100%;
     }
   }
+
+  @include for-small-desktop {
+    width: 52px;
+    height: 52px;
+  }
 }
 
 .contentContainer {
@@ -43,6 +59,10 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+
+  @include for-small-desktop {
+    gap: 3px;
+  }
 }
 
 .titleContainer {
@@ -50,12 +70,20 @@
   line-height: var(--line-height-sm);
   color: var(--light-text-color);
   font-weight: 600;
+
+  @include for-small-desktop {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .messageContainer {
   font-size: var(--font-size-xs);
   line-height: var(--line-height-sm);
   color: var(--text-color);
+
+  @include for-small-desktop {
+    font-size: var(--font-size-xs);
+  }
 }
 
 .closeBtn {
@@ -88,6 +116,11 @@
   background: var(--secondary-color-2);
   border-radius: 2px;
   overflow: hidden;
+
+  @include for-small-desktop {
+    margin-top: 0.5rem;
+    height: 3px;
+  }
 }
 
 .progressBar {
