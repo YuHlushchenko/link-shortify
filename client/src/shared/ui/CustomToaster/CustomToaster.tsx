@@ -7,8 +7,9 @@ export const CustomToaster = () => {
     <Toaster
       position='top-right'
       toastOptions={{ duration: 5000 }}
-      containerStyle={{ top: '1rem', right: '1rem' }}
-      gutter={12}
+      containerStyle={{ top: '16px', right: '16px' }}
+      gutter={6}
+      containerClassName='custom-toaster-container'
     />
   )
 }

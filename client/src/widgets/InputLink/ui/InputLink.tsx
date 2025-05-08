@@ -3,13 +3,13 @@
 import React, { FC } from 'react'
 
 import Button from '@/shared/ui/Button/Button'
+import { ToastType } from '@/shared/const/toast'
+import { notify } from '@/shared/lib/utils/notify'
 
 import styles from './InputLink.module.scss'
 
 import PasteIcon from 'public/assets/svgs/paste.svg'
 import ArrowRight from 'public/assets/svgs/arrow-right.svg'
-import { notify } from '@/shared/lib/utils/notify'
-import { ToastType } from '@/shared/const/toast'
 
 interface IProps {
   pasteFromClipboard: () => void
@@ -92,13 +92,28 @@ const InputLink: FC<IProps> = ({
           <Button
             className='accent'
             type='submit'
-            onClick={() =>
+            onClick={() => {
               notify({
-                title: 'Notification Example',
+                title: 'Notification Example ',
                 description: 'Successfully notification description',
                 type: ToastType.SUCCESS,
               })
-            }
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.INFO,
+              })
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.WARNING,
+              })
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.ERROR,
+              })
+            }}
           >
             Shorten
           </Button>
@@ -110,13 +125,28 @@ const InputLink: FC<IProps> = ({
             className='accent'
             type='submit'
             isRounded
-            onClick={() =>
+            onClick={() => {
               notify({
-                title: 'Notification Example',
+                title: 'Notification Example ',
                 description: 'Successfully notification description',
                 type: ToastType.SUCCESS,
               })
-            }
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.INFO,
+              })
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.WARNING,
+              })
+              notify({
+                title: 'Notification Example ',
+                description: 'Successfully notification description',
+                type: ToastType.ERROR,
+              })
+            }}
           >
             <ArrowRight />
           </Button>

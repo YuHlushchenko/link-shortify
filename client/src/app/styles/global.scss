@@ -1,0 +1,9 @@
+.custom-toaster-container {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+/* for Chrome, Safari */
+.custom-toaster-container::-webkit-scrollbar {
+  display: none;
+}

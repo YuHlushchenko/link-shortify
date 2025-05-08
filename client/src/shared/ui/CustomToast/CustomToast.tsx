@@ -78,6 +78,7 @@ const CustomToast = ({
     }
 
     frameId = requestAnimationFrame(tick)
+
     return () => cancelAnimationFrame(frameId)
   }, [isPaused, closing, duration, handleClose])
 
