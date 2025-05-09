@@ -5,7 +5,7 @@ import { ToastType } from '@/shared/const/toast'
 import CustomToast from '@/shared/ui/CustomToast/CustomToast'
 
 interface ShowToastParams {
-  title: string
+  title?: string
   description?: string
   type?: ToastType
 }

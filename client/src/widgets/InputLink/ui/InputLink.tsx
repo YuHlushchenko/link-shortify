@@ -98,21 +98,6 @@ const InputLink: FC<IProps> = ({
                 description: 'Successfully notification description',
                 type: ToastType.SUCCESS,
               })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.INFO,
-              })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.WARNING,
-              })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.ERROR,
-              })
             }}
           >
             Shorten
@@ -130,21 +115,6 @@ const InputLink: FC<IProps> = ({
                 title: 'Notification Example ',
                 description: 'Successfully notification description',
                 type: ToastType.SUCCESS,
-              })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.INFO,
-              })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.WARNING,
-              })
-              notify({
-                title: 'Notification Example ',
-                description: 'Successfully notification description',
-                type: ToastType.ERROR,
               })
             }}
           >

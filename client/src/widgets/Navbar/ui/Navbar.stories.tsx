@@ -9,7 +9,9 @@ const meta: Meta<typeof Navbar> = {
   component: Navbar,
   // TODO: fix loki bug and remove skip
   parameters: {
-    loki: { skip: true },
+    loki: {
+      skip: true,
+    },
   },
 }
 

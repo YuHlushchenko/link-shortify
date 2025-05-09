@@ -6,7 +6,10 @@ import { FC, useEffect, useState } from 'react'
 import useAutoPasteStore from '../store/useAutoPasteStore'
 
 import { InputLink } from '@/widgets/InputLink'
+
 import Checkbox from '@/shared/ui/Checkbox/Checkbox'
+import { notify } from '@/shared/lib/utils/notify'
+import { ToastType } from '@/shared/const/toast'
 
 import styles from './InputLinkWithAutoPaste.module.scss'
 
@@ -31,18 +34,26 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
   const [isAutoPastePending, setAutoPastePending] = useState(true)
 
   const pasteFromClipboard = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.readText().then((text) => {
-        setInputValue(text)
-        setInputPlaceholder(false)
-        // console.log('Text from clipboard:', text)
-      })
-      // TODO: add error handling (toast)
-      // .catch((err) => {
-      // console.error('Failed to read clipboard contents:', err)
-      // })
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard
+        .readText()
+        .then((text) => {
+          setInputValue(text)
+          setInputPlaceholder(false)
+        })
+        .catch(() => {
+          notify({
+            title: 'No clipboard access',
+            description: 'Please try to paste manually',
+            type: ToastType.ERROR,
+          })
+        })
     } else {
-      // console.warn('Clipboard API not supported')
+      notify({
+        title: 'No clipboard access',
+        description: 'Please try to paste manually',
+        type: ToastType.ERROR,
+      })
     }
   }
 
