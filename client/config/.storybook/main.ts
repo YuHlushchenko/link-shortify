@@ -29,7 +29,7 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../../public'],
   webpackFinal: async (config) => {
-    // Перевірка на наявність config.resolve
+    // Check if config.resolve exists, if not, initialize it
     if (!config.resolve) {
       config.resolve = {
         alias: {},
@@ -60,7 +60,7 @@ const config: StorybookConfig = {
 
     // config.module.rules.push({
     //   test: /\.svg$/,
-    //   use: ['@svgr/webpack'], // Використовуємо SVGR для всіх SVG
+    //   use: ['@svgr/webpack'], // Use SVGR for all SVGs
     // })
 
     // Add separate handling for .svg files based on query parameters
@@ -78,7 +78,9 @@ const config: StorybookConfig = {
       },
     )
 
-    // Повертаємо змінену конфігурацію
+    config.cache = false
+
+    // Return the modified configuration
     return config
   },
 }
