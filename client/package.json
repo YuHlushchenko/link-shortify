@@ -73,7 +73,8 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.106.2"
   },
   "husky": {
     "hooks": {
