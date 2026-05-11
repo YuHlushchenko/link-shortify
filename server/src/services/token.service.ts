@@ -1,5 +1,5 @@
 import jwt, { SignOptions } from 'jsonwebtoken'
-import { ObjectId } from 'mongoose'
+import { Types } from 'mongoose'
 
 import { ENV_VARIABLES } from '@configs/envSettings'
 
@@ -62,7 +62,7 @@ class TokenService {
 
     return userData
   }
-  async saveToken(userId: ObjectId, refreshToken: string) {
+  async saveToken(userId: Types.ObjectId | string, refreshToken: string) {
     const tokenData = await Token.findOne({ user: userId })
 
     if (tokenData) {
