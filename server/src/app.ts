@@ -42,6 +42,7 @@ const startServer = async () => {
     })
   } catch (error) {
     // TODO: add logging
+    // eslint-disable-next-line no-console
     console.error('❌ Error starting server:', error)
   }
 }
