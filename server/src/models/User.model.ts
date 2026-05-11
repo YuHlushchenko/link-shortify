@@ -9,9 +9,7 @@ export interface IUser {
   activationLink: string
 }
 
-interface IUserDocument extends Document, Omit<IUser, '_id'> {
-  _id: ObjectId
-}
+interface IUserDocument extends Document, Omit<IUser, '_id'> {}
 
 const UserSchema = new Schema<IUserDocument>({
   username: { type: String, required: true, unique: true },

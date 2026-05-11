@@ -8,9 +8,7 @@ export interface ILink {
   isActive: boolean
 }
 
-interface ILinkDocument extends Document, Omit<ILink, '_id'> {
-  _id: ObjectId
-}
+interface ILinkDocument extends Document, Omit<ILink, '_id'> {}
 
 const LinkSchema: Schema = new Schema<ILinkDocument>({
   originalUrl: { type: String, required: true },

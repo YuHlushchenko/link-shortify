@@ -31,7 +31,7 @@ class UserController {
   // async resetPassword(req: Request, res: Response) {}
   async activate(req: Request, res: Response, next: NextFunction) {
     try {
-      const { link } = req.params
+      const link = req.params.link as string
 
       await userService.activateEmail(link)
 
