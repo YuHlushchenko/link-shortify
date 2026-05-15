@@ -1,16 +1,18 @@
 # link-shortify
 
-**Link-Shortify** is a URL shortening web application built with technologies like Next.js (client), Express.js (server), and MongoDB. The purpose of this project is to provide a simple yet effective solution for shortening long URLs and managing them.
+**Link-Shortify** is a URL shortening web application that allows users to create, manage, and track shortened links. Built with Next.js on the frontend and a fully serverless AWS infrastructure on the backend.
 
 Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.app/)
 
 ## Features
 
-- Create shortened URLs for any given long URL
+
+- Create shortened URLs with auto-generated or custom slugs
 - Track clicks and statistics for each shortened link
+- QR code generation for any shortened link
+- Authentication via Google and Facebook OAuth
 - Simple and clean user interface
 - Responsive design
-- Scalable and extendable architecture
 
 ## Tech Stack
 
@@ -33,13 +35,18 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 
 ### Backend
 
-- **Node.js** with **Express.js**
-- **MongoDB** for storing shortened URLs and analytics data
+- **AWS Lambda** for serverless compute
+- **AWS API Gateway** for HTTP routing
+- **AWS DynamoDB** for storing shortened URLs and analytics data
+- **AWS Cognito** for authentication (Google and Facebook OAuth)
+- **AWS CloudFront** as CDN and single entry point
+- **AWS S3** for static assets
+- **Upstash Redis** for rate limiting
 - **TypeScript**
 - **Jest** for unit testing
 - **Supertest** for API testing
-- **Mongoose** for MongoDB object modeling
 - **Swagger** for API documentation
+- **AWS CDK + SST** for infrastructure as code
 
 ### Development Tools
 
@@ -50,11 +57,13 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 - **ESLint** for static code analysis
 - **CI/CD** with **GitHub Actions**
 
-### Get Started with **Link-Shortify**
+---
+
+## Get Started with **Link-Shortify**
 
 Welcome to **Link-Shortify**! This project is built using **Next.js** as the foundation, providing a powerful framework for modern web development. Below are the steps to get started, including how to set up the development environment, build the project, and run essential scripts.
 
-#### Prerequisites
+### Prerequisites
 
 Ensure the following software is installed on your system:
 
@@ -64,7 +73,7 @@ Ensure the following software is installed on your system:
 
 ---
 
-#### Installation
+### Installation
 
 Clone the repository and install dependencies:
 
@@ -76,7 +85,7 @@ yarn install
 
 ---
 
-#### Development Workflow
+### Development Workflow
 
 Start the development server:
 
@@ -88,7 +97,7 @@ Open http://localhost:3000 in your browser to see the app.
 
 ---
 
-#### Building for Production
+### Building for Production
 
 To create a production build:
 
@@ -104,7 +113,7 @@ yarn start
 
 ---
 
-#### Linting and Formatting
+### Linting and Formatting
 
 - **Lint code**: `npm run lint`
 - **Fix linting errors**: `npm run lint:fix`
@@ -115,45 +124,45 @@ yarn start
 
 ---
 
-#### Testing
+### Testing
 
 Run different types of tests:
 
-1.  **Unit tests** (via Jest):
+1. **Unit tests** (via Jest):
 
-    ```bash
-    yarn test:unit
-    ```
+```bash
+   yarn test:unit
+```
 
-2.  **Visual regression tests** (via Loki):
+2. **Visual regression tests** (via Loki):
 
-    - Test current UI:
+   - Test current UI:
 
-      ```bash
-      yarn test:ui
-      ```
+```bash
+     yarn test:ui
+```
 
-    - Approve visual changes:
+   - Approve visual changes:
 
-      ```bash
-      yarn test:ui:ok
-      ```
+```bash
+     yarn test:ui:ok
+```
 
-    - Run tests in CI:
+   - Run tests in CI:
 
-      ```bash
-      yarn test:ui:ci
-      ```
+```bash
+     yarn test:ui:ci
+```
 
-    - Generate test reports:
+   - Generate test reports:
 
-      ```bash
-      yarn test:ui:report
-      ```
+```bash
+     yarn test:ui:report
+```
 
 ---
 
-#### Storybook for UI Development
+### Storybook for UI Development
 
 Launch **Storybook** to develop and view UI components in isolation:
 
@@ -169,7 +178,7 @@ yarn storybook:build
 
 ---
 
-#### Pre-commit Hooks
+### Pre-commit Hooks
 
 The project uses **Husky** and **lint-staged** for pre-commit checks:
 
@@ -177,11 +186,11 @@ The project uses **Husky** and **lint-staged** for pre-commit checks:
 
 ---
 
-#### Setting up **i18n Ally** for the Project
+### Setting up **i18n Ally** for the Project
 
 **i18n Ally** is a VS Code extension that simplifies working with localization in your project [Official Documentation for i18n Ally](https://github.com/lokalise/i18n-ally). Below are the steps to configure it for your setup.
 
-##### 1\. **Install the Extension**
+#### 1. **Install the Extension**
 
 Install **i18n Ally** in VS Code:
 
@@ -189,15 +198,15 @@ Install **i18n Ally** in VS Code:
 - Search for `i18n Ally`.
 - Click **Install**.
 
-##### 2\. **Create Configuration Files**
+#### 2. **Create Configuration Files**
 
 In the root of the project, create a directory named `.vscode` and add the following files:
 
-###### **2.1. i18n-ally-custom-framework.yml**
+##### **2.1. i18n-ally-custom-framework.yml**
 
 This file customizes key detection in your project:
 
-```bash
+```yaml
 languageIds:
   - javascript
   - typescript
@@ -213,11 +222,11 @@ scopeRangeRegex: "useTranslations\\(\\s*['\"`](.*?)['\"`]"
 monopoly: true
 ```
 
-###### **2.2. settings.json**
+##### **2.2. settings.json**
 
 This file defines the main paths and format for your localization files:
 
-```bash
+```json
 {
   "i18n-ally.localesPaths": ["client/public/locales"],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
@@ -225,7 +234,7 @@ This file defines the main paths and format for your localization files:
 }
 ```
 
-##### 3\. **Usage**
+#### 3. **Usage**
 
 Once configured:
 
