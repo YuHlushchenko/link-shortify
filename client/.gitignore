@@ -39,11 +39,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/storybook-static
-/storybook-static/*
-/storybook-static
-storybook-static
-storybook-static/*
+storybook-static/
 .loki/report.html
 .loki/report.json
 /reports/unit

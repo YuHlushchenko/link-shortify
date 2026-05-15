@@ -1,3 +1,9 @@
 node_modules
 .next
 .vscode
+.env
+.env.*
+dist/
+infrastructure/cdk.out/
+*.log
+.DS_Store
