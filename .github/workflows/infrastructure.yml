@@ -1,0 +1,54 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - infrastructure/cdk/**
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: eu-central-1
+  AWS_ROLE_ARN: arn:aws:iam::ACCOUNT_ID:role/GitHubActionsRole-link-shortify
+  CDK_DEFAULT_ACCOUNT: "ACCOUNT_ID"
+  CDK_DEFAULT_REGION: eu-central-1
+  STAGE: prod
+  DOMAIN_NAME: julab.space
+  NODE_VERSION: "22"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: github-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        working-directory: infrastructure/cdk
+        run: npm install -g yarn && yarn install
+
+      - name: CDK synth
+        working-directory: infrastructure/cdk
+        run: yarn cdk synth
+
+      # Uncomment when application stacks are ready to deploy:
+      # - name: CDK deploy
+      #   working-directory: infrastructure/cdk
+      #   run: yarn cdk deploy --all --require-approval never

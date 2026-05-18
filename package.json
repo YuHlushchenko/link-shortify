@@ -6,10 +6,16 @@
   "author": "YuHlushchenko <yuhlushchenko@gmail.com>",
   "license": "MIT",
   "private": true,
+  "packageManager": "yarn@4.12.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": "please-use-yarn",
+    "yarn": ">=4.0.0"
+  },
   "workspaces": [
     "client",
     "server",
-    "infrastructure"
+    "infrastructure/cdk"
   ],
   "devDependencies": {
     "husky": "^9.1.6"

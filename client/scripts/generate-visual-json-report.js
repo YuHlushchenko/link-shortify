@@ -18,6 +18,12 @@ const diffDir = joinPath(lokiDir, 'difference')
 ;(async function main() {
   const diffs = await asyncReaddir(diffDir)
 
+  if (diffs.length === 0) {
+    console.warn(
+      '⚠ No visual test diffs found — run `yarn test:ui` first to generate snapshots.',
+    )
+  }
+
   await writeFileAsync(
     joinPath(lokiDir, 'report.json'),
     JSON.stringify({
@@ -33,4 +39,6 @@ const diffDir = joinPath(lokiDir, 'difference')
       diffDir: relative(lokiDir, diffDir),
     }),
   )
+
+  console.log('✔ report.json generated')
 })()

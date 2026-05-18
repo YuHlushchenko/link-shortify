@@ -68,7 +68,7 @@ Welcome to **Link-Shortify**! This project is built using **Next.js** as the fou
 Ensure the following software is installed on your system:
 
 - **Node.js** (version 18 or later recommended)
-- **npm** (comes with Node.js) or **yarn** (if preferred)
+- **Yarn** (required — the project uses Yarn workspaces)
 - **Docker** (optional, for specific testing configurations)
 
 ---
@@ -115,12 +115,12 @@ yarn start
 
 ### Linting and Formatting
 
-- **Lint code**: `npm run lint`
-- **Fix linting errors**: `npm run lint:fix`
-- **Check code formatting (Prettier)**: `npm run lint:prettier`
-- **Fix code formatting**: `npm run lint:prettier:fix`
-- **Lint stylesheets**: `npm run lint:style`
-- **Fix stylesheet issues**: `npm run lint:style:fix`
+- **Lint code**: `yarn lint`
+- **Fix linting errors**: `yarn lint:fix`
+- **Check code formatting (Prettier)**: `yarn lint:prettier`
+- **Fix code formatting**: `yarn lint:prettier:fix`
+- **Lint stylesheets**: `yarn lint:style`
+- **Fix stylesheet issues**: `yarn lint:style:fix`
 
 ---
 
