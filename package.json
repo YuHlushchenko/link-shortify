@@ -18,7 +18,8 @@
     "infrastructure/cdk"
   ],
   "devDependencies": {
-    "husky": "^9.1.6"
+    "husky": "^9.1.6",
+    "ts-node": "^10.9.2"
   },
   "scripts": {
     "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi"

@@ -11997,6 +11997,7 @@ __metadata:
   resolution: "link-shortify@workspace:."
   dependencies:
     husky: "npm:^9.1.6"
+    ts-node: "npm:^10.9.2"
   languageName: unknown
   linkType: soft
 
