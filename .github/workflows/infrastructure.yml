@@ -19,6 +19,7 @@ env:
   CDK_DEFAULT_REGION: eu-central-1
   STAGE: prod
   DOMAIN_NAME: julab.space
+  CERTIFICATE_ARN: arn:aws:acm:us-east-1:ACCOUNT_ID:certificate/CERTIFICATE_ID
   NODE_VERSION: "22"
 
 jobs:
@@ -51,7 +52,6 @@ jobs:
         working-directory: infrastructure/cdk
         run: yarn cdk synth || echo "No stacks to synthesize yet"
 
-      # Uncomment when application stacks are ready to deploy:
-      # - name: CDK deploy
-      #   working-directory: infrastructure/cdk
-      #   run: yarn cdk deploy --all --require-approval never
+      - name: CDK deploy
+        working-directory: infrastructure/cdk
+        run: yarn cdk deploy --all --require-approval never
