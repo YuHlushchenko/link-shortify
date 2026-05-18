@@ -1,5 +1,5 @@
 {
   "installCommand": "yarn install",
   "buildCommand": "yarn workspace client build",
-  "outputDirectory": "client/.next"
+  "outputDirectory": ".next"
 }
