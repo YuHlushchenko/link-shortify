@@ -7,6 +7,7 @@ import { type Stage, getStackPrefix } from '../utils/stage'
 import { GithubOidcStack } from '../lib/github-oidc-stack'
 import { CertificateStack } from '../lib/certificate-stack'
 import { DynamodbStack } from '../lib/dynamodb-stack'
+import { AuthStack } from '../lib/auth-stack'
 
 const app = new cdk.App()
 
@@ -35,4 +36,14 @@ new CertificateStack(app, `${stackPrefix}CertificateStack`, {
 new DynamodbStack(app, `${stackPrefix}DynamodbStack`, {
   env: { account, region },
   stage,
+})
+
+const certificateArn = process.env.CERTIFICATE_ARN!
+
+new AuthStack(app, `${stackPrefix}AuthStack`, {
+  env: { account, region },
+  crossRegionReferences: true,
+  stage,
+  domainName,
+  certificateArn,
 })
