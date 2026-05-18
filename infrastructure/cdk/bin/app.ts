@@ -6,6 +6,7 @@ import * as cdk from 'aws-cdk-lib'
 import { type Stage, getStackPrefix } from '../utils/stage'
 import { GithubOidcStack } from '../lib/github-oidc-stack'
 import { CertificateStack } from '../lib/certificate-stack'
+import { DynamodbStack } from '../lib/dynamodb-stack'
 
 const app = new cdk.App()
 
@@ -29,4 +30,9 @@ new CertificateStack(app, `${stackPrefix}CertificateStack`, {
   crossRegionReferences: true,
   stage,
   domainName,
+})
+
+new DynamodbStack(app, `${stackPrefix}DynamodbStack`, {
+  env: { account, region },
+  stage,
 })
