@@ -40,9 +40,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
-        working-directory: infrastructure/cdk
-        run: npm install -g yarn && yarn install
+        run: yarn install
 
       - name: CDK synth
         working-directory: infrastructure/cdk
