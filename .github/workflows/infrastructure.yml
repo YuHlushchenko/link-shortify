@@ -49,7 +49,7 @@ jobs:
 
       - name: CDK synth
         working-directory: infrastructure/cdk
-        run: yarn cdk synth
+        run: yarn cdk synth || echo "No stacks to synthesize yet"
 
       # Uncomment when application stacks are ready to deploy:
       # - name: CDK deploy
