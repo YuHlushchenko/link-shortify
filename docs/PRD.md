@@ -11,7 +11,7 @@ Link-Shortify is a URL shortening service that allows users to create, manage, a
 ### Authentication & User Management
 
 - User registration, login, logout, and account deletion
-- Google and Facebook OAuth providers
+- Google OAuth provider
 - Anonymous users can create links within a defined limit; authenticated users have no creation limit
 
 ### Link Management

@@ -10,7 +10,7 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 - Create shortened URLs with auto-generated or custom slugs
 - Track clicks and statistics for each shortened link
 - QR code generation for any shortened link
-- Authentication via Google and Facebook OAuth
+- Authentication via Google OAuth
 - Simple and clean user interface
 - Responsive design
 
@@ -38,7 +38,7 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 - **AWS Lambda** for serverless compute
 - **AWS API Gateway** for HTTP routing
 - **AWS DynamoDB** for storing shortened URLs and analytics data
-- **AWS Cognito** for authentication (Google and Facebook OAuth)
+- **AWS Cognito** for authentication (Google OAuth)
 - **AWS CloudFront** as CDN and single entry point
 - **AWS S3** for static assets
 - **Upstash Redis** for rate limiting
