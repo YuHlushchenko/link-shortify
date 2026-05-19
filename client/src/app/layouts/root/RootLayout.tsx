@@ -7,6 +7,7 @@ import { getMessages } from 'next-intl/server'
 import { geistSans, geistMono, monserat } from '@/app/fonts'
 import { IChildren, TLocale } from '@/app/types/global'
 
+import { AuthProvider } from '@/app/auth/AuthProvider'
 import { CustomToaster } from '@/shared/ui/CustomToaster/CustomToaster'
 
 import { Theme } from '@/shared/const/theme'
@@ -45,7 +46,9 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
     >
       <body data-theme={themeFromCookies}>
         <NextIntlClientProvider messages={messages}>
-          <main>{children}</main>
+          <AuthProvider>
+            <main>{children}</main>
+          </AuthProvider>
         </NextIntlClientProvider>
 
         <CustomToaster />
