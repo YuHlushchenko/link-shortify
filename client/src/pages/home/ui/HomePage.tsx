@@ -49,7 +49,7 @@ const HomePage = async () => {
             <p>
               You can create
               <span> 05 </span>
-              more links. <Link href='/login'>Register Now</Link> to enjoy
+              more links. <Link href='/auth/signup'>Register Now</Link> to enjoy
               Unlimited usage
             </p>
           </div>

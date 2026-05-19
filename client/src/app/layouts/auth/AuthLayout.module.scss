@@ -1,0 +1,27 @@
+@use '@/app/styles/mixins.scss' as *;
+
+.themeSwitcherContainer {
+  position: fixed;
+  z-index: 1;
+  transform: translate(0, -50%);
+  top: 50%;
+  right: 55px;
+
+  @include for-small-desktop {
+    right: 45px;
+  }
+
+  @include for-tablet {
+    right: 35px;
+  }
+
+  @include for-tablet-portrait {
+    right: 30px;
+  }
+
+  @include for-phone {
+    top: auto;
+    right: 20px;
+    bottom: -20px;
+  }
+}

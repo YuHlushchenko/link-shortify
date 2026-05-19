@@ -12,22 +12,28 @@ import GoogleIcon from 'public/assets/svgs/google.svg'
 
 import styles from '../auth.module.scss'
 
-export const LoginForm = () => {
-  const { login, signInWithProvider } = useAuth()
+export const SignUpForm = () => {
+  const { signup, signInWithProvider } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
     setLoading(true)
     try {
-      await login(email, password)
+      await signup(email, password)
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Sign in failed')
+      setError(err instanceof Error ? err.message : 'Sign up failed')
     } finally {
       setLoading(false)
     }
@@ -39,8 +45,10 @@ export const LoginForm = () => {
 
       <div className={styles.card}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Welcome Back</h1>
-          <p className={styles.subtitle}>Sign in to your account to continue</p>
+          <h1 className={styles.title}>Create Account</h1>
+          <p className={styles.subtitle}>
+            Join Link-Shortify and start shortening links
+          </p>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -58,18 +66,15 @@ export const LoginForm = () => {
           </div>
 
           <div className={styles.field}>
-            <Link href='/auth/forgot-password' className={styles.forgotLink}>
-              Forgot password?
-            </Link>
             <div className={styles.inputWrapper}>
               <input
                 id='password'
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
-                placeholder='••••••••'
+                placeholder='Min. 8 characters'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete='current-password'
+                autoComplete='new-password'
                 required
               />
               <button
@@ -79,6 +84,33 @@ export const LoginForm = () => {
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? (
+                  <EyeOffIcon width={20} height={20} />
+                ) : (
+                  <EyeIcon width={20} height={20} />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <div className={styles.inputWrapper}>
+              <input
+                id='confirmPassword'
+                className={styles.input}
+                type={showConfirm ? 'text' : 'password'}
+                placeholder='Repeat your password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                autoComplete='new-password'
+                required
+              />
+              <button
+                type='button'
+                className={styles.eyeButton}
+                onClick={() => setShowConfirm((v) => !v)}
+                aria-label={showConfirm ? 'Hide password' : 'Show password'}
+              >
+                {showConfirm ? (
                   <EyeOffIcon width={20} height={20} />
                 ) : (
                   <EyeIcon width={20} height={20} />
@@ -100,7 +132,7 @@ export const LoginForm = () => {
             }}
             disabled={loading}
           >
-            {loading ? 'Signing in…' : 'Sign In'}
+            {loading ? 'Creating account…' : 'Create Account'}
           </Button>
         </form>
 
@@ -120,8 +152,7 @@ export const LoginForm = () => {
         </button>
 
         <p className={styles.switchLink}>
-          Don&apos;t have an account?{' '}
-          <Link href='/auth/signup'>Register Now</Link>
+          Already have an account? <Link href='/auth/login'>Login</Link>
         </p>
       </div>
     </div>
