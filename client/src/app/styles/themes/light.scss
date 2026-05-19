@@ -1,31 +1,35 @@
 [data-theme='app_light_theme'] {
-  --bg-color: #c5d9e6;
-  --text-color: #2b2b2b;
-  --ligth-text-color: #fff;
-  --accent-color-1: #36f;
-  --accent-color-1-transparent: rgb(54 111 255 / 50%);
-  --accent-color-2: #ff6f91;
-  --accent-color-2-transparent: rgb(255 111 145 / 50%);
-  --extra-color: #5581ff;
-  --primary-color-1: #2b2b2b;
-  --secondary-color-1: #d9e2eb;
-  --secondary-color-2: #e0eaf7;
-  --secondary-color-2-transparent: hsl(210deg 100% 95% / 83%);
+  --bg-color: #120e24;
+  --text-color: #cdc6e2;
+  --ligth-text-color: #f2effe;
+  --accent-color-1: #144ee3;
+  --accent-color-1-transparent: rgb(20 78 227 / 50%);
+  --accent-color-2: #eb568e;
+  --accent-color-2-transparent: rgb(235 86 142 / 50%);
+  --extra-color: rgb(11 47 193);
+  --primary-color-1: #9b8fc0;
+  --secondary-color-1: #352d52;
+  --secondary-color-2: #1c1735;
+  --secondary-color-2-transparent: rgb(28 23 53 / 83%);
   --gradient-color: linear-gradient(
     75deg,
-    #36f 0%,
-    #ff6f91 20%,
-    #b371c6 60%,
-    #36f 100%
+    #144ee3 0%,
+    #eb568e 20%,
+    #a353aa 60%,
+    #144ee3 100%
   );
   --webkit-gradient-color: linear-gradient(
     75deg,
-    #36f 0%,
-    #ff6f91 20%,
-    #b371c6 60%,
-    #36f 100%
+    #144ee3 0%,
+    #eb568e 20%,
+    #a353aa 60%,
+    #144ee3 100%
   );
-  --shadow-color: #bfd1e6;
+  --shadow-color: rgb(0 0 0 / 60%);
   --modal-z-index: 100;
-  --modal-bg-color: rgb(177 183 189 / 50%);
+  --modal-bg-color: rgb(0 0 0 / 50%);
+  --toast-success: #4ade80;
+  --toast-error: #f50b37;
+  --toast-warning: #facc15;
+  --toast-info: #38bdf8;
 }

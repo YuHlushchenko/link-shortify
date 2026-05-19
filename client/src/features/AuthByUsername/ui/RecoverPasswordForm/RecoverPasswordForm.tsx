@@ -77,7 +77,7 @@ export const RecoverPasswordForm = () => {
                   id='email'
                   className={styles.input}
                   type='email'
-                  placeholder='you@example.com'
+                  placeholder='Enter e-mail'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete='email'
@@ -133,7 +133,7 @@ export const RecoverPasswordForm = () => {
                     id='newPassword'
                     className={styles.input}
                     type={showNew ? 'text' : 'password'}
-                    placeholder='Min. 8 characters'
+                    placeholder='Enter password'
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     autoComplete='new-password'
@@ -160,7 +160,7 @@ export const RecoverPasswordForm = () => {
                     id='confirmPassword'
                     className={styles.input}
                     type={showConfirm ? 'text' : 'password'}
-                    placeholder='Repeat your password'
+                    placeholder='Confirm password'
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     autoComplete='new-password'

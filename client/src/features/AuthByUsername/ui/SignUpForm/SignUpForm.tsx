@@ -57,7 +57,7 @@ export const SignUpForm = () => {
               id='email'
               className={styles.input}
               type='email'
-              placeholder='you@example.com'
+              placeholder='Enter e-mail'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete='email'
@@ -71,7 +71,7 @@ export const SignUpForm = () => {
                 id='password'
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
-                placeholder='Min. 8 characters'
+                placeholder='Enter password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete='new-password'
@@ -98,7 +98,7 @@ export const SignUpForm = () => {
                 id='confirmPassword'
                 className={styles.input}
                 type={showConfirm ? 'text' : 'password'}
-                placeholder='Repeat your password'
+                placeholder='Confirm password'
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 autoComplete='new-password'

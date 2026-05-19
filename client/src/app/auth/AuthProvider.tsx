@@ -38,6 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     loadUserProfile().catch((err) => {
+      // eslint-disable-next-line no-console
       console.warn('Failed to load user profile on mount:', err)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

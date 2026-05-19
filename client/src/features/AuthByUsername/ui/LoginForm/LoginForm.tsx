@@ -49,7 +49,7 @@ export const LoginForm = () => {
               id='email'
               className={styles.input}
               type='email'
-              placeholder='you@example.com'
+              placeholder='Enter e-mail'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete='email'
@@ -66,7 +66,7 @@ export const LoginForm = () => {
                 id='password'
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
-                placeholder='••••••••'
+                placeholder='Enter password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete='current-password'
