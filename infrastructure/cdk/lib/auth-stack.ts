@@ -31,10 +31,22 @@ export class AuthStack extends cdk.Stack {
 
     const userPool = new cognito.UserPool(this, 'UserPool', {
       userPoolName: `${resourcePrefix}link-shortify`,
-      // Sign-up only via social providers (Google / Facebook)
-      selfSignUpEnabled: false,
+      selfSignUpEnabled: true,
       signInAliases: { email: true },
       autoVerify: { email: true },
+      // Verification code sent to email on sign-up
+      userVerification: {
+        emailStyle: cognito.VerificationEmailStyle.CODE,
+        emailSubject: 'Verify your Link-Shortify account',
+        emailBody: 'Your verification code is {####}',
+      },
+      passwordPolicy: {
+        minLength: 8,
+        requireUppercase: true,
+        requireLowercase: true,
+        requireDigits: true,
+        requireSymbols: false,
+      },
       standardAttributes: {
         email: { required: true, mutable: true },
         givenName: { required: false, mutable: true },
@@ -75,13 +87,21 @@ export class AuthStack extends cdk.Stack {
       userPool,
       userPoolClientName: `${resourcePrefix}link-shortify-web`,
       generateSecret: false,
+      // SRP is what Amplify uses for email+password auth
+      authFlows: {
+        userSrp: true,
+        userPassword: false,
+      },
       oAuth: {
         flows: { authorizationCodeGrant: true },
         scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE],
         callbackUrls,
         logoutUrls,
       },
-      supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.GOOGLE],
+      supportedIdentityProviders: [
+        cognito.UserPoolClientIdentityProvider.COGNITO,
+        cognito.UserPoolClientIdentityProvider.GOOGLE,
+      ],
     })
     userPoolClient.node.addDependency(googleProvider)
 
