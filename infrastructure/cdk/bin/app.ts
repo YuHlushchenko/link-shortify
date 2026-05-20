@@ -8,6 +8,7 @@ import { GithubOidcStack } from '../lib/github-oidc-stack'
 import { CertificateStack } from '../lib/certificate-stack'
 import { DynamodbStack } from '../lib/dynamodb-stack'
 import { AuthStack } from '../lib/auth-stack'
+import { ApiStack } from '../lib/api-stack'
 
 const app = new cdk.App()
 
@@ -33,17 +34,27 @@ new CertificateStack(app, `${stackPrefix}CertificateStack`, {
   domainName,
 })
 
-new DynamodbStack(app, `${stackPrefix}DynamodbStack`, {
+const dynamodbStack = new DynamodbStack(app, `${stackPrefix}DynamodbStack`, {
   env: { account, region },
   stage,
 })
 
 const certificateArn = process.env.CERTIFICATE_ARN!
+const vercelUrl = process.env.VERCEL_APP_URL
 
-new AuthStack(app, `${stackPrefix}AuthStack`, {
+const authStack = new AuthStack(app, `${stackPrefix}AuthStack`, {
   env: { account, region },
   crossRegionReferences: true,
   stage,
   domainName,
   certificateArn,
+  extraCallbackUrls: vercelUrl ? [`${vercelUrl}/api/auth/callback`] : [],
+  extraLogoutUrls: vercelUrl ? [vercelUrl] : [],
+})
+
+new ApiStack(app, `${stackPrefix}ApiStack`, {
+  env: { account, region },
+  stage,
+  authStack,
+  dynamodbStack,
 })

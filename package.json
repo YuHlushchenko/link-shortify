@@ -18,10 +18,12 @@
     "infrastructure/cdk"
   ],
   "devDependencies": {
+    "esbuild": "^0.25.0",
     "husky": "^9.1.6",
     "ts-node": "^10.9.2"
   },
   "scripts": {
-    "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi"
+    "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi",
+    "esbuild": "esbuild"
   }
 }
