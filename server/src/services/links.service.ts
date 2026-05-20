@@ -6,6 +6,7 @@ import {
   PaginatedLinks,
   LinkStatus,
 } from "../repositories/links.repository";
+import { SchedulerService } from "./scheduler.service";
 import { createLayerLogger } from "../common/logger";
 import { LogLayer } from "../common/types";
 
@@ -35,7 +36,10 @@ export interface UpdateLinkInput {
 }
 
 export class LinksService {
-  constructor(private linksRepository: LinksRepository) {}
+  constructor(
+    private linksRepository: LinksRepository,
+    private schedulerService?: SchedulerService,
+  ) {}
 
   async getLinks(input: GetLinksInput): Promise<PaginatedLinks> {
     return this.linksRepository.getAll(input);
@@ -73,6 +77,18 @@ export class LinksService {
       expiresAt: input.expiresAt,
     });
 
+    if (input.expiresAt && this.schedulerService) {
+      await this.schedulerService
+        .scheduleExpiry(slug!, input.userId, input.expiresAt)
+        .catch((err) =>
+          logger.warn({
+            text: "failed to schedule link expiry",
+            slug,
+            error: err?.message ?? err,
+          }),
+        );
+    }
+
     logger.info({ text: "link created", slug, userId: input.userId });
 
     return (await this.linksRepository.getBySlug(slug!))!;
@@ -93,7 +109,38 @@ export class LinksService {
 
     await this.linksRepository.update(slug, input);
 
+    if (this.schedulerService) {
+      await this.manageScheduleOnUpdate(slug, link.userId, input).catch((err) =>
+        logger.warn({
+          text: "failed to manage expiry schedule on update",
+          slug,
+          error: err?.message ?? err,
+        }),
+      );
+    }
+
     return (await this.linksRepository.getBySlug(slug))!;
+  }
+
+  private async manageScheduleOnUpdate(
+    slug: string,
+    userId: string,
+    input: UpdateLinkInput,
+  ): Promise<void> {
+    const deactivating = input.status === "inactive";
+    const removingExpiry = input.expiresAt === null;
+    const updatingExpiry = typeof input.expiresAt === "number";
+
+    if (deactivating || removingExpiry) {
+      await this.schedulerService!.cancelExpiry(slug);
+    } else if (updatingExpiry) {
+      await this.schedulerService!.cancelExpiry(slug);
+      await this.schedulerService!.scheduleExpiry(
+        slug,
+        userId,
+        input.expiresAt!,
+      );
+    }
   }
 
   async deleteLink(userId: string, slug: string): Promise<void> {
@@ -103,6 +150,13 @@ export class LinksService {
     if (link.userId !== userId)
       throw createHttpError.Forbidden("Access denied");
 
+    await this.schedulerService?.cancelExpiry(slug).catch((err) =>
+      logger.warn({
+        text: "failed to cancel expiry schedule on delete",
+        slug,
+        error: err?.message ?? err,
+      }),
+    );
     await this.linksRepository.deleteOne(slug);
 
     logger.info({ text: "link deleted", slug, userId });
@@ -173,6 +227,11 @@ export class LinksService {
     );
     if (unauthorized) throw createHttpError.Forbidden("Access denied");
 
+    if (this.schedulerService) {
+      await Promise.allSettled(
+        slugs.map((s) => this.schedulerService!.cancelExpiry(s)),
+      );
+    }
     await this.linksRepository.bulkDelete(slugs);
 
     logger.info({ text: "bulk delete links", count: slugs.length, userId });

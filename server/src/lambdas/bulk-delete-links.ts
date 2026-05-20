@@ -1,5 +1,6 @@
 import { LinksRepository } from "../repositories/links.repository";
 import { LinksService } from "../services/links.service";
+import { SchedulerService } from "../services/scheduler.service";
 import { createHandler } from "../common/middleware";
 import { createLayerLogger } from "../common/logger";
 import { LogLayer } from "../common/types";
@@ -8,7 +9,10 @@ import { BulkDeleteLinksValidator } from "../validators/bulk-delete-links.valida
 
 const logger = createLayerLogger(LogLayer.LAMBDA);
 
-const linksService = new LinksService(new LinksRepository());
+const linksService = new LinksService(
+  new LinksRepository(),
+  new SchedulerService(),
+);
 const validator = new BulkDeleteLinksValidator();
 
 export const handler = createHandler(async (event) => {

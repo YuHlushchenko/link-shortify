@@ -17,7 +17,7 @@ export enum SortOrder {
 
 const VALID_SORT_BY = Object.values(LinkSortBy);
 const VALID_ORDER = Object.values(SortOrder);
-const VALID_STATUSES: LinkStatus[] = ["active", "inactive", "deleted"];
+const VALID_STATUSES: LinkStatus[] = ["active", "inactive", "expired"];
 
 export interface GetLinksRequest {
   sortBy?: unknown;

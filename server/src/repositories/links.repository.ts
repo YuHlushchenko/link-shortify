@@ -15,7 +15,7 @@ const logger = createLayerLogger(LogLayer.REPOSITORY);
 
 const PAGE_LIMIT = 20;
 
-export type LinkStatus = "active" | "inactive" | "deleted";
+export type LinkStatus = "active" | "inactive" | "deleted" | "expired";
 
 export interface LinkItem {
   PK: string; // slug
@@ -69,7 +69,15 @@ export class LinksRepository {
     const indexName = sortBy === "clickCount" ? "GSI2" : "GSI1";
 
     const expressionValues: Record<string, unknown> = { ":userId": userId };
-    if (status) expressionValues[":status"] = status;
+    let filterExpression: string;
+
+    if (status) {
+      expressionValues[":status"] = status;
+      filterExpression = "#status = :status";
+    } else {
+      expressionValues[":deleted"] = "deleted";
+      filterExpression = "#status <> :deleted";
+    }
 
     const result = await docClient.send(
       new QueryCommand({
@@ -77,8 +85,8 @@ export class LinksRepository {
         IndexName: indexName,
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: expressionValues,
-        FilterExpression: status ? "#status = :status" : undefined,
-        ExpressionAttributeNames: status ? { "#status": "status" } : undefined,
+        FilterExpression: filterExpression,
+        ExpressionAttributeNames: { "#status": "status" },
         ScanIndexForward: order === "asc",
         Limit: PAGE_LIMIT,
         ExclusiveStartKey: cursor ? decodeCursor(cursor) : undefined,

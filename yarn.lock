@@ -365,6 +365,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-scheduler@npm:^3.0.0":
+  version: 3.1050.0
+  resolution: "@aws-sdk/client-scheduler@npm:3.1050.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": "npm:5.2.0"
+    "@aws-crypto/sha256-js": "npm:5.2.0"
+    "@aws-sdk/core": "npm:^3.974.12"
+    "@aws-sdk/credential-provider-node": "npm:^3.972.43"
+    "@aws-sdk/types": "npm:^3.973.8"
+    "@smithy/core": "npm:^3.24.2"
+    "@smithy/fetch-http-handler": "npm:^5.4.2"
+    "@smithy/node-http-handler": "npm:^4.7.2"
+    "@smithy/types": "npm:^4.14.1"
+    tslib: "npm:^2.6.2"
+  checksum: 10c0/a25f3bdc796f3ed4cb6ae0f0f5bf494f07acf3813c4753a2006f77fd05e389a938e6afa63230e001a8203ec92b0d420c62973be11e1766c0208ff7a662d1d68b
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/core@npm:^3.974.12":
   version: 3.974.12
   resolution: "@aws-sdk/core@npm:3.974.12"
@@ -13231,6 +13249,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-cognito-identity-provider": "npm:^3.0.0"
     "@aws-sdk/client-dynamodb": "npm:^3.0.0"
+    "@aws-sdk/client-scheduler": "npm:^3.0.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.0.0"
     "@middy/core": "npm:^4.7.0"
     "@middy/http-error-handler": "npm:^4.7.0"

@@ -1,6 +1,5 @@
 import * as cdk from 'aws-cdk-lib'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
-import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources'
 import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2'
 import * as apigwv2Integrations from 'aws-cdk-lib/aws-apigatewayv2-integrations'
 import * as apigwv2Authorizers from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
@@ -72,7 +71,6 @@ export class ApiStack extends cdk.Stack {
         functionName: `${fnPrefix}${id}`,
         runtime: lambda.Runtime.NODEJS_22_X,
         memorySize: 256,
-        // API Gateway HTTP API integration timeout is 30s — stay under it
         timeout: cdk.Duration.seconds(29),
         logGroup,
         environment: { ...commonEnv, ...extraEnv },
@@ -83,21 +81,44 @@ export class ApiStack extends cdk.Stack {
       })
     }
 
+    // ── expire-link Lambda (EventBridge Scheduler target) ─────────────────────
+    // Defined first so its ARN can be passed as env var to other lambdas
+    const expireLinkLambda = createFn('ExpireLinkFunction', 'expire-link.ts')
+
+    // ── IAM role for EventBridge Scheduler to invoke expire-link ──────────────
+    const schedulerRole = new iam.Role(this, 'SchedulerInvokeRole', {
+      assumedBy: new iam.ServicePrincipal('scheduler.amazonaws.com'),
+      inlinePolicies: {
+        InvokeExpireLink: new iam.PolicyDocument({
+          statements: [
+            new iam.PolicyStatement({
+              actions: ['lambda:InvokeFunction'],
+              resources: [expireLinkLambda.functionArn],
+            }),
+          ],
+        }),
+      },
+    })
+
+    const schedulerEnv = {
+      SCHEDULER_ROLE_ARN: schedulerRole.roleArn,
+      EXPIRE_LINK_FUNCTION_ARN: expireLinkLambda.functionArn,
+    }
+
     // ── Lambda functions ──────────────────────────────────────────────────────
-    const redirectLambda               = createFn('RedirectFunction',             'redirect.ts')
-    const getLinksLambda              = createFn('GetLinksFunction',             'get-links.ts')
-    const createLinkLambda            = createFn('CreateLinkFunction',           'create-link.ts')
-    const updateLinkLambda            = createFn('UpdateLinkFunction',           'update-link.ts')
-    const deleteLinkLambda            = createFn('DeleteLinkFunction',           'delete-link.ts')
-    const bulkDeleteLinksLambda       = createFn('BulkDeleteLinksFunction',      'bulk-delete-links.ts')
-    const getClicksLambda             = createFn('GetClicksFunction',            'get-clicks.ts')
-    const getNotificationsLambda      = createFn('GetNotificationsFunction',     'get-notifications.ts')
-    const updateNotificationLambda    = createFn('UpdateNotificationFunction',   'update-notification.ts')
-    const updateAllNotificationsLambda = createFn('UpdateAllNotificationsFunction', 'update-all-notifications.ts')
-    const deleteAccountLambda         = createFn('DeleteAccountFunction',        'delete-account.ts', {
+    const redirectLambda                = createFn('RedirectFunction',              'redirect.ts')
+    const getLinksLambda               = createFn('GetLinksFunction',              'get-links.ts')
+    const createLinkLambda             = createFn('CreateLinkFunction',            'create-link.ts',      schedulerEnv)
+    const updateLinkLambda             = createFn('UpdateLinkFunction',            'update-link.ts',      schedulerEnv)
+    const deleteLinkLambda             = createFn('DeleteLinkFunction',            'delete-link.ts',      schedulerEnv)
+    const bulkDeleteLinksLambda        = createFn('BulkDeleteLinksFunction',       'bulk-delete-links.ts', schedulerEnv)
+    const getClicksLambda              = createFn('GetClicksFunction',             'get-clicks.ts')
+    const getNotificationsLambda       = createFn('GetNotificationsFunction',      'get-notifications.ts')
+    const updateNotificationLambda     = createFn('UpdateNotificationFunction',    'update-notification.ts')
+    const updateAllNotificationsLambda = createFn('UpdateAllNotificationsFunction','update-all-notifications.ts')
+    const deleteAccountLambda          = createFn('DeleteAccountFunction',         'delete-account.ts', {
       USER_POOL_ID: props.authStack.userPoolId,
     })
-    const linkExpiredLambda           = createFn('LinkExpiredFunction',          'link-expired.ts')
 
     // ── DynamoDB permissions ──────────────────────────────────────────────────
     const linksTable  = props.dynamodbStack.linksTable
@@ -121,38 +142,35 @@ export class ApiStack extends cdk.Stack {
       updateNotificationLambda,
       updateAllNotificationsLambda,
       deleteAccountLambda,
+      expireLinkLambda,
     ].forEach((fn) => linksTable.grantReadWriteData(fn))
 
     // get-clicks needs read on both tables
     linksTable.grantReadData(getClicksLambda)
     clicksTable.grantReadData(getClicksLambda)
 
-    // link-expired needs write access to create notifications
-    linksTable.grantReadWriteData(linkExpiredLambda)
+    // ── EventBridge Scheduler permissions ────────────────────────────────────
+    const schedulerLambdas = [
+      createLinkLambda,
+      updateLinkLambda,
+      deleteLinkLambda,
+      bulkDeleteLinksLambda,
+    ]
 
-    // DynamoDB Streams trigger — fires only for TTL-expired Link items
-    linkExpiredLambda.addEventSource(
-      new lambdaEventSources.DynamoEventSource(linksTable, {
-        startingPosition: lambda.StartingPosition.LATEST,
-        batchSize: 10,
-        bisectBatchOnError: true,
-        retryAttempts: 3,
-        filters: [
-          lambda.FilterCriteria.filter({
-            eventName: lambda.FilterRule.isEqual('REMOVE'),
-            userIdentity: {
-              type: lambda.FilterRule.isEqual('Service'),
-              principalId: lambda.FilterRule.isEqual('dynamodb.amazonaws.com'),
-            },
-            dynamodb: {
-              OldImage: {
-                SK: { S: lambda.FilterRule.isEqual('LINK') },
-              },
-            },
-          }),
-        ],
-      }),
-    )
+    schedulerLambdas.forEach((fn) => {
+      fn.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: ['scheduler:CreateSchedule', 'scheduler:DeleteSchedule'],
+          resources: ['*'],
+        }),
+      )
+      fn.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: ['iam:PassRole'],
+          resources: [schedulerRole.roleArn],
+        }),
+      )
+    })
 
     // ── Cognito permission for delete-account ─────────────────────────────────
     deleteAccountLambda.addToRolePolicy(

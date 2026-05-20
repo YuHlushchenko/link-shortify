@@ -1,5 +1,6 @@
 import { LinksRepository } from "../repositories/links.repository";
 import { LinksService } from "../services/links.service";
+import { SchedulerService } from "../services/scheduler.service";
 import { mapLink } from "../mappers/links.mapper";
 import { createHandler } from "../common/middleware";
 import { createLayerLogger } from "../common/logger";
@@ -9,7 +10,10 @@ import { CreateLinkValidator } from "../validators/create-link.validator";
 
 const logger = createLayerLogger(LogLayer.LAMBDA);
 
-const linksService = new LinksService(new LinksRepository());
+const linksService = new LinksService(
+  new LinksRepository(),
+  new SchedulerService(),
+);
 const validator = new CreateLinkValidator();
 
 export const handler = createHandler(async (event) => {
