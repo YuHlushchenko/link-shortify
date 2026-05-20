@@ -238,6 +238,22 @@ export class LinksService {
   }
 
   async deleteAllUserLinks(userId: string): Promise<void> {
+    if (this.schedulerService) {
+      let cursor: string | undefined;
+      do {
+        const page = await this.linksRepository.getAll({ userId, cursor });
+        const slugsWithExpiry = page.items
+          .filter((l) => l.expiresAt !== undefined)
+          .map((l) => l.PK);
+        if (slugsWithExpiry.length > 0) {
+          await Promise.allSettled(
+            slugsWithExpiry.map((s) => this.schedulerService!.cancelExpiry(s)),
+          );
+        }
+        cursor = page.nextCursor;
+      } while (cursor);
+    }
+
     await this.linksRepository.deleteAllByUser(userId);
   }
 }
