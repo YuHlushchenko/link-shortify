@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
+import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources'
 import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2'
 import * as apigwv2Integrations from 'aws-cdk-lib/aws-apigatewayv2-integrations'
 import * as apigwv2Authorizers from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
@@ -96,6 +97,7 @@ export class ApiStack extends cdk.Stack {
     const deleteAccountLambda         = createFn('DeleteAccountFunction',        'delete-account.ts', {
       USER_POOL_ID: props.authStack.userPoolId,
     })
+    const linkExpiredLambda           = createFn('LinkExpiredFunction',          'link-expired.ts')
 
     // ── DynamoDB permissions ──────────────────────────────────────────────────
     const linksTable  = props.dynamodbStack.linksTable
@@ -124,6 +126,33 @@ export class ApiStack extends cdk.Stack {
     // get-clicks needs read on both tables
     linksTable.grantReadData(getClicksLambda)
     clicksTable.grantReadData(getClicksLambda)
+
+    // link-expired needs write access to create notifications
+    linksTable.grantReadWriteData(linkExpiredLambda)
+
+    // DynamoDB Streams trigger — fires only for TTL-expired Link items
+    linkExpiredLambda.addEventSource(
+      new lambdaEventSources.DynamoEventSource(linksTable, {
+        startingPosition: lambda.StartingPosition.LATEST,
+        batchSize: 10,
+        bisectBatchOnError: true,
+        retryAttempts: 3,
+        filters: [
+          lambda.FilterCriteria.filter({
+            eventName: lambda.FilterRule.isEqual('REMOVE'),
+            userIdentity: {
+              type: lambda.FilterRule.isEqual('Service'),
+              principalId: lambda.FilterRule.isEqual('dynamodb.amazonaws.com'),
+            },
+            dynamodb: {
+              OldImage: {
+                SK: { S: lambda.FilterRule.isEqual('LINK') },
+              },
+            },
+          }),
+        ],
+      }),
+    )
 
     // ── Cognito permission for delete-account ─────────────────────────────────
     deleteAccountLambda.addToRolePolicy(

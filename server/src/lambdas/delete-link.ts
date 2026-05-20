@@ -1,20 +1,20 @@
-import { LinksRepository } from '../repositories/links.repository'
-import { LinksService } from '../services/links.service'
-import { createHandler } from '../common/middleware'
-import { createLayerLogger } from '../common/logger'
-import { LogLayer } from '../common/types'
+import { LinksRepository } from "../repositories/links.repository";
+import { LinksService } from "../services/links.service";
+import { createHandler } from "../common/middleware";
+import { createLayerLogger } from "../common/logger";
+import { LogLayer } from "../common/types";
 
-const logger = createLayerLogger(LogLayer.LAMBDA)
+const logger = createLayerLogger(LogLayer.LAMBDA);
 
-const linksService = new LinksService(new LinksRepository())
+const linksService = new LinksService(new LinksRepository());
 
 export const handler = createHandler(async (event) => {
-  const userId = event.requestContext.authorizer.jwt.claims.sub as string
-  const slug = event.pathParameters?.slug ?? ''
+  const userId = event.requestContext.authorizer.jwt.claims.sub as string;
+  const slug = event.pathParameters?.slug ?? "";
 
-  await linksService.deleteLink(userId, slug)
+  await linksService.deleteLink(userId, slug);
 
-  logger.info({ text: 'DELETE /links/:slug', userId, slug })
+  logger.info({ text: "DELETE /links/:slug", userId, slug });
 
-  return { statusCode: 204 }
-})
+  return { statusCode: 204 };
+});

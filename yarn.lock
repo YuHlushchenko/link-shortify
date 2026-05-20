@@ -2381,15 +2381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datastream/core@npm:0.0.38":
-  version: 0.0.38
-  resolution: "@datastream/core@npm:0.0.38"
-  dependencies:
-    cloneable-readable: "npm:3.0.0"
-  checksum: 10c0/dd790181a9b9a72867fd1f712958db0df57a6008010a6caf480949be4afe6966d772b877647970657d4a0a9c587a41d4fff4b0dd9e2f76fdc742849a5cf9595c
-  languageName: node
-  linkType: hard
-
 "@discoveryjs/json-ext@npm:0.5.7":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -2894,6 +2885,32 @@ __metadata:
   dependencies:
     tslib: "npm:2"
   checksum: 10c0/7a660263986326b662d4cb537e8386331c34fda61fb830b105e6c62d49be58ace40728dae614883b27a41cec7b1df8b44f72f79e16e6028bfca65d398dc04f3b
+  languageName: node
+  linkType: hard
+
+"@hapi/accept@npm:6.0.3":
+  version: 6.0.3
+  resolution: "@hapi/accept@npm:6.0.3"
+  dependencies:
+    "@hapi/boom": "npm:^10.0.1"
+    "@hapi/hoek": "npm:^11.0.2"
+  checksum: 10c0/6860dc50c337c6f4fcf8597c10e74ca4a481d3925075860110b641a0e670a036cdecccb49049745dc1c7ab219a1538ae56c40a38420c7f4aceef13cadd56cb1d
+  languageName: node
+  linkType: hard
+
+"@hapi/boom@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "@hapi/boom@npm:10.0.1"
+  dependencies:
+    "@hapi/hoek": "npm:^11.0.2"
+  checksum: 10c0/e4ae8a69bb67c5687320d320a0706ac66e797a659c19fb1c9b909eaefe3b41780e4ecd4382de1297b10c33e9db81f79667324576b9153f57b0cf701293b908d0
+  languageName: node
+  linkType: hard
+
+"@hapi/hoek@npm:^11.0.2":
+  version: 11.0.7
+  resolution: "@hapi/hoek@npm:11.0.7"
+  checksum: 10c0/39a4a3ae9526ed66509f6d03c6eb43179a2590df6e98443328c966cfa5e7cbb9d340f61fdbe0afe092662d5377d5a611c3303c808fee26a9c9cfd6bd3737dc1c
   languageName: node
   linkType: hard
 
@@ -4189,44 +4206,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@middy/core@npm:^5.0.0":
-  version: 5.5.1
-  resolution: "@middy/core@npm:5.5.1"
+"@middy/core@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "@middy/core@npm:4.7.0"
+  checksum: 10c0/61519a9258f0bd7a9eec3a0400f326659ef91210c4000777423d0d7147a1609bc7cf1074eeb27f6a7e897b84fa5d90ba70e00d85db0c617f95254cdf34a7afcc
+  languageName: node
+  linkType: hard
+
+"@middy/http-error-handler@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "@middy/http-error-handler@npm:4.7.0"
   dependencies:
-    "@datastream/core": "npm:0.0.38"
-  checksum: 10c0/3843ea6ee54a740a64bcc74aa0b4c598ee8b8594501ec4962b4465c98d447582003a092588957f0003fabc66131f622857e556fce17687e63fa2ba1e28a856c7
+    "@middy/util": "npm:4.7.0"
+  checksum: 10c0/c486fcb20c978e6c7502f35ca0168373da8843deb2fc090273e6164524f1a6dec5d98d485cb402b79ef70908e9500359f9b28ded3446668396de48356f376f5a
   languageName: node
   linkType: hard
 
-"@middy/http-error-handler@npm:^5.0.0":
-  version: 5.5.1
-  resolution: "@middy/http-error-handler@npm:5.5.1"
+"@middy/http-header-normalizer@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "@middy/http-header-normalizer@npm:4.7.0"
+  checksum: 10c0/20a1b58e205dd53698b230323ed07146d72123aad54917571771f95825885f0da644ae6e15f40a5a0b9e5cee4094910d86b90b03c5dc8438634fa08ed6fe5409
+  languageName: node
+  linkType: hard
+
+"@middy/http-response-serializer@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "@middy/http-response-serializer@npm:4.7.0"
   dependencies:
-    "@middy/util": "npm:5.5.1"
-  checksum: 10c0/3a14cfd182b7108645ebb304f1e89635136f8f1336365bc9f2b4e1d762f3c3a13b43857502ac439d5f44a1a50b7b4968fe4fee50e167834eea643c8c1870d4cc
+    "@hapi/accept": "npm:6.0.3"
+    "@middy/util": "npm:4.7.0"
+  checksum: 10c0/d7a5e680808d1d72140a9f3991df0db971434a0bb9f242b4ea5518b954262367f8c765c26da44a3b38066a3a13980584e95615f3cdb68310560ed5e8511d10e1
   languageName: node
   linkType: hard
 
-"@middy/http-header-normalizer@npm:^5.0.0":
-  version: 5.5.1
-  resolution: "@middy/http-header-normalizer@npm:5.5.1"
-  checksum: 10c0/dac8b78fc06c0d19b282f702682c4c4c5578bcec4d4c39271e1955f6c923d134834452dd0c1d4f09a420dbdcf48f241ec47184b58a08f245006cc45290ccf18f
-  languageName: node
-  linkType: hard
-
-"@middy/http-response-serializer@npm:^5.0.0":
-  version: 5.5.1
-  resolution: "@middy/http-response-serializer@npm:5.5.1"
-  dependencies:
-    "@middy/util": "npm:5.5.1"
-  checksum: 10c0/81a49de85460a1954b67c264ef999ca4648efdb85200fc32209daa4a06f09a9a5d7aee7de6058413ac919e5256762fb42817c46c28e9f28bf1b1e46e7f54f902
-  languageName: node
-  linkType: hard
-
-"@middy/util@npm:5.5.1":
-  version: 5.5.1
-  resolution: "@middy/util@npm:5.5.1"
-  checksum: 10c0/cc0c023444b7c604cba4b0f9bd7b0f3006feb47a79fe023d7a7c5ff3d12b17f8d09253e4b03742e4c4db7c73dda07e54bb59ac329419fa080cc6dfffb5ce0859
+"@middy/util@npm:4.7.0":
+  version: 4.7.0
+  resolution: "@middy/util@npm:4.7.0"
+  checksum: 10c0/6ba69006ca77ed0a0f3b1070272e050a848882d13a35bc68a7b46946c36a4cfa39c8416d6ca281544f5f645137039d79c63c955c55a71e644c2a237c033ff3bc
   languageName: node
   linkType: hard
 
@@ -8174,15 +8190,6 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10c0/4bda0f09c340cbb6dfdc1ed508b3ca080f12992c18d68c6be4d9cf51756033d5266e61ec57529e610dacbf4da1c634423b0c1b11037709cc6b09045cbd815df5
-  languageName: node
-  linkType: hard
-
-"cloneable-readable@npm:3.0.0":
-  version: 3.0.0
-  resolution: "cloneable-readable@npm:3.0.0"
-  dependencies:
-    readable-stream: "npm:^4.0.0"
-  checksum: 10c0/625c43fba0f0259ede0ff79b9c1c027b9f8996479efd0cc3b34ccea4c2167842bafa010e8fb3e086a57b6e277ed5e4e029ca4bb93e3a1b01b09e4388fef0a2dc
   languageName: node
   linkType: hard
 
@@ -13225,10 +13232,10 @@ __metadata:
     "@aws-sdk/client-cognito-identity-provider": "npm:^3.0.0"
     "@aws-sdk/client-dynamodb": "npm:^3.0.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.0.0"
-    "@middy/core": "npm:^5.0.0"
-    "@middy/http-error-handler": "npm:^5.0.0"
-    "@middy/http-header-normalizer": "npm:^5.0.0"
-    "@middy/http-response-serializer": "npm:^5.0.0"
+    "@middy/core": "npm:^4.7.0"
+    "@middy/http-error-handler": "npm:^4.7.0"
+    "@middy/http-header-normalizer": "npm:^4.7.0"
+    "@middy/http-response-serializer": "npm:^4.7.0"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/http-errors": "npm:^2.0.0"
     "@types/node": "npm:^22.0.0"

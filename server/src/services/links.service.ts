@@ -1,62 +1,65 @@
-import { customAlphabet } from 'nanoid'
-import createHttpError from 'http-errors'
+import { customAlphabet } from "nanoid";
+import createHttpError from "http-errors";
 import {
   LinksRepository,
   LinkItem,
   PaginatedLinks,
   LinkStatus,
-} from '../repositories/links.repository'
-import { createLayerLogger } from '../common/logger'
-import { LogLayer } from '../common/types'
+} from "../repositories/links.repository";
+import { createLayerLogger } from "../common/logger";
+import { LogLayer } from "../common/types";
 
-const logger = createLayerLogger(LogLayer.SERVICE)
+const logger = createLayerLogger(LogLayer.SERVICE);
 
 // URL-safe alphabet without lookalike chars
-const generateSlug = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 6)
+const generateSlug = customAlphabet("0123456789abcdefghijklmnopqrstuvwxyz", 6);
 
 export interface GetLinksInput {
-  userId: string
-  sortBy?: 'createdAt' | 'clickCount'
-  order?: 'asc' | 'desc'
-  status?: LinkStatus
-  cursor?: string
+  userId: string;
+  sortBy?: "createdAt" | "clickCount";
+  order?: "asc" | "desc";
+  status?: LinkStatus;
+  cursor?: string;
 }
 
 export interface CreateLinkInput {
-  userId: string
-  originalUrl: string
-  slug?: string
-  expiresAt?: number
+  userId: string;
+  originalUrl: string;
+  slug?: string;
+  expiresAt?: number;
 }
 
 export interface UpdateLinkInput {
-  status?: LinkStatus
-  expiresAt?: number | null
+  status?: LinkStatus;
+  expiresAt?: number | null;
 }
 
 export class LinksService {
   constructor(private linksRepository: LinksRepository) {}
 
   async getLinks(input: GetLinksInput): Promise<PaginatedLinks> {
-    return this.linksRepository.getAll(input)
+    return this.linksRepository.getAll(input);
   }
 
   async createLink(input: CreateLinkInput): Promise<LinkItem> {
-    const now = Math.floor(Date.now() / 1000)
-    let slug = input.slug
+    const now = Math.floor(Date.now() / 1000);
+    let slug = input.slug;
 
     if (slug) {
-      const existing = await this.linksRepository.getBySlug(slug)
+      const existing = await this.linksRepository.getBySlug(slug);
       if (existing) {
-        throw createHttpError.Conflict('Slug already exists')
+        throw createHttpError.Conflict("Slug already exists");
       }
     } else {
       // generate unique slug, retry up to 3 times on collision
       for (let attempt = 0; attempt < 3; attempt++) {
-        slug = generateSlug()
-        const existing = await this.linksRepository.getBySlug(slug)
-        if (!existing) break
-        if (attempt === 2) throw createHttpError.InternalServerError('Failed to generate unique slug')
+        slug = generateSlug();
+        const existing = await this.linksRepository.getBySlug(slug);
+        if (!existing) break;
+        if (attempt === 2)
+          throw createHttpError.InternalServerError(
+            "Failed to generate unique slug",
+          );
       }
     }
 
@@ -64,107 +67,118 @@ export class LinksService {
       slug: slug!,
       userId: input.userId,
       originalUrl: input.originalUrl,
-      status: 'active',
+      status: "active",
       createdAt: now,
       updatedAt: now,
       expiresAt: input.expiresAt,
-    })
+    });
 
-    logger.info({ text: 'link created', slug, userId: input.userId })
+    logger.info({ text: "link created", slug, userId: input.userId });
 
-    return (await this.linksRepository.getBySlug(slug!))!
+    return (await this.linksRepository.getBySlug(slug!))!;
   }
 
-  async updateLink(userId: string, slug: string, input: UpdateLinkInput): Promise<LinkItem> {
-    const link = await this.linksRepository.getBySlug(slug)
+  async updateLink(
+    userId: string,
+    slug: string,
+    input: UpdateLinkInput,
+  ): Promise<LinkItem> {
+    const link = await this.linksRepository.getBySlug(slug);
 
-    if (!link) throw createHttpError.NotFound('Link not found')
-    if (link.userId !== userId) throw createHttpError.Forbidden('Access denied')
-    if (link.status === 'deleted') throw createHttpError.Gone('Link has been deleted')
+    if (!link) throw createHttpError.NotFound("Link not found");
+    if (link.userId !== userId)
+      throw createHttpError.Forbidden("Access denied");
+    if (link.status === "deleted")
+      throw createHttpError.Gone("Link has been deleted");
 
-    await this.linksRepository.update(slug, input)
+    await this.linksRepository.update(slug, input);
 
-    return (await this.linksRepository.getBySlug(slug))!
+    return (await this.linksRepository.getBySlug(slug))!;
   }
 
   async deleteLink(userId: string, slug: string): Promise<void> {
-    const link = await this.linksRepository.getBySlug(slug)
+    const link = await this.linksRepository.getBySlug(slug);
 
-    if (!link) throw createHttpError.NotFound('Link not found')
-    if (link.userId !== userId) throw createHttpError.Forbidden('Access denied')
+    if (!link) throw createHttpError.NotFound("Link not found");
+    if (link.userId !== userId)
+      throw createHttpError.Forbidden("Access denied");
 
-    await this.linksRepository.deleteOne(slug)
+    await this.linksRepository.deleteOne(slug);
 
-    logger.info({ text: 'link deleted', slug, userId })
+    logger.info({ text: "link deleted", slug, userId });
   }
 
   async bulkDeleteLinks(userId: string, slugs: string[]): Promise<void> {
-    const linkMap = new Map<string, LinkItem | null>()
-    let failedSlugs = slugs
+    const linkMap = new Map<string, LinkItem | null>();
+    let failedSlugs = slugs;
 
     const initial = await Promise.allSettled(
       slugs.map((slug) => this.linksRepository.getBySlug(slug)),
-    )
+    );
 
-    const stillPending: string[] = []
+    const stillPending: string[] = [];
     initial.forEach((result, index) => {
-      const slug = slugs[index]
-      if (result.status === 'fulfilled') {
-        linkMap.set(slug, result.value)
+      const slug = slugs[index];
+      if (result.status === "fulfilled") {
+        linkMap.set(slug, result.value);
       } else {
-        stillPending.push(slug)
+        stillPending.push(slug);
         logger.error({
-          text: 'Failed to fetch link for ownership check',
+          text: "Failed to fetch link for ownership check",
           slug,
           error: result.reason?.message || result.reason,
-        })
+        });
       }
-    })
+    });
 
-    failedSlugs = stillPending
+    failedSlugs = stillPending;
 
     for (let retry = 1; retry <= 2; retry++) {
-      if (failedSlugs.length === 0) break
+      if (failedSlugs.length === 0) break;
 
-      await new Promise((resolve) => setTimeout(resolve, 500 * retry))
+      await new Promise((resolve) => setTimeout(resolve, 500 * retry));
 
       const retryResults = await Promise.allSettled(
         failedSlugs.map((slug) => this.linksRepository.getBySlug(slug)),
-      )
-      const nextFailed: string[] = []
+      );
+      const nextFailed: string[] = [];
 
       retryResults.forEach((result, i) => {
-        const slug = failedSlugs[i]
-        if (result.status === 'fulfilled') {
-          linkMap.set(slug, result.value)
-          logger.info({ text: 'link fetch retry succeeded', retry, slug })
+        const slug = failedSlugs[i];
+        if (result.status === "fulfilled") {
+          linkMap.set(slug, result.value);
+          logger.info({ text: "link fetch retry succeeded", retry, slug });
         } else {
-          nextFailed.push(slug)
+          nextFailed.push(slug);
           logger.error({
-            text: 'link fetch retry failed',
+            text: "link fetch retry failed",
             retry,
             slug,
             error: result.reason?.message || result.reason,
-          })
+          });
         }
-      })
+      });
 
-      failedSlugs = nextFailed
+      failedSlugs = nextFailed;
     }
 
     if (failedSlugs.length > 0) {
-      throw createHttpError.InternalServerError('Failed to verify ownership for some links')
+      throw createHttpError.InternalServerError(
+        "Failed to verify ownership for some links",
+      );
     }
 
-    const unauthorized = [...linkMap.values()].find((link) => link && link.userId !== userId)
-    if (unauthorized) throw createHttpError.Forbidden('Access denied')
+    const unauthorized = [...linkMap.values()].find(
+      (link) => link && link.userId !== userId,
+    );
+    if (unauthorized) throw createHttpError.Forbidden("Access denied");
 
-    await this.linksRepository.bulkDelete(slugs)
+    await this.linksRepository.bulkDelete(slugs);
 
-    logger.info({ text: 'bulk delete links', count: slugs.length, userId })
+    logger.info({ text: "bulk delete links", count: slugs.length, userId });
   }
 
   async deleteAllUserLinks(userId: string): Promise<void> {
-    await this.linksRepository.deleteAllByUser(userId)
+    await this.linksRepository.deleteAllByUser(userId);
   }
 }
