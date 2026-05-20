@@ -12,60 +12,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo:4.4.6
-        env:
-          MONGO_INITDB_ROOT_USERNAME: admin
-          MONGO_INITDB_ROOT_PASSWORD: admin
-          MONGO_INITDB_DATABASE: APP-DATABASE
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Install pm2
-        run: |
-          npm install -g pm2
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Typecheck
         run: |
           cd server
-          yarn install
+          yarn typecheck
 
-      - name: Lint code
-        run: |
-          cd server
-          yarn lint
-          yarn lint:prettier
-
-      - name: Start app with pm2
-        env:
-          MONGO_DB_PROTOCOL: mongodb
-          MONGO_DB_HOST: localhost
-          MONGO_DB_PORT: 27017
-          MONGO_DB_NAME: link-shortify
-        run: |
-          cd server
-          pm2 start yarn --name "server" -- start
-
-      - name: Run tests
-        run: |
-          cd server
-          echo "No tests yet"
-
-      - name: Stop pm2 app
-        run: |
-          pm2 stop "server"
-
-      - name: Build TypeScript
+      - name: Build
         run: |
           cd server
           yarn build
