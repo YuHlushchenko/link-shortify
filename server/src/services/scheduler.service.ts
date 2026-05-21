@@ -22,7 +22,7 @@ function scheduleName(slug: string): string {
 export class SchedulerService {
   async scheduleExpiry(
     slug: string,
-    userId: string,
+    userId: string | undefined,
     expiresAt: number,
   ): Promise<void> {
     const scheduleAt = new Date(expiresAt * 1000).toISOString().slice(0, 19);

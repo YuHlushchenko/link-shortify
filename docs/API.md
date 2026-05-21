@@ -4,11 +4,123 @@
 
 Base URL: `https://api.yourdomain.com`
 
-All endpoints except `GET /s/{slug}` require authentication via AWS Cognito JWT token in the `Authorization` header.
+All endpoints except `GET /s/{slug}`, `POST /links/anonymous`, and `GET /links/anonymous` require authentication via AWS Cognito JWT token in the `Authorization` header.
+
+Anonymous users may create up to **5 active links** (configurable via `ANON_LINK_LIMIT`). Deleting a link frees up a slot. The limit is enforced per `SHA256(IP + browser fingerprint)` combination.
+
+---
+
+## Anonymous Links
+
+### Create Anonymous Link
+
+`POST /links/anonymous`
+
+Creates a shortened link for an unauthenticated user. No `Authorization` header required.
+
+**Request Body**
+
+| Field       | Type   | Required | Description                                 |
+| ----------- | ------ | -------- | ------------------------------------------- |
+| fingerprint | string | Yes      | Browser fingerprint (e.g. from FingerprintJS) |
+| originalUrl | string | Yes      | Destination URL                             |
+| slug        | string | No       | Custom slug. Auto-generated if not provided |
+| expiresAt   | number | No       | Unix timestamp                              |
+
+```json
+{
+  "fingerprint": "abc123...",
+  "originalUrl": "https://example.com/very/long/url"
+}
+```
+
+**Response**
+
+```json
+201 Created
+{
+  "slug": "x7k2mq",
+  "originalUrl": "https://example.com/very/long/url",
+  "status": "active",
+  "createdAt": 1735689600,
+  "clickCount": 0
+}
+```
+
+**Errors**
+
+| Status                | Description                                           |
+| --------------------- | ----------------------------------------------------- |
+| 409 Conflict          | Slug already exists                                   |
+| 429 Too Many Requests | Anonymous link limit reached (`ANON_LINK_LIMIT` = 5) |
+
+---
+
+### Get Anonymous Links
+
+`GET /links/anonymous`
+
+Returns all active anonymous links for the current browser session. No `Authorization` header required.
+
+**Query Parameters**
+
+| Parameter   | Type   | Required | Description        |
+| ----------- | ------ | -------- | ------------------ |
+| fingerprint | string | Yes      | Browser fingerprint |
+
+**Response**
+
+```json
+200 OK
+{
+  "links": [
+    {
+      "slug": "x7k2mq",
+      "originalUrl": "https://example.com",
+      "status": "active",
+      "createdAt": 1735689600,
+      "clickCount": 3
+    }
+  ]
+}
+```
 
 ---
 
 ## Auth
+
+### Claim Anonymous Links
+
+`POST /auth/claim`
+
+Transfers all anonymous links created in the current browser session to the authenticated user's account. Can be called multiple times from different IP + fingerprint combinations.
+
+**Request Headers**
+
+`Authorization: Bearer {accessToken}`
+
+**Request Body**
+
+| Field       | Type   | Required | Description        |
+| ----------- | ------ | -------- | ------------------ |
+| fingerprint | string | Yes      | Browser fingerprint |
+
+```json
+{
+  "fingerprint": "abc123..."
+}
+```
+
+**Response**
+
+```json
+200 OK
+{
+  "claimed": 3
+}
+```
+
+---
 
 ### Delete Account
 

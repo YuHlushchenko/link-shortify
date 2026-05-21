@@ -45,7 +45,7 @@ export const handler = async (
   }
 
   return {
-    statusCode: 301,
+    statusCode: 302,
     headers: { Location: link.originalUrl },
     body: "",
   };

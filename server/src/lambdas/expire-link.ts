@@ -13,13 +13,12 @@ const notificationsService = new NotificationsService(
 
 interface ExpireLinkEvent {
   slug: string;
-  userId: string;
 }
 
 export const handler = async (event: ExpireLinkEvent): Promise<void> => {
-  const { slug, userId } = event;
+  const { slug } = event;
 
-  logger.info({ text: "expire-link triggered", slug, userId });
+  logger.info({ text: "expire-link triggered", slug });
 
   const link = await linksRepository.getBySlug(slug);
 
@@ -29,7 +28,12 @@ export const handler = async (event: ExpireLinkEvent): Promise<void> => {
   }
 
   await linksRepository.update(slug, { status: "expired" });
-  await notificationsService.createExpiredLinkNotification(userId, slug);
 
-  logger.info({ text: "link expired and notification sent", slug, userId });
+  // Use current userId from DB — link may have been claimed after schedule was created
+  if (link.userId) {
+    await notificationsService.createExpiredLinkNotification(link.userId, slug);
+    logger.info({ text: "link expired and notification sent", slug, userId: link.userId });
+  } else {
+    logger.info({ text: "link expired (anonymous, no notification)", slug });
+  }
 };

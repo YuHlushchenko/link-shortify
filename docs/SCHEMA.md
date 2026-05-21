@@ -22,17 +22,20 @@ Single table design with two entity types: Links and Notifications.
 
 ### Attributes — Link
 
-| Attribute   | Type   | Notes                                |
-| ----------- | ------ | ------------------------------------ |
-| PK          | String | Partition key — slug                 |
-| SK          | String | Sort key — always `LINK`             |
-| userId      | String | Cognito sub of the owner             |
-| originalUrl | String | Destination URL                      |
-| status      | String | `active`, `inactive`, or `deleted`   |
-| createdAt   | Number | Unix timestamp                       |
-| updatedAt   | Number | Unix timestamp                       |
-| expiresAt   | Number | Unix timestamp, used as DynamoDB TTL |
-| clickCount  | Number | Total number of clicks               |
+| Attribute   | Type   | Notes                                                         |
+| ----------- | ------ | ------------------------------------------------------------- |
+| PK          | String | Partition key — slug                                          |
+| SK          | String | Sort key — always `LINK`                                      |
+| userId      | String | Cognito sub of the owner. Absent for anonymous links          |
+| anonymousId | String | SHA256(IP + fingerprint). Absent after claim or for auth links |
+| originalUrl | String | Destination URL                                               |
+| status      | String | `active`, `inactive`, `deleted`, or `expired`                 |
+| createdAt   | Number | Unix timestamp                                                |
+| updatedAt   | Number | Unix timestamp                                                |
+| expiresAt   | Number | Unix timestamp, used as DynamoDB TTL                          |
+| clickCount  | Number | Total number of clicks                                        |
+
+A link has either `userId` (authenticated) or `anonymousId` (anonymous), never both. After claim (`POST /auth/claim`), `userId` is set and `anonymousId` is removed.
 
 ### Attributes — Notification
 
@@ -47,14 +50,15 @@ Single table design with two entity types: Links and Notifications.
 
 ### Global Secondary Indexes
 
-| GSI  | PK       | SK           | Purpose                             |
-| ---- | -------- | ------------ | ----------------------------------- |
-| GSI1 | `userId` | `createdAt`  | Get all links by user, sort by date |
-| GSI2 | `userId` | `clickCount` | Sort links by popularity            |
+| GSI  | PK            | SK           | Purpose                                    |
+| ---- | ------------- | ------------ | ------------------------------------------ |
+| GSI1 | `userId`      | `createdAt`  | Get all links by user, sort by date        |
+| GSI2 | `userId`      | `clickCount` | Sort links by popularity                   |
+| GSI3 | `anonymousId` | `createdAt`  | Get all links by anonymous session; claim  |
 
 ### Streams
 
-DynamoDB Streams is enabled on this table. A Lambda function is subscribed to the stream and listens for `REMOVE` events caused by TTL expiration. When a link expires, the Lambda automatically creates a new Notification record for the link owner.
+DynamoDB Streams is enabled on this table. A Lambda function is subscribed to the stream and listens for `REMOVE` events caused by TTL expiration. When a link expires, the Lambda automatically creates a new Notification record for the link owner. For anonymous links (no `userId`), the stream event is ignored — no notification is created.
 
 ---
 
@@ -87,14 +91,17 @@ None required.
 
 ## Access Patterns
 
-| Access Pattern                | Table        | Operation                                                           |
-| ----------------------------- | ------------ | ------------------------------------------------------------------- |
-| Get link by slug (redirect)   | links-table  | Query PK=slug, SK=LINK                                              |
-| Get all links by user         | links-table  | Query GSI1 PK=userId                                                |
-| Sort links by date            | links-table  | Query GSI1 PK=userId, sort by SK                                    |
-| Sort links by popularity      | links-table  | Query GSI2 PK=userId, sort by SK                                    |
-| Check if slug exists          | links-table  | Query PK=slug                                                       |
-| Get all notifications by user | links-table  | Query PK=userId, SK begins_with NOTIFICATION#                       |
-| Get unread notifications      | links-table  | Query PK=userId, SK begins_with NOTIFICATION# + filter isRead=false |
-| Get all clicks by slug        | clicks-table | Query PK=slug                                                       |
-| Get clicks by date range      | clicks-table | Query PK=slug, SK between dates                                     |
+| Access Pattern                       | Table        | Operation                                                           |
+| ------------------------------------ | ------------ | ------------------------------------------------------------------- |
+| Get link by slug (redirect)          | links-table  | Query PK=slug, SK=LINK                                              |
+| Get all links by user                | links-table  | Query GSI1 PK=userId                                                |
+| Sort links by date                   | links-table  | Query GSI1 PK=userId, sort by SK                                    |
+| Sort links by popularity             | links-table  | Query GSI2 PK=userId, sort by SK                                    |
+| Check if slug exists                 | links-table  | Query PK=slug                                                       |
+| Get anonymous links by session       | links-table  | Query GSI3 PK=anonymousId                                           |
+| Count anonymous links (limit check)  | links-table  | Query GSI3 PK=anonymousId, SELECT COUNT, filter status <> deleted   |
+| Claim anonymous links                | links-table  | Query GSI3 PK=anonymousId → batch Update userId, remove anonymousId |
+| Get all notifications by user        | links-table  | Query PK=userId, SK begins_with NOTIFICATION#                       |
+| Get unread notifications             | links-table  | Query PK=userId, SK begins_with NOTIFICATION# + filter isRead=false |
+| Get all clicks by slug               | clicks-table | Query PK=slug                                                       |
+| Get clicks by date range             | clicks-table | Query PK=slug, SK between dates                                     |

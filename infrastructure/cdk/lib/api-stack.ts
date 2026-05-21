@@ -52,9 +52,11 @@ export class ApiStack extends cdk.Stack {
 
     // ── Common env vars ───────────────────────────────────────────────────────
     const commonEnv = {
-      LOG_LEVEL: "info",
+      LOG_LEVEL: props.stage === "prod" ? "info" : "debug",
       LINKS_TABLE_NAME: props.dynamodbStack.linksTable.tableName,
       CLICKS_TABLE_NAME: props.dynamodbStack.clicksTable.tableName,
+      PAGE_LIMIT: "20",
+      BULK_CHUNK_SIZE: "100",
     };
 
     // ── Lambda factory ────────────────────────────────────────────────────────
@@ -109,6 +111,11 @@ export class ApiStack extends cdk.Stack {
       EXPIRE_LINK_FUNCTION_ARN: expireLinkLambda.functionArn,
     };
 
+    // ── Anonymous link env vars ───────────────────────────────────────────────
+    const anonEnv = {
+      ANON_LINK_LIMIT: "5",
+    };
+
     // ── Lambda functions ──────────────────────────────────────────────────────
     const redirectLambda = createFn("RedirectFunction", "redirect.ts");
     const getLinksLambda = createFn("GetLinksFunction", "get-links.ts");
@@ -154,6 +161,14 @@ export class ApiStack extends cdk.Stack {
       },
     );
 
+    const createLinkAnonLambda = createFn(
+      "CreateLinkAnonFunction",
+      "create-link-anon.ts",
+      { ...anonEnv, ...schedulerEnv },
+    );
+    const getLinksAnonLambda = createFn("GetLinksAnonFunction", "get-links-anon.ts");
+    const claimLinksLambda = createFn("ClaimLinksFunction", "claim-links.ts");
+
     // ── DynamoDB permissions ──────────────────────────────────────────────────
     const linksTable = props.dynamodbStack.linksTable;
     const clicksTable = props.dynamodbStack.clicksTable;
@@ -163,7 +178,7 @@ export class ApiStack extends cdk.Stack {
     clicksTable.grantWriteData(redirectLambda);
 
     // read-only
-    [getLinksLambda, getNotificationsLambda].forEach((fn) =>
+    [getLinksLambda, getNotificationsLambda, getLinksAnonLambda].forEach((fn) =>
       linksTable.grantReadData(fn),
     );
 
@@ -177,6 +192,8 @@ export class ApiStack extends cdk.Stack {
       updateAllNotificationsLambda,
       deleteAccountLambda,
       expireLinkLambda,
+      createLinkAnonLambda,
+      claimLinksLambda,
     ].forEach((fn) => linksTable.grantReadWriteData(fn));
 
     // get-clicks needs read on both tables
@@ -236,6 +253,9 @@ export class ApiStack extends cdk.Stack {
     };
 
     addRoute("/s/{slug}", apigwv2.HttpMethod.GET, redirectLambda);
+    addRoute("/links/anonymous", apigwv2.HttpMethod.POST, createLinkAnonLambda);
+    addRoute("/links/anonymous", apigwv2.HttpMethod.GET, getLinksAnonLambda);
+    addRoute("/auth/claim", apigwv2.HttpMethod.POST, claimLinksLambda, jwtAuthorizer);
     addRoute("/links", apigwv2.HttpMethod.GET, getLinksLambda, jwtAuthorizer);
     addRoute(
       "/links",

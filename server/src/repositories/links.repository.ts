@@ -13,14 +13,16 @@ import { LogLayer } from "../common/types";
 
 const logger = createLayerLogger(LogLayer.REPOSITORY);
 
-const PAGE_LIMIT = 20;
+const PAGE_LIMIT = parseInt(process.env.PAGE_LIMIT ?? "20", 10);
+const BULK_CHUNK_SIZE = parseInt(process.env.BULK_CHUNK_SIZE ?? "100", 10);
 
 export type LinkStatus = "active" | "inactive" | "deleted" | "expired";
 
 export interface LinkItem {
   PK: string; // slug
   SK: "LINK";
-  userId: string;
+  userId?: string;
+  anonymousId?: string;
   originalUrl: string;
   status: LinkStatus;
   createdAt: number;
@@ -36,7 +38,8 @@ export interface PaginatedLinks {
 
 export interface CreateLinkInput {
   slug: string;
-  userId: string;
+  userId?: string;
+  anonymousId?: string;
   originalUrl: string;
   status: LinkStatus;
   createdAt: number;
@@ -126,15 +129,14 @@ export class LinksRepository {
           Item: {
             PK: input.slug,
             SK: "LINK",
-            userId: input.userId,
             originalUrl: input.originalUrl,
             status: input.status,
             createdAt: input.createdAt,
             updatedAt: input.updatedAt,
             clickCount: 0,
-            ...(input.expiresAt !== undefined
-              ? { expiresAt: input.expiresAt }
-              : {}),
+            ...(input.userId !== undefined ? { userId: input.userId } : {}),
+            ...(input.anonymousId !== undefined ? { anonymousId: input.anonymousId } : {}),
+            ...(input.expiresAt !== undefined ? { expiresAt: input.expiresAt } : {}),
           },
           ConditionExpression: "attribute_not_exists(PK)",
         }),
@@ -145,6 +147,84 @@ export class LinksRepository {
       }
       throw err;
     }
+  }
+
+  async countByAnonymousId(anonymousId: string): Promise<number> {
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: LINKS_TABLE_NAME,
+        IndexName: "GSI3",
+        KeyConditionExpression: "anonymousId = :anonymousId",
+        FilterExpression: "#status <> :deleted",
+        ExpressionAttributeNames: { "#status": "status" },
+        ExpressionAttributeValues: {
+          ":anonymousId": anonymousId,
+          ":deleted": "deleted",
+        },
+        Select: "COUNT",
+      }),
+    );
+    return result.Count ?? 0;
+  }
+
+  async getByAnonymousId(anonymousId: string): Promise<LinkItem[]> {
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: LINKS_TABLE_NAME,
+        IndexName: "GSI3",
+        KeyConditionExpression: "anonymousId = :anonymousId",
+        FilterExpression: "#status <> :deleted",
+        ExpressionAttributeNames: { "#status": "status" },
+        ExpressionAttributeValues: {
+          ":anonymousId": anonymousId,
+          ":deleted": "deleted",
+        },
+        ScanIndexForward: false,
+      }),
+    );
+    return (result.Items ?? []) as LinkItem[];
+  }
+
+  async claimByAnonymousId(anonymousId: string, userId: string): Promise<number> {
+    const links = await docClient.send(
+      new QueryCommand({
+        TableName: LINKS_TABLE_NAME,
+        IndexName: "GSI3",
+        KeyConditionExpression: "anonymousId = :anonymousId",
+        FilterExpression: "#status <> :deleted",
+        ExpressionAttributeNames: { "#status": "status" },
+        ExpressionAttributeValues: {
+          ":anonymousId": anonymousId,
+          ":deleted": "deleted",
+        },
+      }),
+    );
+
+    const items = (links.Items ?? []) as LinkItem[];
+    if (items.length === 0) return 0;
+
+    const now = Math.floor(Date.now() / 1000);
+
+    for (let i = 0; i < items.length; i += BULK_CHUNK_SIZE) {
+      const chunk = items.slice(i, i + BULK_CHUNK_SIZE);
+      await docClient.send(
+        new TransactWriteCommand({
+          TransactItems: chunk.map((link) => ({
+            Update: {
+              TableName: LINKS_TABLE_NAME,
+              Key: { PK: link.PK, SK: "LINK" },
+              UpdateExpression: "SET userId = :userId, updatedAt = :updatedAt REMOVE anonymousId",
+              ExpressionAttributeValues: {
+                ":userId": userId,
+                ":updatedAt": now,
+              },
+            },
+          })),
+        }),
+      );
+    }
+
+    return items.length;
   }
 
   async update(slug: string, input: UpdateLinkInput): Promise<void> {
@@ -190,8 +270,7 @@ export class LinksRepository {
   async bulkDelete(slugs: string[]): Promise<void> {
     const now = Math.floor(Date.now() / 1000);
 
-    // TransactWrite limit is 100 items
-    for (let i = 0; i < slugs.length; i += 100) {
+    for (let i = 0; i < slugs.length; i += BULK_CHUNK_SIZE) {
       const chunk = slugs.slice(i, i + 100);
       await docClient.send(
         new TransactWriteCommand({

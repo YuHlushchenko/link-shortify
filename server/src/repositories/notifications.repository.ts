@@ -213,5 +213,9 @@ function encodeCursor(key: Record<string, unknown>): string {
 }
 
 function decodeCursor(cursor: string): Record<string, unknown> {
-  return JSON.parse(Buffer.from(cursor, "base64").toString("utf-8"));
+  try {
+    return JSON.parse(Buffer.from(cursor, "base64").toString("utf-8"));
+  } catch {
+    throw createHttpError.BadRequest("Invalid cursor");
+  }
 }

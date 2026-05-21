@@ -24,7 +24,8 @@ export interface GetLinksInput {
 }
 
 export interface CreateLinkInput {
-  userId: string;
+  userId?: string;
+  anonymousId?: string;
   originalUrl: string;
   slug?: string;
   expiresAt?: number;
@@ -70,6 +71,7 @@ export class LinksService {
     await this.linksRepository.create({
       slug: slug!,
       userId: input.userId,
+      anonymousId: input.anonymousId,
       originalUrl: input.originalUrl,
       status: "active",
       createdAt: now,
@@ -235,6 +237,20 @@ export class LinksService {
     await this.linksRepository.bulkDelete(slugs);
 
     logger.info({ text: "bulk delete links", count: slugs.length, userId });
+  }
+
+  async getAnonymousLinks(anonymousId: string): Promise<LinkItem[]> {
+    return this.linksRepository.getByAnonymousId(anonymousId);
+  }
+
+  async countAnonymousLinks(anonymousId: string): Promise<number> {
+    return this.linksRepository.countByAnonymousId(anonymousId);
+  }
+
+  async claimAnonymousLinks(anonymousId: string, userId: string): Promise<number> {
+    const claimed = await this.linksRepository.claimByAnonymousId(anonymousId, userId);
+    logger.info({ text: "anonymous links claimed", anonymousId, userId, count: claimed });
+    return claimed;
   }
 
   async deleteAllUserLinks(userId: string): Promise<void> {

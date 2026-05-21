@@ -45,6 +45,13 @@ export class DynamodbStack extends cdk.Stack {
       sortKey: { name: "clickCount", type: dynamodb.AttributeType.NUMBER },
     });
 
+    // Get all anonymous links by session (anonymousId = SHA256(ip + fingerprint))
+    this.linksTable.addGlobalSecondaryIndex({
+      indexName: "GSI3",
+      partitionKey: { name: "anonymousId", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "createdAt", type: dynamodb.AttributeType.NUMBER },
+    });
+
     this.clicksTable = new dynamodb.Table(this, "ClicksTable", {
       tableName: `${prefix}clicks`,
       partitionKey: { name: "PK", type: dynamodb.AttributeType.STRING },
