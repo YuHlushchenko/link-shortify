@@ -17,7 +17,7 @@ const validator = new CreateLinkAnonValidator();
 const ANON_LINK_LIMIT = parseInt(process.env.ANON_LINK_LIMIT ?? "5", 10);
 
 export const handler = createPublicHandler(async (event) => {
-  const sourceIp = event.requestContext.http.sourceIp;
+  const sourceIp = event.headers?.["cf-connecting-ip"] ?? event.requestContext.http.sourceIp;
 
   let raw: unknown;
   try {

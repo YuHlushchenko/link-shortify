@@ -150,7 +150,7 @@ Returns all shortened links for the authenticated user.
 | --------- | ------ | -------- | ------------------------------------------------- |
 | sortBy    | string | No       | `createdAt` or `clickCount`. Default: `createdAt` |
 | order     | string | No       | `asc` or `desc`. Default: `desc`                  |
-| status    | string | No       | `active`, `inactive`, or `deleted`                |
+| status    | string | No       | `active`, `inactive`, or `expired`                |
 
 **Response**
 

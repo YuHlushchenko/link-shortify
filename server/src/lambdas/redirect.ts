@@ -35,6 +35,7 @@ export const handler = async (
         slug,
         clickId: nanoid(),
         clickedAt: now,
+        country: event.headers?.["cf-ipcountry"],
         userAgent: event.headers?.["user-agent"],
         referrer: event.headers?.["referer"],
       }),
