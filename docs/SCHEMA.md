@@ -32,7 +32,7 @@ Single table design with two entity types: Links and Notifications.
 | status      | String | `active`, `inactive`, `deleted`, or `expired`                 |
 | createdAt   | Number | Unix timestamp                                                |
 | updatedAt   | Number | Unix timestamp                                                |
-| expiresAt   | Number | Unix timestamp, used as DynamoDB TTL                          |
+| expiresAt   | Number | Unix timestamp of expiration                                  |
 | clickCount  | Number | Total number of clicks                                        |
 
 A link has either `userId` (authenticated) or `anonymousId` (anonymous), never both. After claim (`POST /auth/claim`), `userId` is set and `anonymousId` is removed.
@@ -56,9 +56,11 @@ A link has either `userId` (authenticated) or `anonymousId` (anonymous), never b
 | GSI2 | `userId`      | `clickCount` | Sort links by popularity                   |
 | GSI3 | `anonymousId` | `createdAt`  | Get all links by anonymous session; claim  |
 
-### Streams
+### Link Expiration
 
-DynamoDB Streams is enabled on this table. A Lambda function is subscribed to the stream and listens for `REMOVE` events caused by TTL expiration. When a link expires, the Lambda automatically creates a new Notification record for the link owner. For anonymous links (no `userId`), the stream event is ignored — no notification is created.
+Link expiration is handled by **EventBridge Scheduler**. When a link is created or updated with an `expiresAt` value, a one-time EventBridge schedule is created. At the scheduled time, the `expire-link` Lambda is invoked — it sets the link status to `expired` and creates a Notification for the owner (if the link has a `userId`). For anonymous links, no notification is created.
+
+Expired records are **never deleted** from the database.
 
 ---
 
@@ -77,9 +79,10 @@ Append-only log of click events.
 | Attribute | Type   | Notes                                                |
 | --------- | ------ | ---------------------------------------------------- |
 | PK        | String | Partition key — slug                                 |
-| SK        | String | Sort key — Unix timestamp + UUID to avoid collisions |
+| SK        | String | Sort key — `clickedAt#clickId`                       |
 | clickId   | String | UUID, unique identifier for the click event          |
-| country   | String | Derived from request headers                         |
+| clickedAt | Number | Unix timestamp of the click                          |
+| country   | String | ISO 3166-1 alpha-2 code from `CF-IPCountry` header   |
 | referrer  | String | HTTP Referer header                                  |
 | userAgent | String | HTTP User-Agent header                               |
 
@@ -104,4 +107,4 @@ None required.
 | Get all notifications by user        | links-table  | Query PK=userId, SK begins_with NOTIFICATION#                       |
 | Get unread notifications             | links-table  | Query PK=userId, SK begins_with NOTIFICATION# + filter isRead=false |
 | Get all clicks by slug               | clicks-table | Query PK=slug                                                       |
-| Get clicks by date range             | clicks-table | Query PK=slug, SK between dates                                     |
+| Get clicks by date range             | clicks-table | Query PK=slug + FilterExpression clickedAt BETWEEN from AND to      |

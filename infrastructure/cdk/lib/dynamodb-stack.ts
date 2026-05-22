@@ -25,9 +25,6 @@ export class DynamodbStack extends cdk.Stack {
       partitionKey: { name: "PK", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "SK", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      timeToLiveAttribute: "expiresAt",
-      // Streams needed for TTL expiration → notification Lambda
-      stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
       removalPolicy,
     });
 
@@ -62,9 +59,6 @@ export class DynamodbStack extends cdk.Stack {
 
     new cdk.CfnOutput(this, "LinksTableName", {
       value: this.linksTable.tableName,
-    });
-    new cdk.CfnOutput(this, "LinksTableStreamArn", {
-      value: this.linksTable.tableStreamArn!,
     });
     new cdk.CfnOutput(this, "ClicksTableName", {
       value: this.clicksTable.tableName,

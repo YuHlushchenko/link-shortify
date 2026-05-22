@@ -24,6 +24,7 @@
   },
   "scripts": {
     "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi",
-    "esbuild": "esbuild"
+    "esbuild": "esbuild",
+    "docs:api": "bash docs/swagger/serve.sh"
   }
 }

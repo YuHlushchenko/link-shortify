@@ -19,7 +19,7 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 ### Frontend
 
 - **FSD** (Feature-Sliced Design) architecture. More details: [Feature-Sliced Design](https://feature-sliced.design)
-- **Next.js** (v14.2.13)
+- **Next.js** (v15.3.6)
 - **TypeScript**
 - **SCSS**
 - **Custom Hooks** for reusable logic
@@ -159,6 +159,18 @@ Run different types of tests:
 ```bash
      yarn test:ui:report
 ```
+
+---
+
+### API Documentation (Swagger)
+
+To browse the API documentation locally:
+
+```bash
+yarn docs:api
+```
+
+Opens Swagger UI at `http://localhost:8080`.
 
 ---
 
