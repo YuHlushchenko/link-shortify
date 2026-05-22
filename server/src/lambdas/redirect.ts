@@ -1,5 +1,6 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
 import { nanoid } from "nanoid";
+import warmer from "lambda-warmer";
 import { LinksRepository } from "../repositories/links.repository";
 import { ClicksRepository } from "../repositories/clicks.repository";
 import { createLayerLogger } from "../common/logger";
@@ -9,7 +10,7 @@ const logger = createLayerLogger(LogLayer.CONTROLLER);
 const linksRepository = new LinksRepository();
 const clicksRepository = new ClicksRepository();
 
-export const handler = async (
+const _handler = async (
   event: APIGatewayProxyEventV2,
 ): Promise<APIGatewayProxyResultV2> => {
   const slug = event.pathParameters?.slug;
@@ -50,4 +51,9 @@ export const handler = async (
     headers: { Location: link.originalUrl },
     body: "",
   };
+};
+
+export const handler = async (event: any): Promise<any> => {
+  if (await warmer(event)) return "warmed";
+  return _handler(event);
 };

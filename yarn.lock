@@ -13197,6 +13197,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lambda-warmer@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "lambda-warmer@npm:2.3.0"
+  checksum: 10c0/8f973b433fb757cb96abe4cd4f53efe4cbf531b7214c8109c03e36cbbcff0c9f4c6b3f6b988b64bca39420f5ff1309b9297d4e3cf5951e7463f4ad2667924824
+  languageName: node
+  linkType: hard
+
 "language-subtag-registry@npm:^0.3.20":
   version: 0.3.23
   resolution: "language-subtag-registry@npm:0.3.23"
@@ -13290,6 +13297,7 @@ __metadata:
     "@upstash/ratelimit": "npm:^2.0.8"
     "@upstash/redis": "npm:^1.38.0"
     http-errors: "npm:^2.0.0"
+    lambda-warmer: "npm:^2.3.0"
     nanoid: "npm:^3.3.11"
     pino: "npm:^9.0.0"
     typescript: "npm:~5.9.3"

@@ -5,6 +5,8 @@ import * as apigwv2Integrations from "aws-cdk-lib/aws-apigatewayv2-integrations"
 import * as apigwv2Authorizers from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import * as logs from "aws-cdk-lib/aws-logs";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as events from "aws-cdk-lib/aws-events";
+import * as targets from "aws-cdk-lib/aws-events-targets";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 import { AuthStack } from "./auth-stack";
@@ -65,6 +67,7 @@ export class ApiStack extends cdk.Stack {
       id: string,
       entry: string,
       extraEnv?: Record<string, string>,
+      memorySize = 256,
     ) => {
       const logGroup = new logs.LogGroup(this, `${id}LogGroup`, {
         logGroupName: `/aws/lambda/${fnPrefix}${id}`,
@@ -77,7 +80,7 @@ export class ApiStack extends cdk.Stack {
         handler: "handler",
         functionName: `${fnPrefix}${id}`,
         runtime: lambda.Runtime.NODEJS_22_X,
-        memorySize: 256,
+        memorySize,
         timeout: cdk.Duration.seconds(29),
         logGroup,
         environment: { ...commonEnv, ...extraEnv },
@@ -125,7 +128,7 @@ export class ApiStack extends cdk.Stack {
     };
 
     // ── Lambda functions ──────────────────────────────────────────────────────
-    const redirectLambda = createFn("RedirectFunction", "redirect.ts");
+    const redirectLambda = createFn("RedirectFunction", "redirect.ts", undefined, 512);
     const getLinksLambda = createFn("GetLinksFunction", "get-links.ts");
     const createLinkLambda = createFn(
       "CreateLinkFunction",
@@ -319,6 +322,20 @@ export class ApiStack extends cdk.Stack {
       deleteAccountLambda,
       jwtAuthorizer,
     );
+
+    // ── Redirect Lambda optimizations (prod only) ─────────────────────────────
+    if (props.stage === "prod") {
+      new events.Rule(this, "RedirectLambdaWarmer", {
+        ruleName: "redirect-lambda-warmer",
+        schedule: events.Schedule.rate(cdk.Duration.minutes(5)),
+        description: "Keep redirect Lambda warm to reduce cold starts",
+        targets: [
+          new targets.LambdaFunction(redirectLambda, {
+            event: events.RuleTargetInput.fromObject({ warmer: true, concurrency: 1 }),
+          }),
+        ],
+      });
+    }
 
     // ── Outputs ───────────────────────────────────────────────────────────────
     new cdk.CfnOutput(this, "ApiUrl", {

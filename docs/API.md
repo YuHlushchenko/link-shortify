@@ -62,6 +62,7 @@ Creates a shortened link for an unauthenticated user. No `Authorization` header 
 
 | Status                | Description                                           |
 | --------------------- | ----------------------------------------------------- |
+| 400 Bad Request       | URL points to a private or internal address           |
 | 409 Conflict          | Slug already exists                                   |
 | 429 Too Many Requests | Anonymous link limit reached (`ANON_LINK_LIMIT` = 5) |
 
@@ -222,10 +223,11 @@ Creates a new shortened link.
 
 **Errors**
 
-| Status                | Description         |
-| --------------------- | ------------------- |
-| 409 Conflict          | Slug already exists |
-| 429 Too Many Requests | Rate limit exceeded |
+| Status                | Description                                      |
+| --------------------- | ------------------------------------------------ |
+| 409 Conflict          | Slug already exists                              |
+| 400 Bad Request       | URL points to a private or internal address      |
+| 429 Too Many Requests | Rate limit exceeded                              |
 
 ---
 

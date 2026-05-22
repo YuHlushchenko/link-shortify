@@ -162,6 +162,19 @@ Run different types of tests:
 
 ---
 
+### API Testing
+
+To test the API endpoints manually, use the base URL from the AWS API Gateway console and a valid Cognito access token.
+
+**Getting an access token:**
+1. Run the client locally (`yarn dev`) or open the deployed app
+2. Sign in via Google OAuth or email/password
+3. Open browser DevTools → Application → Local Storage
+4. Copy the value of the Cognito access token key (starts with `eyJ...`)
+5. Use it as `Authorization: Bearer <token>` in your requests
+
+---
+
 ### API Documentation (Swagger)
 
 To browse the API documentation locally:

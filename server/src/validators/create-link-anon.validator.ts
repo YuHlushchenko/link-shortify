@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import { IValidator, ValidationError, LogLayer } from "../common/types";
 import { createLayerLogger } from "../common/logger";
+import { isPrivateUrl } from "../common/url-safety";
 
 const logger = createLayerLogger(LogLayer.VALIDATION);
 
@@ -64,6 +65,14 @@ export class CreateLinkAnonValidator implements IValidator<CreateLinkAnonRequest
 
     if (!VALID_URL_PROTOCOLS.has(parsed.protocol)) {
       this.errors.push({ field: "originalUrl", message: "'originalUrl' must use http or https" });
+      return;
+    }
+
+    if (isPrivateUrl(parsed)) {
+      this.errors.push({
+        field: "originalUrl",
+        message: "'originalUrl' must not point to a private or internal address",
+      });
     }
   }
 
