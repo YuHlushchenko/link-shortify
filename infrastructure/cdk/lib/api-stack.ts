@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as apigwv2 from "aws-cdk-lib/aws-apigatewayv2";
 import * as apigwv2Integrations from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import * as apigwv2Authorizers from "aws-cdk-lib/aws-apigatewayv2-authorizers";
@@ -12,7 +13,7 @@ import { Construct } from "constructs";
 import { AuthStack } from "./auth-stack";
 import { DynamodbStack } from "./dynamodb-stack";
 import { getLambdaPath } from "../utils/get-lambda-path";
-import { type Stage, getLambdaPrefix, getStackPrefix } from "../utils/stage";
+import { type Stage, getLambdaPrefix, getStackPrefix, getResourcePrefix } from "../utils/stage";
 
 interface ApiStackProps extends cdk.StackProps {
   authStack: AuthStack;
@@ -337,10 +338,34 @@ export class ApiStack extends cdk.Stack {
       });
     }
 
+    // ── Custom domain ─────────────────────────────────────────────────────────
+    const apiDomain = `${getResourcePrefix(props.stage)}api.julab.space`;
+
+    const certificate = new acm.Certificate(this, "ApiCertificate", {
+      domainName: apiDomain,
+      validation: acm.CertificateValidation.fromDns(),
+    });
+
+    const domainName = new apigwv2.DomainName(this, "ApiDomainName", {
+      domainName: apiDomain,
+      certificate,
+    });
+
+    new apigwv2.ApiMapping(this, "ApiMapping", {
+      api: httpApi,
+      domainName,
+    });
+
     // ── Outputs ───────────────────────────────────────────────────────────────
     new cdk.CfnOutput(this, "ApiUrl", {
       value: httpApi.apiEndpoint,
       exportName: `${stackPrefix}ApiUrl`,
+    });
+
+    new cdk.CfnOutput(this, "ApiDomainTarget", {
+      value: domainName.regionalDomainName,
+      exportName: `${stackPrefix}ApiDomainTarget`,
+      description: `CNAME target for ${apiDomain} in Cloudflare`,
     });
   }
 }
