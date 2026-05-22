@@ -53,6 +53,7 @@ export class ApiStack extends cdk.Stack {
     // ── Common env vars ───────────────────────────────────────────────────────
     const commonEnv = {
       LOG_LEVEL: props.stage === "prod" ? "info" : "debug",
+      STAGE: props.stage,
       LINKS_TABLE_NAME: props.dynamodbStack.linksTable.tableName,
       CLICKS_TABLE_NAME: props.dynamodbStack.clicksTable.tableName,
       PAGE_LIMIT: "20",
@@ -111,6 +112,13 @@ export class ApiStack extends cdk.Stack {
       EXPIRE_LINK_FUNCTION_ARN: expireLinkLambda.functionArn,
     };
 
+    const upstashEnv = {
+      UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL!,
+      UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN!,
+      RATE_LIMIT_PER_MINUTE: "10",
+      RATE_LIMIT_PER_DAY: "200",
+    };
+
     // ── Anonymous link env vars ───────────────────────────────────────────────
     const anonEnv = {
       ANON_LINK_LIMIT: "5",
@@ -122,7 +130,7 @@ export class ApiStack extends cdk.Stack {
     const createLinkLambda = createFn(
       "CreateLinkFunction",
       "create-link.ts",
-      schedulerEnv,
+      { ...schedulerEnv, ...upstashEnv },
     );
     const updateLinkLambda = createFn(
       "UpdateLinkFunction",
@@ -164,7 +172,7 @@ export class ApiStack extends cdk.Stack {
     const createLinkAnonLambda = createFn(
       "CreateLinkAnonFunction",
       "create-link-anon.ts",
-      { ...anonEnv, ...schedulerEnv },
+      { ...anonEnv, ...schedulerEnv, ...upstashEnv },
     );
     const getLinksAnonLambda = createFn("GetLinksAnonFunction", "get-links-anon.ts");
     const claimLinksLambda = createFn("ClaimLinksFunction", "claim-links.ts");

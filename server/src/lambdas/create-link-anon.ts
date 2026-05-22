@@ -8,6 +8,7 @@ import { createPublicHandler } from "../common/middleware";
 import { createLayerLogger } from "../common/logger";
 import { LogLayer } from "../common/types";
 import { CreateLinkAnonValidator } from "../validators/create-link-anon.validator";
+import { checkRateLimit } from "../common/ratelimit";
 
 const logger = createLayerLogger(LogLayer.LAMBDA);
 
@@ -38,6 +39,8 @@ export const handler = createPublicHandler(async (event) => {
   const anonymousId = createHash("sha256")
     .update(`${sourceIp}:${body.fingerprint}`)
     .digest("hex");
+
+  await checkRateLimit(anonymousId);
 
   const count = await linksService.countAnonymousLinks(anonymousId);
   if (count >= ANON_LINK_LIMIT) {

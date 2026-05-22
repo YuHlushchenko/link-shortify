@@ -7,6 +7,7 @@ import { createLayerLogger } from "../common/logger";
 import { LogLayer } from "../common/types";
 import createHttpError from "http-errors";
 import { CreateLinkValidator } from "../validators/create-link.validator";
+import { checkRateLimit } from "../common/ratelimit";
 
 const logger = createLayerLogger(LogLayer.LAMBDA);
 
@@ -18,6 +19,9 @@ const validator = new CreateLinkValidator();
 
 export const handler = createHandler(async (event) => {
   const userId = event.requestContext.authorizer.jwt.claims.sub as string;
+
+  await checkRateLimit(userId);
+
   let raw: unknown;
   try {
     raw = JSON.parse(event.body ?? "{}");

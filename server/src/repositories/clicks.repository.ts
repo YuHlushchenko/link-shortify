@@ -6,7 +6,7 @@ import { LogLayer } from "../common/types";
 
 const logger = createLayerLogger(LogLayer.REPOSITORY);
 
-const PAGE_LIMIT = 20;
+const PAGE_LIMIT = parseInt(process.env.PAGE_LIMIT ?? "20", 10);
 
 export interface ClickItem {
   PK: string; // slug

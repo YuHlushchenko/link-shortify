@@ -8,6 +8,17 @@ All endpoints except `GET /s/{slug}`, `POST /links/anonymous`, and `GET /links/a
 
 Anonymous users may create up to **5 active links** (configurable via `ANON_LINK_LIMIT`). Deleting a link frees up a slot. The limit is enforced per `SHA256(IP + browser fingerprint)` combination.
 
+## Rate Limiting
+
+Rate limits apply to link creation endpoints to prevent abuse. When a limit is exceeded, the API returns `429 Too Many Requests`.
+
+| Endpoint | Identifier | Per minute | Per day |
+| -------- | ---------- | ---------- | ------- |
+| `POST /links` | `userId` | 10 | 200 |
+| `POST /links/anonymous` | `SHA256(IP + fingerprint)` | 10 | 200 |
+
+Limits are enforced via Upstash Redis sliding window algorithm.
+
 ---
 
 ## Anonymous Links
