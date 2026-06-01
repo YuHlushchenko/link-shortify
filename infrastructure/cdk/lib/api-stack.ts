@@ -13,6 +13,7 @@ import { Construct } from "constructs";
 import { AuthStack } from "./auth-stack";
 import { DynamodbStack } from "./dynamodb-stack";
 import { getLambdaPath } from "../utils/get-lambda-path";
+import { buildDashboardBody } from "./dashboard-body";
 import { type Stage, getLambdaPrefix, getStackPrefix, getResourcePrefix } from "../utils/stage";
 
 interface ApiStackProps extends cdk.StackProps {
@@ -354,6 +355,31 @@ export class ApiStack extends cdk.Stack {
     new apigwv2.ApiMapping(this, "ApiMapping", {
       api: httpApi,
       domainName,
+    });
+
+    // ── CloudWatch Dashboard ──────────────────────────────────────────────────
+    if (props.stage === "prod") new cdk.aws_cloudwatch.CfnDashboard(this, "Dashboard", {
+      dashboardName: `link-shortify-${props.stage}`,
+      dashboardBody: buildDashboardBody({
+        region: this.region,
+        apiId: httpApi.apiId,
+        linksTableName: linksTable.tableName,
+        clicksTableName: clicksTable.tableName,
+        redirectFunctionName: redirectLambda.functionName,
+        createLinkFunctionName: createLinkLambda.functionName,
+        createLinkAnonFunctionName: createLinkAnonLambda.functionName,
+        getLinksFunctionName: getLinksLambda.functionName,
+        updateLinkFunctionName: updateLinkLambda.functionName,
+        deleteLinkFunctionName: deleteLinkLambda.functionName,
+        bulkDeleteLinksFunctionName: bulkDeleteLinksLambda.functionName,
+        getClicksFunctionName: getClicksLambda.functionName,
+        getNotificationsFunctionName: getNotificationsLambda.functionName,
+        updateNotificationFunctionName: updateNotificationLambda.functionName,
+        updateAllNotificationsFunctionName: updateAllNotificationsLambda.functionName,
+        claimLinksFunctionName: claimLinksLambda.functionName,
+        deleteAccountFunctionName: deleteAccountLambda.functionName,
+        expireLinkFunctionName: expireLinkLambda.functionName,
+      }),
     });
 
     // ── Outputs ───────────────────────────────────────────────────────────────
