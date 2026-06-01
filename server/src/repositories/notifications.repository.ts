@@ -1,4 +1,4 @@
-import { PutCommand, QueryCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { BatchWriteCommand, PutCommand, QueryCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 import createHttpError from "http-errors";
 import { docClient, LINKS_TABLE_NAME } from "../common/db";
@@ -205,6 +205,67 @@ export class NotificationsRepository {
         failedCount: failed.length,
       });
     }
+  }
+
+  async deleteAllByUser(userId: string): Promise<void> {
+    const allKeys: Array<{ PK: string; SK: string }> = [];
+    let cursor: string | undefined;
+
+    do {
+      const page = await this.getAllByUser({ userId, cursor });
+      allKeys.push(...page.items.map((n) => ({ PK: n.PK, SK: n.SK })));
+      cursor = page.nextCursor;
+    } while (cursor);
+
+    if (allKeys.length === 0) return;
+
+    const chunks: Array<Array<{ PK: string; SK: string }>> = [];
+    for (let i = 0; i < allKeys.length; i += 25) {
+      chunks.push(allKeys.slice(i, i + 25));
+    }
+
+    const sendBatch = (chunk: Array<{ PK: string; SK: string }>) =>
+      docClient.send(
+        new BatchWriteCommand({
+          RequestItems: {
+            [LINKS_TABLE_NAME]: chunk.map((key) => ({
+              DeleteRequest: { Key: key },
+            })),
+          },
+        }),
+      );
+
+    let failedChunks = (
+      await Promise.allSettled(chunks.map(sendBatch))
+    )
+      .map((r, i) => (r.status === "rejected" ? chunks[i] : null))
+      .filter((c): c is Array<{ PK: string; SK: string }> => c !== null);
+
+    for (let retry = 1; retry <= 2; retry++) {
+      if (failedChunks.length === 0) break;
+
+      await new Promise((resolve) => setTimeout(resolve, 500 * retry));
+
+      const retryResults = await Promise.allSettled(failedChunks.map(sendBatch));
+      const stillFailed: typeof failedChunks = [];
+
+      retryResults.forEach((r, i) => {
+        if (r.status === "fulfilled") {
+          logger.info({ text: "deleteAllByUser batch retry succeeded", retry });
+        } else {
+          stillFailed.push(failedChunks[i]);
+          logger.error({ text: "deleteAllByUser batch retry failed", retry, error: r.reason?.message });
+        }
+      });
+
+      failedChunks = stillFailed;
+    }
+
+    if (failedChunks.length > 0) {
+      logger.error({ text: "deleteAllByUser: some batches failed after all retries", userId, failedChunks: failedChunks.length });
+    }
+
+    logger.info({ text: "deleteAllByUser notifications", userId, count: allKeys.length });
   }
 }
 
