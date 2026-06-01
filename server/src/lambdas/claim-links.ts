@@ -26,7 +26,7 @@ export const handler = createHandler(async (event) => {
     throw createHttpError.BadRequest("'fingerprint' is required");
   }
 
-  const sourceIp = event.requestContext.http.sourceIp;
+  const sourceIp = event.headers?.["cf-connecting-ip"] ?? event.requestContext.http.sourceIp;
   const anonymousId = createHash("sha256")
     .update(`${sourceIp}:${body.fingerprint}`)
     .digest("hex");
