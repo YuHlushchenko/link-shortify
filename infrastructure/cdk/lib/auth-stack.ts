@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as ses from "aws-cdk-lib/aws-ses";
-import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
+import * as ssm from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
 import { type Stage, getResourcePrefix, getStackPrefix } from "../utils/stage";
 
@@ -33,10 +33,13 @@ export class AuthStack extends cdk.Stack {
         })
       : null;
 
-    const googleSecret = secretsmanager.Secret.fromSecretNameV2(
+    const googleClientId = ssm.StringParameter.valueForStringParameter(
       this,
-      "GoogleOauthSecret",
-      `${props.stage}/link-shortify/google-oauth`,
+      `/${props.stage}/link-shortify/google-client-id`,
+    );
+
+    const googleClientSecret = cdk.SecretValue.unsafePlainText(
+      process.env.GOOGLE_CLIENT_SECRET!,
     );
 
     const userPool = new cognito.UserPool(this, "UserPool", {
@@ -82,13 +85,8 @@ export class AuthStack extends cdk.Stack {
       "GoogleProvider",
       {
         userPool,
-        // clientId is not a secret — appears in OAuth consent screen URLs
-        clientId: googleSecret
-          .secretValueFromJson("GOOGLE_CLIENT_ID")
-          .unsafeUnwrap(),
-        clientSecretValue: googleSecret.secretValueFromJson(
-          "GOOGLE_CLIENT_SECRET",
-        ),
+        clientId: googleClientId,
+        clientSecretValue: googleClientSecret,
         scopes: ["openid", "email", "profile"],
         attributeMapping: {
           email: cognito.ProviderAttribute.GOOGLE_EMAIL,
