@@ -8,6 +8,11 @@ import * as logs from "aws-cdk-lib/aws-logs";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as events from "aws-cdk-lib/aws-events";
 import * as targets from "aws-cdk-lib/aws-events-targets";
+import * as sns from "aws-cdk-lib/aws-sns";
+import * as snsSubscriptions from "aws-cdk-lib/aws-sns-subscriptions";
+import * as cloudwatch from "aws-cdk-lib/aws-cloudwatch";
+import * as cloudwatchActions from "aws-cdk-lib/aws-cloudwatch-actions";
+import * as budgets from "aws-cdk-lib/aws-budgets";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 import { AuthStack } from "./auth-stack";
@@ -20,6 +25,9 @@ interface ApiStackProps extends cdk.StackProps {
   authStack: AuthStack;
   dynamodbStack: DynamodbStack;
   stage: Stage;
+  domainName: string;
+  // If provided, CloudWatch alarms + budget alerts are created (prod only)
+  alertEmail?: string;
 }
 
 export class ApiStack extends cdk.Stack {
@@ -340,7 +348,7 @@ export class ApiStack extends cdk.Stack {
     }
 
     // ── Custom domain ─────────────────────────────────────────────────────────
-    const apiDomain = `${getResourcePrefix(props.stage)}api.julab.space`;
+    const apiDomain = `${getResourcePrefix(props.stage)}api.${props.domainName}`;
 
     const certificate = new acm.Certificate(this, "ApiCertificate", {
       domainName: apiDomain,
@@ -381,6 +389,211 @@ export class ApiStack extends cdk.Stack {
         expireLinkFunctionName: expireLinkLambda.functionName,
       }),
     });
+
+    // ── Alerts (prod only) ────────────────────────────────────────────────────
+    if (props.stage === "prod" && props.alertEmail) {
+      // SNS topic — single destination for all alerts
+      const alertTopic = new sns.Topic(this, "AlertTopic", {
+        topicName: "link-shortify-alerts",
+        displayName: "Link-Shortify Alerts",
+      });
+      alertTopic.addSubscription(
+        new snsSubscriptions.EmailSubscription(props.alertEmail),
+      );
+      // Allow AWS Budgets to publish to this topic
+      alertTopic.addToResourcePolicy(
+        new iam.PolicyStatement({
+          principals: [new iam.ServicePrincipal("budgets.amazonaws.com")],
+          actions: ["SNS:Publish"],
+          resources: [alertTopic.topicArn],
+        }),
+      );
+
+      // ── API Gateway access logs ──────────────────────────────────────────
+      // Access logs capture every request with status code, route, and error
+      // details — needed for 429 metric filter and 5xx root-cause tracing.
+      const accessLogGroup = new logs.LogGroup(this, "ApiAccessLogGroup", {
+        logGroupName: `/aws/apigateway/${fnPrefix}link-shortify`,
+        retention: logs.RetentionDays.THREE_MONTHS,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      });
+      accessLogGroup.grantWrite(
+        new iam.ServicePrincipal("apigateway.amazonaws.com"),
+      );
+
+      const cfnStage = httpApi.defaultStage!.node.defaultChild as apigwv2.CfnStage;
+      cfnStage.accessLogSettings = {
+        destinationArn: accessLogGroup.logGroupArn,
+        format: JSON.stringify({
+          requestId: "$context.requestId",
+          status: "$context.status",
+          routeKey: "$context.routeKey",
+          errorMessage: "$context.error.message",
+          integrationError: "$context.integration.error",
+          integrationStatus: "$context.integration.status",
+          timestamp: "$context.requestTimeEpoch",
+          sourceIp: "$context.identity.sourceIp",
+        }),
+      };
+
+      // ── Metric filters ───────────────────────────────────────────────────
+      // 429 on POST /links (auth) or POST /links/anonymous — abuse detection
+      new logs.MetricFilter(this, "Links429Filter", {
+        logGroup: accessLogGroup,
+        filterPattern: logs.FilterPattern.literal(
+          '{ $.status = "429" && ($.routeKey = "POST /links" || $.routeKey = "POST /links/anonymous") }',
+        ),
+        metricNamespace: "LinkShortify",
+        metricName: "Links429Count",
+        metricValue: "1",
+        defaultValue: 0,
+      });
+
+      // 5xx from any endpoint — unhandled errors or Lambda/integration failures
+      new logs.MetricFilter(this, "Api5xxFilter", {
+        logGroup: accessLogGroup,
+        filterPattern: logs.FilterPattern.literal(
+          '{ $.status = "500" || $.status = "502" || $.status = "503" || $.status = "504" }',
+        ),
+        metricNamespace: "LinkShortify",
+        metricName: "Api5xxCount",
+        metricValue: "1",
+        defaultValue: 0,
+      });
+
+      // ── CloudWatch Alarms ────────────────────────────────────────────────
+      const alarm = (
+        id: string,
+        metric: cloudwatch.IMetric,
+        threshold: number,
+        name: string,
+        description: string,
+      ) =>
+        new cloudwatch.Alarm(this, id, {
+          metric,
+          threshold,
+          evaluationPeriods: 1,
+          alarmName: name,
+          alarmDescription: description,
+          treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
+          comparisonOperator:
+            cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+        }).addAlarmAction(new cloudwatchActions.SnsAction(alertTopic));
+
+      // 1) Redirect Lambda unhandled error — direct Lambda Errors metric
+      alarm(
+        "RedirectErrorsAlarm",
+        redirectLambda.metricErrors({ period: cdk.Duration.minutes(5) }),
+        1,
+        "link-shortify-redirect-errors",
+        `RedirectFunction threw an unhandled error.\nLogs: /aws/lambda/${fnPrefix}RedirectFunction`,
+      );
+
+      // 2) Abuse: rate limit (429) triggered ≥3 times in 5 min on /links
+      alarm(
+        "Links429Alarm",
+        new cloudwatch.Metric({
+          namespace: "LinkShortify",
+          metricName: "Links429Count",
+          statistic: "Sum",
+          period: cdk.Duration.minutes(5),
+        }),
+        3,
+        "link-shortify-rate-limit-abuse",
+        `429 rate limit triggered ≥3 times in 5 min on POST /links.\nAccess logs: /aws/apigateway/${fnPrefix}link-shortify`,
+      );
+
+      // 3) Any 5xx from the API
+      alarm(
+        "Api5xxAlarm",
+        new cloudwatch.Metric({
+          namespace: "LinkShortify",
+          metricName: "Api5xxCount",
+          statistic: "Sum",
+          period: cdk.Duration.minutes(5),
+        }),
+        1,
+        "link-shortify-5xx-errors",
+        `5xx error detected.\nAccess logs: /aws/apigateway/${fnPrefix}link-shortify\nLambda logs: /aws/lambda/${fnPrefix}<FunctionName>`,
+      );
+
+      // 4) Redirect Lambda throttled by Lambda concurrency limits
+      alarm(
+        "RedirectThrottlesAlarm",
+        redirectLambda.metricThrottles({ period: cdk.Duration.minutes(5) }),
+        1,
+        "link-shortify-redirect-throttles",
+        `RedirectFunction is being throttled (Lambda concurrency limit reached).\nCheck: CloudWatch → Lambda → ${fnPrefix}RedirectFunction → Concurrency`,
+      );
+
+      // 5) Redirect p99 latency — PRD target <100ms; p99 >500ms signals real degradation
+      alarm(
+        "RedirectDurationAlarm",
+        redirectLambda.metricDuration({
+          period: cdk.Duration.minutes(5),
+          statistic: "p99",
+        }),
+        500,
+        "link-shortify-redirect-latency",
+        `RedirectFunction p99 duration exceeded 500ms.\nLogs: /aws/lambda/${fnPrefix}RedirectFunction`,
+      );
+
+      // 6) create-link Lambda errors — critical write path, direct alarm is more reliable than 5xx filter
+      alarm(
+        "CreateLinkErrorsAlarm",
+        createLinkLambda.metricErrors({ period: cdk.Duration.minutes(5) }),
+        1,
+        "link-shortify-create-link-errors",
+        `CreateLinkFunction threw an unhandled error.\nLogs: /aws/lambda/${fnPrefix}CreateLinkFunction`,
+      );
+
+      // 7) DynamoDB throttled requests — PAY_PER_REQUEST can still throttle on hot partitions
+      alarm(
+        "DynamoThrottlesAlarm",
+        props.dynamodbStack.linksTable.metric("ThrottledRequests", {
+          period: cdk.Duration.minutes(5),
+          statistic: "Sum",
+        }),
+        1,
+        "link-shortify-dynamo-throttles",
+        `DynamoDB links table is throttling requests (hot partition).\nCheck: CloudWatch → DynamoDB → ${props.dynamodbStack.linksTable.tableName}`,
+      );
+
+      // ── Budget alert ─────────────────────────────────────────────────────
+      // Sends email when actual spend exceeds $0.05/month (the cost target).
+      // Uses direct email subscriber (no SNS needed for budget).
+      new budgets.CfnBudget(this, "MonthlyBudget", {
+        budget: {
+          budgetName: "link-shortify-monthly",
+          budgetType: "COST",
+          timeUnit: "MONTHLY",
+          budgetLimit: { amount: 0.05, unit: "USD" },
+        },
+        notificationsWithSubscribers: [
+          {
+            notification: {
+              notificationType: "ACTUAL",
+              comparisonOperator: "GREATER_THAN",
+              threshold: 80,
+              thresholdType: "PERCENTAGE",
+            },
+            subscribers: [{ subscriptionType: "EMAIL", address: props.alertEmail }],
+          },
+          {
+            notification: {
+              notificationType: "ACTUAL",
+              comparisonOperator: "GREATER_THAN",
+              threshold: 100,
+              thresholdType: "PERCENTAGE",
+            },
+            subscribers: [
+              { subscriptionType: "EMAIL", address: props.alertEmail },
+              { subscriptionType: "SNS", address: alertTopic.topicArn },
+            ],
+          },
+        ],
+      });
+    }
 
     // ── Outputs ───────────────────────────────────────────────────────────────
     new cdk.CfnOutput(this, "ApiUrl", {

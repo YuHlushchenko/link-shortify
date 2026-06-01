@@ -52,9 +52,13 @@ const authStack = new AuthStack(app, `${stackPrefix}AuthStack`, {
   extraLogoutUrls: vercelUrl ? [vercelUrl] : [],
 })
 
+const alertEmail = process.env.ALERT_EMAIL
+
 new ApiStack(app, `${stackPrefix}ApiStack`, {
   env: { account, region },
   stage,
+  domainName,
   authStack,
   dynamodbStack,
+  alertEmail,
 })
