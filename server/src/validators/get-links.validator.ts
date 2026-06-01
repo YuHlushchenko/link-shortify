@@ -23,6 +23,8 @@ export interface GetLinksRequest {
   sortBy?: unknown;
   order?: unknown;
   status?: unknown;
+  from?: unknown;
+  to?: unknown;
 }
 
 export class GetLinksValidator implements IValidator<GetLinksRequest> {
@@ -34,6 +36,7 @@ export class GetLinksValidator implements IValidator<GetLinksRequest> {
     this.validateSortBy(request.sortBy);
     this.validateOrder(request.order);
     this.validateStatus(request.status);
+    this.validateDateRange(request.from, request.to);
 
     if (this.errors.length > 0) {
       logger.warn({ text: "GetLinks validation failed", errors: this.errors });
@@ -71,6 +74,23 @@ export class GetLinksValidator implements IValidator<GetLinksRequest> {
         field: "status",
         message: `'status' must be one of: ${VALID_STATUSES.join(", ")}`,
       });
+    }
+  }
+
+  private validateDateRange(from: unknown, to: unknown): void {
+    const fromNum = from !== undefined ? Number(from) : null;
+    const toNum = to !== undefined ? Number(to) : null;
+
+    if (fromNum !== null && (!Number.isInteger(fromNum) || isNaN(fromNum))) {
+      this.errors.push({ field: "from", message: "'from' must be an integer Unix timestamp" });
+    }
+
+    if (toNum !== null && (!Number.isInteger(toNum) || isNaN(toNum))) {
+      this.errors.push({ field: "to", message: "'to' must be an integer Unix timestamp" });
+    }
+
+    if (fromNum !== null && toNum !== null && !isNaN(fromNum) && !isNaN(toNum) && fromNum > toNum) {
+      this.errors.push({ field: "from/to", message: "'from' must not be greater than 'to'" });
     }
   }
 }

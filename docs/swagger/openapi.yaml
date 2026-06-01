@@ -210,6 +210,20 @@ paths:
           schema:
             type: string
             enum: [active, inactive, expired]
+        - name: from
+          in: query
+          required: false
+          description: Unix timestamp — return links created at or after
+          schema:
+            type: integer
+          example: 1748000000
+        - name: to
+          in: query
+          required: false
+          description: Unix timestamp — return links created at or before
+          schema:
+            type: integer
+          example: 1748999999
         - name: cursor
           in: query
           required: false

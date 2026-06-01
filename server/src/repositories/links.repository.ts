@@ -58,6 +58,8 @@ export interface GetAllLinksInput {
   sortBy?: "createdAt" | "clickCount";
   order?: "asc" | "desc";
   status?: LinkStatus;
+  from?: number;
+  to?: number;
   cursor?: string;
 }
 
@@ -67,28 +69,60 @@ export class LinksRepository {
     sortBy = "createdAt",
     order = "desc",
     status,
+    from,
+    to,
     cursor,
   }: GetAllLinksInput): Promise<PaginatedLinks> {
     const indexName = sortBy === "clickCount" ? "GSI2" : "GSI1";
+    const useKeyDateRange = indexName === "GSI1" && (from !== undefined || to !== undefined);
 
     const expressionValues: Record<string, unknown> = { ":userId": userId };
-    let filterExpression: string;
+    const filterParts: string[] = [];
 
+    // Status filter
     if (status) {
       expressionValues[":status"] = status;
-      filterExpression = "#status = :status";
+      filterParts.push("#status = :status");
     } else {
       expressionValues[":deleted"] = "deleted";
-      filterExpression = "#status <> :deleted";
+      filterParts.push("#status <> :deleted");
+    }
+
+    // Key condition (GSI1 — createdAt is SK, so BETWEEN is efficient)
+    let keyCondition = "userId = :userId";
+    if (useKeyDateRange) {
+      if (from !== undefined && to !== undefined) {
+        expressionValues[":from"] = from;
+        expressionValues[":to"] = to;
+        keyCondition += " AND createdAt BETWEEN :from AND :to";
+      } else if (from !== undefined) {
+        expressionValues[":from"] = from;
+        keyCondition += " AND createdAt >= :from";
+      } else if (to !== undefined) {
+        expressionValues[":to"] = to;
+        keyCondition += " AND createdAt <= :to";
+      }
+    }
+
+    // Date range via filter for GSI2 (createdAt is not the SK there)
+    if (!useKeyDateRange) {
+      if (from !== undefined) {
+        expressionValues[":from"] = from;
+        filterParts.push("createdAt >= :from");
+      }
+      if (to !== undefined) {
+        expressionValues[":to"] = to;
+        filterParts.push("createdAt <= :to");
+      }
     }
 
     const result = await docClient.send(
       new QueryCommand({
         TableName: LINKS_TABLE_NAME,
         IndexName: indexName,
-        KeyConditionExpression: "userId = :userId",
+        KeyConditionExpression: keyCondition,
         ExpressionAttributeValues: expressionValues,
-        FilterExpression: filterExpression,
+        FilterExpression: filterParts.length > 0 ? filterParts.join(" AND ") : undefined,
         ExpressionAttributeNames: { "#status": "status" },
         ScanIndexForward: order === "asc",
         Limit: PAGE_LIMIT,

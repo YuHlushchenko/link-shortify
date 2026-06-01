@@ -163,6 +163,8 @@ Returns all shortened links for the authenticated user.
 | sortBy    | string | No       | `createdAt` or `clickCount`. Default: `createdAt` |
 | order     | string | No       | `asc` or `desc`. Default: `desc`                  |
 | status    | string | No       | `active`, `inactive`, or `expired`                |
+| from      | number | No       | Unix timestamp — return links created at or after |
+| to        | number | No       | Unix timestamp — return links created at or before |
 
 **Response**
 

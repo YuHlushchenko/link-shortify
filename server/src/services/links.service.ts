@@ -20,6 +20,8 @@ export interface GetLinksInput {
   sortBy?: "createdAt" | "clickCount";
   order?: "asc" | "desc";
   status?: LinkStatus;
+  from?: number;
+  to?: number;
   cursor?: string;
 }
 
@@ -43,7 +45,15 @@ export class LinksService {
   ) {}
 
   async getLinks(input: GetLinksInput): Promise<PaginatedLinks> {
-    return this.linksRepository.getAll(input);
+    return this.linksRepository.getAll({
+      userId: input.userId,
+      sortBy: input.sortBy,
+      order: input.order,
+      status: input.status,
+      from: input.from,
+      to: input.to,
+      cursor: input.cursor,
+    });
   }
 
   async createLink(input: CreateLinkInput): Promise<LinkItem> {

@@ -19,13 +19,15 @@ export const handler = createHandler(async (event) => {
   const userId = event.requestContext.authorizer.jwt.claims.sub as string;
   const q = event.queryStringParameters ?? {};
 
-  validator.validate({ sortBy: q.sortBy, order: q.order, status: q.status });
+  validator.validate({ sortBy: q.sortBy, order: q.order, status: q.status, from: q.from, to: q.to });
 
   const result = await linksService.getLinks({
     userId,
     sortBy: q.sortBy as LinkSortBy | undefined,
     order: q.order as SortOrder | undefined,
     status: q.status as LinkStatus | undefined,
+    ...(q.from !== undefined && { from: Number(q.from) }),
+    ...(q.to !== undefined && { to: Number(q.to) }),
     cursor: q.cursor,
   });
 

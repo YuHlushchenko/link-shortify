@@ -25,8 +25,8 @@ export const handler = createHandler(async (event) => {
   const result = await clicksService.getClicks({
     userId,
     slug,
-    from: q.from ? Number(q.from) : undefined,
-    to: q.to ? Number(q.to) : undefined,
+    ...(q.from !== undefined && { from: Number(q.from) }),
+    ...(q.to !== undefined && { to: Number(q.to) }),
     cursor: q.cursor,
   });
 
