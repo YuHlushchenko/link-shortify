@@ -400,14 +400,16 @@ export class ApiStack extends cdk.Stack {
       alertTopic.addSubscription(
         new snsSubscriptions.EmailSubscription(props.alertEmail),
       );
-      // Allow AWS Budgets to publish to this topic
-      alertTopic.addToResourcePolicy(
-        new iam.PolicyStatement({
-          principals: [new iam.ServicePrincipal("budgets.amazonaws.com")],
-          actions: ["SNS:Publish"],
-          resources: [alertTopic.topicArn],
-        }),
-      );
+      // Allow AWS Budgets and CloudWatch to publish to this topic
+      for (const service of ["budgets.amazonaws.com", "cloudwatch.amazonaws.com"]) {
+        alertTopic.addToResourcePolicy(
+          new iam.PolicyStatement({
+            principals: [new iam.ServicePrincipal(service)],
+            actions: ["SNS:Publish"],
+            resources: [alertTopic.topicArn],
+          }),
+        );
+      }
 
       // ── API Gateway access logs ──────────────────────────────────────────
       // Access logs capture every request with status code, route, and error
