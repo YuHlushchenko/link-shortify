@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as cognito from "aws-cdk-lib/aws-cognito";
+import * as ses from "aws-cdk-lib/aws-ses";
 import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 import { Construct } from "constructs";
 import { type Stage, getResourcePrefix, getStackPrefix } from "../utils/stage";
@@ -25,6 +26,12 @@ export class AuthStack extends cdk.Stack {
 
     const resourcePrefix = getResourcePrefix(props.stage);
     const stackPrefix = getStackPrefix(props.stage);
+
+    const sesIdentity = props.stage === "prod"
+      ? new ses.EmailIdentity(this, "SesIdentity", {
+          identity: ses.Identity.domain(props.domainName),
+        })
+      : null;
 
     const googleSecret = secretsmanager.Secret.fromSecretNameV2(
       this,
@@ -56,6 +63,13 @@ export class AuthStack extends cdk.Stack {
         familyName: { required: false, mutable: true },
         profilePicture: { required: false, mutable: true },
       },
+      ...(sesIdentity ? {
+        email: cognito.UserPoolEmail.withSES({
+          sesRegion: this.region,
+          fromEmail: `noreply@${props.domainName}`,
+          fromName: "Link-Shortify",
+        }),
+      } : {}),
       accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
       removalPolicy:
         props.stage === "prod"
@@ -159,6 +173,21 @@ export class AuthStack extends cdk.Stack {
       value: userPoolClient.userPoolClientId,
       exportName: `${stackPrefix}UserPoolClientId`,
     });
+
+    if (sesIdentity) {
+      new cdk.CfnOutput(this, "SesDkim1", {
+        value: `${sesIdentity.dkimDnsTokenName1} → ${sesIdentity.dkimDnsTokenValue1}`,
+        description: "DKIM CNAME 1 — add to Cloudflare (no proxy)",
+      });
+      new cdk.CfnOutput(this, "SesDkim2", {
+        value: `${sesIdentity.dkimDnsTokenName2} → ${sesIdentity.dkimDnsTokenValue2}`,
+        description: "DKIM CNAME 2 — add to Cloudflare (no proxy)",
+      });
+      new cdk.CfnOutput(this, "SesDkim3", {
+        value: `${sesIdentity.dkimDnsTokenName3} → ${sesIdentity.dkimDnsTokenValue3}`,
+        description: "DKIM CNAME 3 — add to Cloudflare (no proxy)",
+      });
+    }
 
     new cdk.CfnOutput(this, "CognitoDomain", {
       value: userPoolDomain.cloudFrontEndpoint,
