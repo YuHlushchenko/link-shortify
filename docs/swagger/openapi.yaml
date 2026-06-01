@@ -525,7 +525,9 @@ components:
       description: Link slug
       schema:
         type: string
-        pattern: '^[a-z0-9-_]{1,32}$'
+        pattern: '^[a-z0-9][a-z0-9-]*[a-z0-9]$'
+        minLength: 3
+        maxLength: 50
       example: abc123
 
   schemas:
@@ -540,7 +542,9 @@ components:
           description: Destination URL
         slug:
           type: string
-          pattern: '^[a-z0-9-_]{1,32}$'
+          pattern: '^[a-z0-9][a-z0-9-]*[a-z0-9]$'
+          minLength: 3
+          maxLength: 50
           description: Custom slug. Auto-generated if not provided
         expiresAt:
           type: integer
@@ -561,7 +565,9 @@ components:
           description: Destination URL
         slug:
           type: string
-          pattern: '^[a-z0-9-_]{1,32}$'
+          pattern: '^[a-z0-9][a-z0-9-]*[a-z0-9]$'
+          minLength: 3
+          maxLength: 50
           description: Custom slug. Auto-generated if not provided
         expiresAt:
           type: integer

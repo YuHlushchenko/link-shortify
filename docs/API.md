@@ -19,6 +19,10 @@ Rate limits apply to link creation endpoints to prevent abuse. When a limit is e
 
 Limits are enforced via Upstash Redis sliding window algorithm.
 
+## Pagination
+
+Endpoints that return lists support cursor-based pagination. When there are more results, the response includes a `nextCursor` string. Pass it as the `cursor` query parameter in the next request to fetch the next page. Page size is 20 items.
+
 ---
 
 ## Anonymous Links
@@ -154,7 +158,7 @@ Deletes the authenticated user's Cognito account (including linked OAuth provide
 
 `GET /links`
 
-Returns all shortened links for the authenticated user.
+Returns shortened links for the authenticated user. Supports cursor-based pagination (page size: 20).
 
 **Query Parameters**
 
@@ -165,6 +169,7 @@ Returns all shortened links for the authenticated user.
 | status    | string | No       | `active`, `inactive`, or `expired`                |
 | from      | number | No       | Unix timestamp — return links created at or after |
 | to        | number | No       | Unix timestamp — return links created at or before |
+| cursor    | string | No       | Pagination cursor from previous response          |
 
 **Response**
 
@@ -181,9 +186,12 @@ Returns all shortened links for the authenticated user.
       "expiresAt": 1767225600,
       "clickCount": 42
     }
-  ]
+  ],
+  "nextCursor": "eyJQSyI6ImFiYzEyMyJ9"
 }
 ```
+
+`nextCursor` is omitted when there are no more results.
 
 ---
 
@@ -307,7 +315,7 @@ Deletes multiple links at once.
 
 `GET /links/{slug}/clicks`
 
-Returns the click history for a specific link.
+Returns the click history for a specific link. Supports cursor-based pagination (page size: 20).
 
 **Query Parameters**
 
@@ -315,6 +323,7 @@ Returns the click history for a specific link.
 | --------- | ------ | -------- | ----------------------------------- |
 | from      | number | No       | Unix timestamp, start of date range |
 | to        | number | No       | Unix timestamp, end of date range   |
+| cursor    | string | No       | Pagination cursor from previous response |
 
 **Response**
 
@@ -329,9 +338,12 @@ Returns the click history for a specific link.
       "referrer": "https://twitter.com",
       "userAgent": "Mozilla/5.0 ..."
     }
-  ]
+  ],
+  "nextCursor": "eyJQSyI6ImFiYzEyMyJ9"
 }
 ```
+
+`nextCursor` is omitted when there are no more results.
 
 ---
 
@@ -365,13 +377,14 @@ Location: https://example.com/very/long/url
 
 `GET /notifications`
 
-Returns all notifications for the authenticated user, sorted by date descending.
+Returns all notifications for the authenticated user, sorted by date descending. Supports cursor-based pagination (page size: 20).
 
 **Query Parameters**
 
 | Parameter  | Type    | Required | Description                                  |
 | ---------- | ------- | -------- | -------------------------------------------- |
 | unreadOnly | boolean | No       | If `true`, returns only unread notifications |
+| cursor     | string  | No       | Pagination cursor from previous response     |
 
 **Response**
 
@@ -385,9 +398,12 @@ Returns all notifications for the authenticated user, sorted by date descending.
       "isRead": false,
       "createdAt": 1735689600
     }
-  ]
+  ],
+  "nextCursor": "eyJQSyI6InVzZXIxIn0="
 }
 ```
+
+`nextCursor` is omitted when there are no more results.
 
 ---
 
