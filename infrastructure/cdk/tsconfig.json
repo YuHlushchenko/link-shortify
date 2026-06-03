@@ -24,6 +24,10 @@
     "outDir": "./dist",
     "typeRoots": [
       "./node_modules/@types"
+    ],
+    "types": [
+      "jest",
+      "node"
     ]
   },
   "exclude": [

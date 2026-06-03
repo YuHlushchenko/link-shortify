@@ -3830,7 +3830,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
 }
 `;
 
-exports[`ApiStack prod with alertEmail matches snapshot 1`] = `
+exports[`ApiStack prod matches snapshot 1`] = `
 {
   "Outputs": {
     "ApiDomainTarget": {

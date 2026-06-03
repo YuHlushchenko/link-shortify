@@ -4,7 +4,7 @@ import { Construct } from "constructs";
 
 const GITHUB_OIDC_DOMAIN = "token.actions.githubusercontent.com";
 const GITHUB_OIDC_URL = `https://${GITHUB_OIDC_DOMAIN}`;
-const GITHUB_REPO = "YuHlushchenko/link-shortify";
+export const GITHUB_REPO = "YuHlushchenko/link-shortify";
 
 export class GithubOidcStack extends cdk.Stack {
   public readonly deployRoleArn: string;

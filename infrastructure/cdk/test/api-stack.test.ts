@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib'
-import { Template } from 'aws-cdk-lib/assertions'
+import { Template, Match } from 'aws-cdk-lib/assertions'
 import { ApiStack } from '../lib/api-stack'
 import { AuthStack } from '../lib/auth-stack'
 import { DynamodbStack } from '../lib/dynamodb-stack'
@@ -23,30 +23,115 @@ function makeDeps(app: cdk.App, stage: 'dev' | 'prod') {
 }
 
 describe('ApiStack', () => {
-  it('dev matches snapshot', () => {
-    const app = new cdk.App()
-    app.node.setContext('aws:cdk:bundling-stacks', [])
-    const { dynamodbStack, authStack } = makeDeps(app, 'dev')
-    const stack = new ApiStack(app, 'ApiStack', {
-      stage: 'dev',
-      domainName: 'test.example.com',
-      authStack,
-      dynamodbStack,
+  describe('dev', () => {
+    let template: Template
+
+    beforeAll(() => {
+      const app = new cdk.App()
+      app.node.setContext('aws:cdk:bundling-stacks', [])
+      const { dynamodbStack, authStack } = makeDeps(app, 'dev')
+      const stack = new ApiStack(app, 'ApiStack', {
+        stage: 'dev',
+        domainName: 'test.example.com',
+        authStack,
+        dynamodbStack,
+      })
+      template = Template.fromStack(stack)
     })
-    expect(Template.fromStack(stack).toJSON()).toMatchSnapshot()
+
+    it('matches snapshot', () => {
+      expect(template.toJSON()).toMatchSnapshot()
+    })
+
+    it('creates exactly 15 Lambda functions', () => {
+      template.resourceCountIs('AWS::Lambda::Function', 15)
+    })
+
+    it('all Lambda functions use nodejs22.x runtime', () => {
+      template.allResourcesProperties('AWS::Lambda::Function', {
+        Runtime: 'nodejs22.x',
+      })
+    })
+
+    it('RedirectFunction has 512 MB memory', () => {
+      template.hasResourceProperties('AWS::Lambda::Function', {
+        FunctionName: 'Dev-RedirectFunction',
+        MemorySize: 512,
+      })
+    })
+
+    it('other Lambda functions have 256 MB memory', () => {
+      template.hasResourceProperties('AWS::Lambda::Function', {
+        FunctionName: 'Dev-CreateLinkFunction',
+        MemorySize: 256,
+        Timeout: 29,
+      })
+    })
+
+    it('no CloudWatch alarms in dev', () => {
+      template.resourceCountIs('AWS::CloudWatch::Alarm', 0)
+    })
+
+    it('no SNS topic in dev', () => {
+      template.resourceCountIs('AWS::SNS::Topic', 0)
+    })
+
+    it('no budget in dev', () => {
+      template.resourceCountIs('AWS::Budgets::Budget', 0)
+    })
+
+    it('no Lambda warmer EventBridge rule in dev', () => {
+      template.resourceCountIs('AWS::Events::Rule', 0)
+    })
   })
 
-  it('prod with alertEmail matches snapshot', () => {
-    const app = new cdk.App()
-    app.node.setContext('aws:cdk:bundling-stacks', [])
-    const { dynamodbStack, authStack } = makeDeps(app, 'prod')
-    const stack = new ApiStack(app, 'ApiStack', {
-      stage: 'prod',
-      domainName: 'test.example.com',
-      authStack,
-      dynamodbStack,
-      alertEmail: 'test@example.com',
+  describe('prod', () => {
+    let template: Template
+
+    beforeAll(() => {
+      const app = new cdk.App()
+      app.node.setContext('aws:cdk:bundling-stacks', [])
+      const { dynamodbStack, authStack } = makeDeps(app, 'prod')
+      const stack = new ApiStack(app, 'ApiStack', {
+        stage: 'prod',
+        domainName: 'test.example.com',
+        authStack,
+        dynamodbStack,
+        alertEmail: 'test@example.com',
+      })
+      template = Template.fromStack(stack)
     })
-    expect(Template.fromStack(stack).toJSON()).toMatchSnapshot()
+
+    it('matches snapshot', () => {
+      expect(template.toJSON()).toMatchSnapshot()
+    })
+
+    it('creates exactly 7 CloudWatch alarms', () => {
+      template.resourceCountIs('AWS::CloudWatch::Alarm', 7)
+    })
+
+    it('creates SNS alert topic', () => {
+      template.resourceCountIs('AWS::SNS::Topic', 1)
+      template.hasResourceProperties('AWS::SNS::Topic', {
+        TopicName: 'link-shortify-alerts',
+      })
+    })
+
+    it('creates monthly budget', () => {
+      template.resourceCountIs('AWS::Budgets::Budget', 1)
+      template.hasResourceProperties('AWS::Budgets::Budget', {
+        Budget: Match.objectLike({
+          BudgetType: 'COST',
+          TimeUnit: 'MONTHLY',
+        }),
+      })
+    })
+
+    it('creates Lambda warmer EventBridge rule', () => {
+      template.hasResourceProperties('AWS::Events::Rule', {
+        Name: 'redirect-lambda-warmer',
+        ScheduleExpression: 'rate(5 minutes)',
+      })
+    })
   })
 })
