@@ -8477,6 +8477,7 @@ __metadata:
     loki: "npm:^0.35.1"
     next: "npm:15.3.6"
     next-intl: "npm:^3.20.0"
+    prettier: "npm:^3.3.3"
     react: "npm:19.0.0"
     react-dom: "npm:19.0.0"
     react-hot-toast: "npm:^2.5.2"
