@@ -118,29 +118,49 @@ export class LinksService {
     if (link.status === 'deleted')
       throw createHttpError.Gone('Link has been deleted')
 
-    await this.linksRepository.update(slug, input)
+    const now = Math.floor(Date.now() / 1000)
+    const effectiveInput: UpdateLinkInput =
+      input.status === 'active' &&
+      input.expiresAt === undefined &&
+      link.expiresAt !== undefined &&
+      link.expiresAt <= now
+        ? { ...input, expiresAt: null }
+        : input
+
+    await this.linksRepository.update(slug, effectiveInput)
 
     if (this.schedulerService) {
-      await this.manageScheduleOnUpdate(slug, link.userId, input).catch((err) =>
-        logger.warn({
-          text: 'failed to manage expiry schedule on update',
-          slug,
-          error: err?.message ?? err,
-        }),
+      await this.manageScheduleOnUpdate(slug, link.userId, input, link).catch(
+        (err) =>
+          logger.warn({
+            text: 'failed to manage expiry schedule on update',
+            slug,
+            error: err?.message ?? err,
+          }),
       )
     }
 
     return (await this.linksRepository.getBySlug(slug))!
   }
 
+  // LIFECYCLE: scheduler is tied to link activation state
+  //   active   + expiresAt → scheduler exists
+  //   inactive + expiresAt → scheduler cancelled (restored on reactivation if expiresAt still future)
+  //   expired  + expiresAt → scheduler already fired; expiresAt cleared on reactivation
+  //   deleted              → scheduler cancelled in deleteLink
   private async manageScheduleOnUpdate(
     slug: string,
     userId: string,
     input: UpdateLinkInput,
+    currentLink: LinkItem,
   ): Promise<void> {
+    const now = Math.floor(Date.now() / 1000)
     const deactivating = input.status === 'inactive'
     const removingExpiry = input.expiresAt === null
     const updatingExpiry = typeof input.expiresAt === 'number'
+    const reactivating =
+      input.status === 'active' &&
+      (currentLink.status === 'inactive' || currentLink.status === 'expired')
 
     if (deactivating || removingExpiry) {
       await this.schedulerService!.cancelExpiry(slug)
@@ -151,6 +171,16 @@ export class LinksService {
         userId,
         input.expiresAt!,
       )
+    } else if (
+      reactivating &&
+      currentLink.expiresAt &&
+      currentLink.expiresAt > now
+    ) {
+      await this.schedulerService!.scheduleExpiry(
+        slug,
+        userId,
+        currentLink.expiresAt,
+      )
     }
   }
 
@@ -159,6 +189,8 @@ export class LinksService {
 
     if (!link) throw createHttpError.NotFound('Link not found')
     if (link.userId !== userId) throw createHttpError.Forbidden('Access denied')
+    if (link.status === 'deleted')
+      throw createHttpError.Gone('Link has been deleted')
 
     await this.schedulerService?.cancelExpiry(slug).catch((err) =>
       logger.warn({
@@ -237,14 +269,22 @@ export class LinksService {
     )
     if (unauthorized) throw createHttpError.Forbidden('Access denied')
 
+    const existingSlugs = [...linkMap.entries()]
+      .filter(([_, link]) => link !== null)
+      .map(([slug]) => slug)
+
     if (this.schedulerService) {
       await Promise.allSettled(
-        slugs.map((s) => this.schedulerService!.cancelExpiry(s)),
+        existingSlugs.map((s) => this.schedulerService!.cancelExpiry(s)),
       )
     }
-    await this.linksRepository.bulkDelete(slugs)
+    await this.linksRepository.bulkDelete(existingSlugs)
 
-    logger.info({ text: 'bulk delete links', count: slugs.length, userId })
+    logger.info({
+      text: 'bulk delete links',
+      count: existingSlugs.length,
+      userId,
+    })
   }
 
   async getAnonymousLinks(anonymousId: string): Promise<LinkItem[]> {
