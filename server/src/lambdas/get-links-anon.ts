@@ -20,6 +20,12 @@ export const handler = createPublicHandler(async (event) => {
     )
   }
 
+  if (fingerprint.length > 256) {
+    throw createHttpError.BadRequest(
+      "'fingerprint' must not exceed 256 characters",
+    )
+  }
+
   const sourceIp =
     event.headers?.['cf-connecting-ip'] ?? event.requestContext.http.sourceIp
   const anonymousId = createHash('sha256')

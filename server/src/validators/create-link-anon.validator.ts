@@ -10,6 +10,7 @@ const ORIGINAL_URL_MAX_LENGTH = 2048
 const SLUG_PATTERN = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/
 const SLUG_MIN_LENGTH = 3
 const SLUG_MAX_LENGTH = 50
+const FINGERPRINT_MAX_LENGTH = 256
 
 export interface CreateLinkAnonRequest {
   fingerprint: unknown
@@ -45,6 +46,14 @@ export class CreateLinkAnonValidator
       this.errors.push({
         field: 'fingerprint',
         message: "'fingerprint' is required",
+      })
+      return
+    }
+
+    if (value.length > FINGERPRINT_MAX_LENGTH) {
+      this.errors.push({
+        field: 'fingerprint',
+        message: `'fingerprint' must not exceed ${FINGERPRINT_MAX_LENGTH} characters`,
       })
     }
   }

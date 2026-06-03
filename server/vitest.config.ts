@@ -4,6 +4,9 @@ export default defineConfig({
   test: {
     globals: true,
     setupFiles: ['./src/test-setup.ts'],
+    env: {
+      LOG_LEVEL: 'silent',
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

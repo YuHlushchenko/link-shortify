@@ -37,7 +37,7 @@ Creates a shortened link for an unauthenticated user. No `Authorization` header 
 
 | Field       | Type   | Required | Description                                 |
 | ----------- | ------ | -------- | ------------------------------------------- |
-| fingerprint | string | Yes      | Browser fingerprint (e.g. from FingerprintJS) |
+| fingerprint | string | Yes      | Browser fingerprint (e.g. from FingerprintJS). Max 256 characters |
 | originalUrl | string | Yes      | Destination URL                             |
 | slug        | string | No       | Custom slug. Auto-generated if not provided |
 | expiresAt   | number | No       | Unix timestamp                              |
@@ -82,7 +82,7 @@ Returns all active anonymous links for the current browser session. No `Authoriz
 
 | Parameter   | Type   | Required | Description        |
 | ----------- | ------ | -------- | ------------------ |
-| fingerprint | string | Yes      | Browser fingerprint |
+| fingerprint | string | Yes      | Browser fingerprint. Max 256 characters |
 
 **Response**
 
@@ -119,7 +119,7 @@ Transfers all anonymous links created in the current browser session to the auth
 
 | Field       | Type   | Required | Description        |
 | ----------- | ------ | -------- | ------------------ |
-| fingerprint | string | Yes      | Browser fingerprint |
+| fingerprint | string | Yes      | Browser fingerprint. Max 256 characters |
 
 ```json
 {
@@ -294,6 +294,10 @@ Marks a link as deleted. The slug is permanently reserved and cannot be reused.
 Deletes multiple links at once.
 
 **Request Body**
+
+| Field | Type     | Required | Description                                                    |
+| ----- | -------- | -------- | -------------------------------------------------------------- |
+| slugs | string[] | Yes      | Array of slugs to delete. Max 100 items, no duplicates allowed |
 
 ```json
 {

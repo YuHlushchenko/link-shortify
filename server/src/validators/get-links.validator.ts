@@ -78,8 +78,8 @@ export class GetLinksValidator implements IValidator<GetLinksRequest> {
   }
 
   private validateDateRange(from: unknown, to: unknown): void {
-    const fromNum = from !== undefined ? Number(from) : null
-    const toNum = to !== undefined ? Number(to) : null
+    const fromNum = from !== undefined && from !== '' ? Number(from) : null
+    const toNum = to !== undefined && to !== '' ? Number(to) : null
 
     if (fromNum !== null && (!Number.isInteger(fromNum) || isNaN(fromNum))) {
       this.errors.push({

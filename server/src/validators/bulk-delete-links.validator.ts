@@ -5,6 +5,7 @@ import { createLayerLogger } from '../common/logger'
 const logger = createLayerLogger(LogLayer.VALIDATION)
 
 const MAX_BULK_DELETE = 100
+const SLUG_MAX_LENGTH = 50
 
 export interface BulkDeleteLinksRequest {
   slugs: unknown
@@ -65,6 +66,26 @@ export class BulkDeleteLinksValidator
       this.errors.push({
         field: 'slugs',
         message: "'slugs' must not contain empty strings",
+      })
+      return
+    }
+
+    const hasTooLong = (value as string[]).some(
+      (s) => s.length > SLUG_MAX_LENGTH,
+    )
+    if (hasTooLong) {
+      this.errors.push({
+        field: 'slugs',
+        message: `'slugs' items must not exceed ${SLUG_MAX_LENGTH} characters`,
+      })
+      return
+    }
+
+    const uniqueSlugs = new Set(value as string[])
+    if (uniqueSlugs.size !== value.length) {
+      this.errors.push({
+        field: 'slugs',
+        message: "'slugs' must not contain duplicate values",
       })
     }
   }
