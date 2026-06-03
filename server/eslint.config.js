@@ -1,5 +1,6 @@
 const tseslint = require('typescript-eslint')
 const prettierConfig = require('eslint-config-prettier')
+const vitestPlugin = require('eslint-plugin-vitest')
 
 module.exports = tseslint.config(
   { ignores: ['dist/**'] },
@@ -18,6 +19,14 @@ module.exports = tseslint.config(
       '@typescript-eslint/no-unused-vars': ['warn', { args: 'none' }],
       '@typescript-eslint/no-unused-expressions': 'off',
       'no-console': 'warn',
+    },
+  },
+  {
+    files: ['src/**/__tests__/**/*.ts'],
+    plugins: { vitest: vitestPlugin },
+    rules: {
+      ...vitestPlugin.configs.recommended.rules,
+      'no-console': 'off',
     },
   },
 )

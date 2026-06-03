@@ -28,6 +28,11 @@ jobs:
           cd server
           yarn lint
 
+      - name: Test
+        run: |
+          cd server
+          yarn test:unit
+
       - name: Typecheck
         run: |
           cd server
