@@ -54,7 +54,7 @@ jobs:
 
       - name: CDK synth
         working-directory: infrastructure/cdk
-        run: yarn cdk synth || echo "No stacks to synthesize yet"
+        run: yarn cdk synth
 
       - name: CDK deploy
         working-directory: infrastructure/cdk

@@ -1,18 +1,18 @@
-import { LinkItem, PaginatedLinks } from "../repositories/links.repository";
+import { LinkItem, PaginatedLinks } from '../repositories/links.repository'
 
 export interface LinkResponse {
-  slug: string;
-  originalUrl: string;
-  status: string;
-  createdAt: number;
-  updatedAt: number;
-  expiresAt?: number;
-  clickCount: number;
+  slug: string
+  originalUrl: string
+  status: string
+  createdAt: number
+  updatedAt: number
+  expiresAt?: number
+  clickCount: number
 }
 
 export interface PaginatedLinksResponse {
-  links: LinkResponse[];
-  nextCursor?: string;
+  links: LinkResponse[]
+  nextCursor?: string
 }
 
 export function mapLink(item: LinkItem): LinkResponse {
@@ -24,7 +24,7 @@ export function mapLink(item: LinkItem): LinkResponse {
     updatedAt: item.updatedAt,
     clickCount: item.clickCount,
     ...(item.expiresAt !== undefined ? { expiresAt: item.expiresAt } : {}),
-  };
+  }
 }
 
 export function mapPaginatedLinks(
@@ -33,5 +33,5 @@ export function mapPaginatedLinks(
   return {
     links: paginated.items.map(mapLink),
     ...(paginated.nextCursor ? { nextCursor: paginated.nextCursor } : {}),
-  };
+  }
 }

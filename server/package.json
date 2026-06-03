@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "lint:prettier": "prettier --check .",
+    "lint:prettier:fix": "prettier --write ."
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.0.0",
@@ -22,10 +26,19 @@
     "nanoid": "^3.3.11",
     "pino": "^9.0.0"
   },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.145",
     "@types/http-errors": "^2.0.0",
     "@types/node": "^22.0.0",
-    "typescript": "~5.9.3"
+    "eslint": "^9",
+    "eslint-config-prettier": "^10.1.8",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.60.1"
   }
 }

@@ -9,9 +9,9 @@ const PRIVATE_HOSTNAME_PATTERNS = [
   /^\[?::1\]?$/,
   /^\[?fc[0-9a-f]{2}:/i,
   /^\[?fd[0-9a-f]{2}:/i,
-];
+]
 
 export function isPrivateUrl(url: URL): boolean {
-  const hostname = url.hostname.toLowerCase();
-  return PRIVATE_HOSTNAME_PATTERNS.some((pattern) => pattern.test(hostname));
+  const hostname = url.hostname.toLowerCase()
+  return PRIVATE_HOSTNAME_PATTERNS.some((pattern) => pattern.test(hostname))
 }

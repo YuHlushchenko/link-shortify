@@ -1,1 +1,1 @@
-[ -d client ] && cd client && yarn lint-staged && cd .. || exit 1
+node_modules/.bin/lint-staged

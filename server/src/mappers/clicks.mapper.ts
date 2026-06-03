@@ -1,16 +1,16 @@
-import { ClickItem, PaginatedClicks } from "../repositories/clicks.repository";
+import { ClickItem, PaginatedClicks } from '../repositories/clicks.repository'
 
 export interface ClickResponse {
-  clickId: string;
-  clickedAt: number;
-  country?: string;
-  referrer?: string;
-  userAgent?: string;
+  clickId: string
+  clickedAt: number
+  country?: string
+  referrer?: string
+  userAgent?: string
 }
 
 export interface PaginatedClicksResponse {
-  clicks: ClickResponse[];
-  nextCursor?: string;
+  clicks: ClickResponse[]
+  nextCursor?: string
 }
 
 export function mapClick(item: ClickItem): ClickResponse {
@@ -20,7 +20,7 @@ export function mapClick(item: ClickItem): ClickResponse {
     ...(item.country ? { country: item.country } : {}),
     ...(item.referrer ? { referrer: item.referrer } : {}),
     ...(item.userAgent ? { userAgent: item.userAgent } : {}),
-  };
+  }
 }
 
 export function mapPaginatedClicks(
@@ -29,5 +29,5 @@ export function mapPaginatedClicks(
   return {
     clicks: paginated.items.map(mapClick),
     ...(paginated.nextCursor ? { nextCursor: paginated.nextCursor } : {}),
-  };
+  }
 }

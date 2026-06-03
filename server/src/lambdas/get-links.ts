@@ -1,25 +1,31 @@
-import { LinksRepository, LinkStatus } from "../repositories/links.repository";
-import { LinksService } from "../services/links.service";
-import { mapPaginatedLinks } from "../mappers/links.mapper";
-import { createHandler } from "../common/middleware";
-import { createLayerLogger } from "../common/logger";
-import { LogLayer } from "../common/types";
+import { LinksRepository, LinkStatus } from '../repositories/links.repository'
+import { LinksService } from '../services/links.service'
+import { mapPaginatedLinks } from '../mappers/links.mapper'
+import { createHandler } from '../common/middleware'
+import { createLayerLogger } from '../common/logger'
+import { LogLayer } from '../common/types'
 import {
   GetLinksValidator,
   LinkSortBy,
   SortOrder,
-} from "../validators/get-links.validator";
+} from '../validators/get-links.validator'
 
-const logger = createLayerLogger(LogLayer.LAMBDA);
+const logger = createLayerLogger(LogLayer.LAMBDA)
 
-const linksService = new LinksService(new LinksRepository());
-const validator = new GetLinksValidator();
+const linksService = new LinksService(new LinksRepository())
+const validator = new GetLinksValidator()
 
 export const handler = createHandler(async (event) => {
-  const userId = event.requestContext.authorizer.jwt.claims.sub as string;
-  const q = event.queryStringParameters ?? {};
+  const userId = event.requestContext.authorizer.jwt.claims.sub as string
+  const q = event.queryStringParameters ?? {}
 
-  validator.validate({ sortBy: q.sortBy, order: q.order, status: q.status, from: q.from, to: q.to });
+  validator.validate({
+    sortBy: q.sortBy,
+    order: q.order,
+    status: q.status,
+    from: q.from,
+    to: q.to,
+  })
 
   const result = await linksService.getLinks({
     userId,
@@ -29,9 +35,9 @@ export const handler = createHandler(async (event) => {
     ...(q.from !== undefined && { from: Number(q.from) }),
     ...(q.to !== undefined && { to: Number(q.to) }),
     cursor: q.cursor,
-  });
+  })
 
-  logger.info({ text: "GET /links", userId, count: result.items.length });
+  logger.info({ text: 'GET /links', userId, count: result.items.length })
 
-  return { statusCode: 200, body: mapPaginatedLinks(result) };
-});
+  return { statusCode: 200, body: mapPaginatedLinks(result) }
+})

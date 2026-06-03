@@ -1,71 +1,71 @@
-import createHttpError from "http-errors";
-import { IValidator, ValidationError, LogLayer } from "../common/types";
-import { createLayerLogger } from "../common/logger";
+import createHttpError from 'http-errors'
+import { IValidator, ValidationError, LogLayer } from '../common/types'
+import { createLayerLogger } from '../common/logger'
 
-const logger = createLayerLogger(LogLayer.VALIDATION);
+const logger = createLayerLogger(LogLayer.VALIDATION)
 
-const MAX_BULK_DELETE = 100;
+const MAX_BULK_DELETE = 100
 
 export interface BulkDeleteLinksRequest {
-  slugs: unknown;
+  slugs: unknown
 }
 
 export class BulkDeleteLinksValidator
   implements IValidator<BulkDeleteLinksRequest>
 {
-  private errors: ValidationError[] = [];
+  private errors: ValidationError[] = []
 
   validate(request: BulkDeleteLinksRequest): void {
-    this.errors = [];
+    this.errors = []
 
-    this.validateSlugs(request.slugs);
+    this.validateSlugs(request.slugs)
 
     if (this.errors.length > 0) {
       logger.warn({
-        text: "BulkDeleteLinks validation failed",
+        text: 'BulkDeleteLinks validation failed',
         errors: this.errors,
-      });
-      throw createHttpError.BadRequest(JSON.stringify({ errors: this.errors }));
+      })
+      throw createHttpError.BadRequest(JSON.stringify({ errors: this.errors }))
     }
   }
 
   private validateSlugs(value: unknown): void {
     if (!Array.isArray(value)) {
-      this.errors.push({ field: "slugs", message: "'slugs' must be an array" });
-      return;
+      this.errors.push({ field: 'slugs', message: "'slugs' must be an array" })
+      return
     }
 
     if (value.length === 0) {
       this.errors.push({
-        field: "slugs",
+        field: 'slugs',
         message: "'slugs' must not be empty",
-      });
-      return;
+      })
+      return
     }
 
     if (value.length > MAX_BULK_DELETE) {
       this.errors.push({
-        field: "slugs",
+        field: 'slugs',
         message: `'slugs' must not exceed ${MAX_BULK_DELETE} items`,
-      });
-      return;
+      })
+      return
     }
 
-    const hasNonStrings = value.some((s) => typeof s !== "string");
+    const hasNonStrings = value.some((s) => typeof s !== 'string')
     if (hasNonStrings) {
       this.errors.push({
-        field: "slugs",
+        field: 'slugs',
         message: "'slugs' must contain only strings",
-      });
-      return;
+      })
+      return
     }
 
-    const hasEmpty = value.some((s) => (s as string).trim() === "");
+    const hasEmpty = value.some((s) => (s as string).trim() === '')
     if (hasEmpty) {
       this.errors.push({
-        field: "slugs",
+        field: 'slugs',
         message: "'slugs' must not contain empty strings",
-      });
+      })
     }
   }
 }

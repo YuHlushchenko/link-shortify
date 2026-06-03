@@ -1,1 +1,2 @@
 [ -d client ] && cd client && yarn test:unit && yarn build || exit 1
+[ -d server ] && cd server && yarn typecheck || exit 1

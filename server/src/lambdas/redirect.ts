@@ -1,33 +1,33 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
-import { nanoid } from "nanoid";
-import warmer from "lambda-warmer";
-import { LinksRepository } from "../repositories/links.repository";
-import { ClicksRepository } from "../repositories/clicks.repository";
-import { createLayerLogger } from "../common/logger";
-import { LogLayer } from "../common/types";
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda'
+import { nanoid } from 'nanoid'
+import warmer from 'lambda-warmer'
+import { LinksRepository } from '../repositories/links.repository'
+import { ClicksRepository } from '../repositories/clicks.repository'
+import { createLayerLogger } from '../common/logger'
+import { LogLayer } from '../common/types'
 
-const logger = createLayerLogger(LogLayer.CONTROLLER);
-const linksRepository = new LinksRepository();
-const clicksRepository = new ClicksRepository();
+const logger = createLayerLogger(LogLayer.CONTROLLER)
+const linksRepository = new LinksRepository()
+const clicksRepository = new ClicksRepository()
 
 const _handler = async (
   event: APIGatewayProxyEventV2,
 ): Promise<APIGatewayProxyResultV2> => {
-  const slug = event.pathParameters?.slug;
+  const slug = event.pathParameters?.slug
 
   if (!slug) {
-    return { statusCode: 400, body: "Bad Request" };
+    return { statusCode: 400, body: 'Bad Request' }
   }
 
-  const link = await linksRepository.getBySlug(slug);
-  const now = Math.floor(Date.now() / 1000);
+  const link = await linksRepository.getBySlug(slug)
+  const now = Math.floor(Date.now() / 1000)
 
   if (!link) {
-    return { statusCode: 404, body: "Not Found" };
+    return { statusCode: 404, body: 'Not Found' }
   }
 
-  if (link.status !== "active" || (link.expiresAt && link.expiresAt < now)) {
-    return { statusCode: 410, body: "Gone" };
+  if (link.status !== 'active' || (link.expiresAt && link.expiresAt < now)) {
+    return { statusCode: 410, body: 'Gone' }
   }
 
   try {
@@ -36,24 +36,26 @@ const _handler = async (
         slug,
         clickId: nanoid(),
         clickedAt: now,
-        country: event.headers?.["cf-ipcountry"],
-        userAgent: event.headers?.["user-agent"],
-        referrer: event.headers?.["referer"],
+        country: event.headers?.['cf-ipcountry'],
+        userAgent: event.headers?.['user-agent'],
+        referrer: event.headers?.['referer'],
       }),
       linksRepository.incrementClickCount(slug),
-    ]);
+    ])
   } catch (err) {
-    logger.error({ text: "Failed to track click", slug, err });
+    logger.error({ text: 'Failed to track click', slug, err })
   }
 
   return {
     statusCode: 302,
     headers: { Location: link.originalUrl },
-    body: "",
-  };
-};
+    body: '',
+  }
+}
 
-export const handler = async (event: any): Promise<any> => {
-  if (await warmer(event)) return "warmed";
-  return _handler(event);
-};
+export const handler = async (
+  event: APIGatewayProxyEventV2,
+): Promise<APIGatewayProxyResultV2 | string> => {
+  if (await warmer(event)) return 'warmed'
+  return _handler(event)
+}
