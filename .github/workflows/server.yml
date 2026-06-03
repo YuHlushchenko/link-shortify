@@ -23,6 +23,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Lint
+        run: |
+          cd server
+          yarn lint
+
       - name: Typecheck
         run: |
           cd server
