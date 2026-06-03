@@ -52,6 +52,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Test
+        working-directory: infrastructure/cdk
+        run: yarn test --ci
+
       - name: CDK synth
         working-directory: infrastructure/cdk
         run: yarn cdk synth

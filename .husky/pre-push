@@ -1,3 +1,4 @@
 #!/bin/sh
 (cd client && yarn test:unit && yarn build) || exit 1
 (cd server && yarn test:unit && yarn typecheck) || exit 1
+(cd infrastructure/cdk && yarn test) || exit 1

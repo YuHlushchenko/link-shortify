@@ -179,6 +179,22 @@ yarn test:watch
 yarn test:coverage
 ```
 
+#### Infrastructure (run from `infrastructure/cdk/`)
+
+1. **Snapshot tests** (via Jest):
+
+```bash
+yarn test
+```
+
+2. **Update snapshots** after an intentional infrastructure change:
+
+```bash
+yarn test -u
+```
+
+> Snapshot tests synthesize each CDK stack to CloudFormation and compare the result against a stored snapshot. If anything changes (IAM policy, Lambda env var, DynamoDB billing mode, etc.) the test fails with a diff — update the snapshot only when the change is intentional.
+
 ---
 
 ### API Testing
