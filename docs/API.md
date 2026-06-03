@@ -288,13 +288,21 @@ Marks a link as deleted. The slug is permanently reserved and cannot be reused.
 204 No Content
 ```
 
+**Errors**
+
+| Status          | Description                  |
+| --------------- | ---------------------------- |
+| 403 Forbidden   | Link belongs to another user |
+| 404 Not Found   | Link does not exist          |
+| 410 Gone        | Link is already deleted      |
+
 ---
 
 ### Bulk Delete Links
 
 `DELETE /links`
 
-Deletes multiple links at once.
+Deletes multiple links at once. Non-existent slugs are silently ignored.
 
 **Request Body**
 
