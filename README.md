@@ -43,10 +43,9 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 - **AWS S3** for static assets
 - **Upstash Redis** for rate limiting
 - **TypeScript**
-- **Jest** for unit testing
-- **Supertest** for API testing
+- **Vitest** for unit testing
 - **Swagger** for API documentation
-- **AWS CDK + SST** for infrastructure as code
+- **AWS CDK** for infrastructure as code
 
 ### Development Tools
 
@@ -126,12 +125,12 @@ yarn start
 
 ### Testing
 
-Run different types of tests:
+#### Frontend (run from `client/`)
 
 1. **Unit tests** (via Jest):
 
 ```bash
-   yarn test:unit
+yarn test:unit
 ```
 
 2. **Visual regression tests** (via Loki):
@@ -158,6 +157,26 @@ Run different types of tests:
 
 ```bash
      yarn test:ui:report
+```
+
+#### Backend (run from `server/`)
+
+1. **Unit tests** (via Vitest):
+
+```bash
+yarn test:unit
+```
+
+2. **Watch mode** (reruns tests on file change):
+
+```bash
+yarn test:watch
+```
+
+3. **Coverage report** (generates `server/coverage/index.html`):
+
+```bash
+yarn test:coverage
 ```
 
 ---
@@ -205,9 +224,10 @@ yarn storybook:build
 
 ### Pre-commit Hooks
 
-The project uses **Husky** and **lint-staged** for pre-commit checks:
+The project uses **Husky** and **lint-staged** for automated checks:
 
-- Code is automatically linted and formatted before each commit.
+- **pre-commit**: staged files are linted and formatted automatically (ESLint + Prettier) for both client and server
+- **pre-push**: unit tests, typecheck, and build run before pushing to remote
 
 ---
 
