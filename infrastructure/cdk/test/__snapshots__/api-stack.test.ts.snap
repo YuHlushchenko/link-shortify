@@ -84,10 +84,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "520d3462a37395da3fd9e1938e97f43d21847ceea40d8f94b119ccf6e07173b6.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -116,7 +113,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-BulkDeleteLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "BulkDeleteLinksFunctionLogGroup8EFA202E",
@@ -269,10 +266,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "dacea1d412c6fee51305559140f407e8696a324d1a5f8c912b1618ce5580b62b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -289,7 +283,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-ClaimLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "ClaimLinksFunctionLogGroupC9B0DE0C",
@@ -424,10 +418,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "2b15d6555c6cbd234e8523b6394d6ed4bcce779670668bfd8cc82b723abeae65.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -461,7 +452,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-CreateLinkAnonFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "CreateLinkAnonFunctionLogGroupEC6FCF74",
@@ -596,10 +587,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "afe93d4a5eb1a8245df251cfef6c6a51cb8109484f843dee3edb62ee61234358.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -632,7 +620,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-CreateLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "CreateLinkFunctionLogGroupFD8149E0",
@@ -785,10 +773,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "79b50f8f6ede962ae9cc84f93d37766e1455243057393eb55c2d1134c0022657.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -820,7 +805,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-DeleteAccountFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "DeleteAccountFunctionLogGroupBF0D0283",
@@ -996,10 +981,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "1ceeed34effeb13817e09fbf152871ff6265b980440dbd20920eaf64477bea1b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1028,7 +1010,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-DeleteLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "DeleteLinkFunctionLogGroupFF090D6E",
@@ -1181,10 +1163,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "d219b783b39fd9b96e2410a0dc434bcc8dfe3d75c8b0ab46a5e90cd7763d0fb1.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1201,7 +1180,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-ExpireLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "ExpireLinkFunctionLogGroup1D6A57BD",
@@ -1336,10 +1315,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "b83e26134953ae4086426561229915bce0c0d950e623bbb4e37faa4290f831be.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1356,7 +1332,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-GetClicksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetClicksFunctionLogGroup398D1B6B",
@@ -1515,10 +1491,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "f0d9552eafe7bbb887f3ceebd0d366b0003fa3cd18bffdb885eacf6528838c61.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1535,7 +1508,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-GetLinksAnonFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetLinksAnonFunctionLogGroup32E6CA97",
@@ -1666,10 +1639,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "1d9377da2fabb17b5daa9dc1570a80502488d01337d167856f1e02a3888c21dc.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1686,7 +1656,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-GetLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetLinksFunctionLogGroup6BE075B4",
@@ -1817,10 +1787,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "04f0886b5b38cb89b5ae05c771863c57d565d0b39c5654e75f28f46d1c979b3b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -1837,7 +1804,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-GetNotificationsFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetNotificationsFunctionLogGroup649852AE",
@@ -3104,10 +3071,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "45f38a0d6374cd904920e59961d90c7dac05448cd72a84232f0a64b4828c13de.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -3124,7 +3088,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-RedirectFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "RedirectFunctionLogGroup7D7A22C7",
@@ -3311,10 +3275,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "ff192f749722cd4ca66e6566d6071395d695f1473569f7e7ed77db8be02ff207.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -3331,7 +3292,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-UpdateAllNotificationsFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateAllNotificationsFunctionLogGroup536DCC99",
@@ -3466,10 +3427,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "0b090649131c87904590cde22fa99cdd29150b3bbfee1c0f975a09c054112a5f.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -3498,7 +3456,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-UpdateLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateLinkFunctionLogGroup485513B9",
@@ -3651,10 +3609,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "2c7a65ea1e4f3d25a7a9659d0da33c388f625caf4a524f170ea9796bee728170.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -3671,7 +3626,7 @@ exports[`ApiStack dev matches snapshot 1`] = `
           },
         },
         "FunctionName": "Dev-UpdateNotificationFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateNotificationFunctionLogGroup25B4915C",
@@ -4037,10 +3992,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "520d3462a37395da3fd9e1938e97f43d21847ceea40d8f94b119ccf6e07173b6.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -4069,7 +4021,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
           },
         },
         "FunctionName": "BulkDeleteLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "BulkDeleteLinksFunctionLogGroup8EFA202E",
@@ -4222,10 +4174,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "dacea1d412c6fee51305559140f407e8696a324d1a5f8c912b1618ce5580b62b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -4242,7 +4191,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
           },
         },
         "FunctionName": "ClaimLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "ClaimLinksFunctionLogGroupC9B0DE0C",
@@ -4377,10 +4326,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "2b15d6555c6cbd234e8523b6394d6ed4bcce779670668bfd8cc82b723abeae65.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -4414,7 +4360,7 @@ Lambda logs: /aws/lambda/<FunctionName>",
           },
         },
         "FunctionName": "CreateLinkAnonFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "CreateLinkAnonFunctionLogGroupEC6FCF74",
@@ -4578,10 +4524,7 @@ Logs: /aws/lambda/CreateLinkFunction",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "afe93d4a5eb1a8245df251cfef6c6a51cb8109484f843dee3edb62ee61234358.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -4614,7 +4557,7 @@ Logs: /aws/lambda/CreateLinkFunction",
           },
         },
         "FunctionName": "CreateLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "CreateLinkFunctionLogGroupFD8149E0",
@@ -4921,10 +4864,7 @@ Logs: /aws/lambda/CreateLinkFunction",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "79b50f8f6ede962ae9cc84f93d37766e1455243057393eb55c2d1134c0022657.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -4956,7 +4896,7 @@ Logs: /aws/lambda/CreateLinkFunction",
           },
         },
         "FunctionName": "DeleteAccountFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "DeleteAccountFunctionLogGroupBF0D0283",
@@ -5132,10 +5072,7 @@ Logs: /aws/lambda/CreateLinkFunction",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "1ceeed34effeb13817e09fbf152871ff6265b980440dbd20920eaf64477bea1b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -5164,7 +5101,7 @@ Logs: /aws/lambda/CreateLinkFunction",
           },
         },
         "FunctionName": "DeleteLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "DeleteLinkFunctionLogGroupFF090D6E",
@@ -5356,10 +5293,7 @@ Check: CloudWatch → DynamoDB → ",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "d219b783b39fd9b96e2410a0dc434bcc8dfe3d75c8b0ab46a5e90cd7763d0fb1.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -5376,7 +5310,7 @@ Check: CloudWatch → DynamoDB → ",
           },
         },
         "FunctionName": "ExpireLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "ExpireLinkFunctionLogGroup1D6A57BD",
@@ -5511,10 +5445,7 @@ Check: CloudWatch → DynamoDB → ",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "b83e26134953ae4086426561229915bce0c0d950e623bbb4e37faa4290f831be.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -5531,7 +5462,7 @@ Check: CloudWatch → DynamoDB → ",
           },
         },
         "FunctionName": "GetClicksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetClicksFunctionLogGroup398D1B6B",
@@ -5690,10 +5621,7 @@ Check: CloudWatch → DynamoDB → ",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "f0d9552eafe7bbb887f3ceebd0d366b0003fa3cd18bffdb885eacf6528838c61.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -5710,7 +5638,7 @@ Check: CloudWatch → DynamoDB → ",
           },
         },
         "FunctionName": "GetLinksAnonFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetLinksAnonFunctionLogGroup32E6CA97",
@@ -5841,10 +5769,7 @@ Check: CloudWatch → DynamoDB → ",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "1d9377da2fabb17b5daa9dc1570a80502488d01337d167856f1e02a3888c21dc.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -5861,7 +5786,7 @@ Check: CloudWatch → DynamoDB → ",
           },
         },
         "FunctionName": "GetLinksFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetLinksFunctionLogGroup6BE075B4",
@@ -5992,10 +5917,7 @@ Check: CloudWatch → DynamoDB → ",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "04f0886b5b38cb89b5ae05c771863c57d565d0b39c5654e75f28f46d1c979b3b.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -6012,7 +5934,7 @@ Check: CloudWatch → DynamoDB → ",
           },
         },
         "FunctionName": "GetNotificationsFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "GetNotificationsFunctionLogGroup649852AE",
@@ -7434,10 +7356,7 @@ Logs: /aws/lambda/RedirectFunction",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "45f38a0d6374cd904920e59961d90c7dac05448cd72a84232f0a64b4828c13de.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -7454,7 +7373,7 @@ Logs: /aws/lambda/RedirectFunction",
           },
         },
         "FunctionName": "RedirectFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "RedirectFunctionLogGroup7D7A22C7",
@@ -7710,10 +7629,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "ff192f749722cd4ca66e6566d6071395d695f1473569f7e7ed77db8be02ff207.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -7730,7 +7646,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
           },
         },
         "FunctionName": "UpdateAllNotificationsFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateAllNotificationsFunctionLogGroup536DCC99",
@@ -7865,10 +7781,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "0b090649131c87904590cde22fa99cdd29150b3bbfee1c0f975a09c054112a5f.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -7897,7 +7810,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
           },
         },
         "FunctionName": "UpdateLinkFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateLinkFunctionLogGroup485513B9",
@@ -8050,10 +7963,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
       ],
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "2c7a65ea1e4f3d25a7a9659d0da33c388f625caf4a524f170ea9796bee728170.zip",
+          "ZipFile": "exports.handler = async () => {}",
         },
         "Environment": {
           "Variables": {
@@ -8070,7 +7980,7 @@ Check: CloudWatch → Lambda → RedirectFunction → Concurrency",
           },
         },
         "FunctionName": "UpdateNotificationFunction",
-        "Handler": "index.handler",
+        "Handler": "handler",
         "LoggingConfig": {
           "LogGroup": {
             "Ref": "UpdateNotificationFunctionLogGroup25B4915C",

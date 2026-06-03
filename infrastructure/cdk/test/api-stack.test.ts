@@ -4,6 +4,29 @@ import { ApiStack } from '../lib/api-stack'
 import { AuthStack } from '../lib/auth-stack'
 import { DynamodbStack } from '../lib/dynamodb-stack'
 
+// NodejsFunction bundles Lambda code with esbuild and hashes the bundled output.
+// The hash includes absolute file paths, so snapshots differ between machines and CI.
+// Replacing with a plain Function + inline code produces a deterministic, path-independent snapshot.
+jest.mock('aws-cdk-lib/aws-lambda-nodejs', () => {
+  const { Function, Runtime, Code } = require('aws-cdk-lib/aws-lambda')
+  return {
+    NodejsFunction: class extends Function {
+      constructor(scope: any, id: string, props: any) {
+        super(scope, id, {
+          runtime: Runtime.NODEJS_22_X,
+          handler: props.handler ?? 'index.handler',
+          code: Code.fromInline('exports.handler = async () => {}'),
+          functionName: props.functionName,
+          memorySize: props.memorySize ?? 256,
+          timeout: props.timeout,
+          logGroup: props.logGroup,
+          environment: props.environment,
+        })
+      }
+    },
+  }
+})
+
 const CERT_ARN = 'arn:aws:acm:us-east-1:123456789012:certificate/test-cert-id'
 
 beforeAll(() => {
@@ -28,7 +51,6 @@ describe('ApiStack', () => {
 
     beforeAll(() => {
       const app = new cdk.App()
-      app.node.setContext('aws:cdk:bundling-stacks', [])
       const { dynamodbStack, authStack } = makeDeps(app, 'dev')
       const stack = new ApiStack(app, 'ApiStack', {
         stage: 'dev',
@@ -90,7 +112,6 @@ describe('ApiStack', () => {
 
     beforeAll(() => {
       const app = new cdk.App()
-      app.node.setContext('aws:cdk:bundling-stacks', [])
       const { dynamodbStack, authStack } = makeDeps(app, 'prod')
       const stack = new ApiStack(app, 'ApiStack', {
         stage: 'prod',
