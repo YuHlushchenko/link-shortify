@@ -266,8 +266,11 @@ Updates one or more attributes of a link.
 200 OK
 {
   "slug": "my-link",
+  "originalUrl": "https://example.com",
   "status": "inactive",
-  "updatedAt": 1735689600
+  "createdAt": 1735689600,
+  "updatedAt": 1735689700,
+  "clickCount": 42
 }
 ```
 
