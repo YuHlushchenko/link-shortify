@@ -66,9 +66,10 @@ Creates a shortened link for an unauthenticated user. No `Authorization` header 
 
 | Status                | Description                                           |
 | --------------------- | ----------------------------------------------------- |
-| 400 Bad Request       | URL points to a private or internal address           |
-| 409 Conflict          | Slug already exists                                   |
-| 429 Too Many Requests | Anonymous link limit reached (`ANON_LINK_LIMIT` = 5) |
+| 400 Bad Request           | URL points to a private or internal address           |
+| 409 Conflict              | Custom slug already exists                            |
+| 429 Too Many Requests     | Anonymous link limit reached (`ANON_LINK_LIMIT` = 5) |
+| 500 Internal Server Error | Auto-slug generation failed after 3 retries           |
 
 ---
 
@@ -149,6 +150,12 @@ Deletes the authenticated user's Cognito account (including linked OAuth provide
 `Authorization: Bearer {accessToken}`
 
 **Response:** `204 No Content`
+
+**Errors**
+
+| Status                    | Description                                                                 |
+| ------------------------- | --------------------------------------------------------------------------- |
+| 500 Internal Server Error | Data cleanup failed. Cognito account is preserved — user can retry.         |
 
 ---
 
@@ -235,9 +242,10 @@ Creates a new shortened link.
 
 | Status                | Description                                      |
 | --------------------- | ------------------------------------------------ |
-| 409 Conflict          | Slug already exists                              |
-| 400 Bad Request       | URL points to a private or internal address      |
-| 429 Too Many Requests | Rate limit exceeded                              |
+| 409 Conflict              | Custom slug already exists                       |
+| 400 Bad Request           | URL points to a private or internal address      |
+| 429 Too Many Requests     | Rate limit exceeded                              |
+| 500 Internal Server Error | Auto-slug generation failed after 3 retries      |
 
 ---
 
@@ -381,8 +389,8 @@ Location: https://example.com/very/long/url
 
 | Status        | Description                           |
 | ------------- | ------------------------------------- |
-| 404 Not Found | Slug does not exist                   |
-| 410 Gone      | Link is inactive, deleted, or expired |
+| 404 Not Found | Slug does not exist, or link is inactive / expired |
+| 410 Gone      | Link is permanently deleted                        |
 
 ---
 

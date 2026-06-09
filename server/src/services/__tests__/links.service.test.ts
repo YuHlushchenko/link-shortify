@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import createHttpError from 'http-errors'
 import { LinksService } from '../links.service'
 import type {
   LinksRepository,
@@ -97,9 +98,7 @@ describe('LinksService', () => {
 
     describe('auto-generated slug', () => {
       it('creates link when first generated slug is available', async () => {
-        repo.getBySlug
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink({ PK: 'gen123' }))
+        repo.getBySlug.mockResolvedValueOnce(makeLink({ PK: 'gen123' }))
 
         await service.createLink({ originalUrl: 'https://example.com' })
 
@@ -113,10 +112,10 @@ describe('LinksService', () => {
           .mockReturnValueOnce('taken1')
           .mockReturnValueOnce('free1')
 
-        repo.getBySlug
-          .mockResolvedValueOnce(makeLink({ PK: 'taken1' }))
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink({ PK: 'free1' }))
+        repo.create.mockRejectedValueOnce(
+          createHttpError.Conflict('Slug already exists'),
+        )
+        repo.getBySlug.mockResolvedValueOnce(makeLink({ PK: 'free1' }))
 
         const result = await service.createLink({
           originalUrl: 'https://example.com',
@@ -134,24 +133,23 @@ describe('LinksService', () => {
           .mockReturnValueOnce('col2')
           .mockReturnValueOnce('col3')
 
-        repo.getBySlug
-          .mockResolvedValueOnce(makeLink())
-          .mockResolvedValueOnce(makeLink())
-          .mockResolvedValueOnce(makeLink())
+        const conflict = createHttpError.Conflict('Slug already exists')
+        repo.create
+          .mockRejectedValueOnce(conflict)
+          .mockRejectedValueOnce(conflict)
+          .mockRejectedValueOnce(conflict)
 
         await expect(
           service.createLink({ originalUrl: 'https://example.com' }),
         ).rejects.toMatchObject({ status: 500 })
 
-        expect(repo.create).not.toHaveBeenCalled()
+        expect(repo.create).toHaveBeenCalledTimes(3)
       })
     })
 
     describe('expiry scheduling', () => {
       it('schedules expiry when expiresAt is provided', async () => {
-        repo.getBySlug
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink())
+        repo.getBySlug.mockResolvedValueOnce(makeLink())
 
         await service.createLink({
           userId: 'user-1',
@@ -167,9 +165,7 @@ describe('LinksService', () => {
       })
 
       it('does not schedule when expiresAt is not provided', async () => {
-        repo.getBySlug
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink())
+        repo.getBySlug.mockResolvedValueOnce(makeLink())
 
         await service.createLink({ originalUrl: 'https://example.com' })
 
@@ -177,9 +173,7 @@ describe('LinksService', () => {
       })
 
       it('does not throw when scheduling fails (soft failure)', async () => {
-        repo.getBySlug
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink())
+        repo.getBySlug.mockResolvedValueOnce(makeLink())
         scheduler.scheduleExpiry.mockRejectedValueOnce(new Error('AWS error'))
 
         await expect(
@@ -194,9 +188,7 @@ describe('LinksService', () => {
         const serviceNoScheduler = new LinksService(
           repo as unknown as LinksRepository,
         )
-        repo.getBySlug
-          .mockResolvedValueOnce(null)
-          .mockResolvedValueOnce(makeLink())
+        repo.getBySlug.mockResolvedValueOnce(makeLink())
 
         await serviceNoScheduler.createLink({
           originalUrl: 'https://example.com',
@@ -495,7 +487,7 @@ describe('LinksService', () => {
 
       expect(scheduler.cancelExpiry).toHaveBeenCalledWith('with-expiry')
       expect(scheduler.cancelExpiry).not.toHaveBeenCalledWith('no-expiry')
-      expect(repo.deleteAllByUser).toHaveBeenCalledWith('user-1')
+      expect(repo.bulkDelete).toHaveBeenCalledWith(['with-expiry', 'no-expiry'])
     })
 
     it('handles pagination and processes all pages', async () => {
@@ -513,7 +505,7 @@ describe('LinksService', () => {
 
       expect(scheduler.cancelExpiry).toHaveBeenCalledWith('link-1')
       expect(scheduler.cancelExpiry).toHaveBeenCalledWith('link-2')
-      expect(repo.deleteAllByUser).toHaveBeenCalledWith('user-1')
+      expect(repo.bulkDelete).toHaveBeenCalledWith(['link-1', 'link-2'])
     })
 
     it('skips scheduler calls when no schedulerService', async () => {
@@ -528,7 +520,7 @@ describe('LinksService', () => {
       await serviceNoScheduler.deleteAllUserLinks('user-1')
 
       expect(scheduler.cancelExpiry).not.toHaveBeenCalled()
-      expect(repo.deleteAllByUser).toHaveBeenCalledWith('user-1')
+      expect(repo.bulkDelete).toHaveBeenCalled()
     })
   })
 })

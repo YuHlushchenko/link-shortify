@@ -65,29 +65,43 @@ export class LinksService {
       if (existing) {
         throw createHttpError.Conflict('Slug already exists')
       }
+      await this.linksRepository.create({
+        slug,
+        userId: input.userId,
+        anonymousId: input.anonymousId,
+        originalUrl: input.originalUrl,
+        status: 'active',
+        createdAt: now,
+        updatedAt: now,
+        expiresAt: input.expiresAt,
+      })
     } else {
-      // generate unique slug, retry up to 3 times on collision
+      // Optimistic locking: try create directly, retry up to 3 times on collision.
+      // Avoids a getBySlug pre-check and handles race conditions — the DB condition
+      // is the real uniqueness guard.
       for (let attempt = 0; attempt < 3; attempt++) {
         slug = generateSlug()
-        const existing = await this.linksRepository.getBySlug(slug)
-        if (!existing) break
-        if (attempt === 2)
+        try {
+          await this.linksRepository.create({
+            slug,
+            userId: input.userId,
+            anonymousId: input.anonymousId,
+            originalUrl: input.originalUrl,
+            status: 'active',
+            createdAt: now,
+            updatedAt: now,
+            expiresAt: input.expiresAt,
+          })
+          break
+        } catch (err: unknown) {
+          const isConflict = (err as { status?: number }).status === 409
+          if (isConflict && attempt < 2) continue
           throw createHttpError.InternalServerError(
             'Failed to generate unique slug',
           )
+        }
       }
     }
-
-    await this.linksRepository.create({
-      slug: slug!,
-      userId: input.userId,
-      anonymousId: input.anonymousId,
-      originalUrl: input.originalUrl,
-      status: 'active',
-      createdAt: now,
-      updatedAt: now,
-      expiresAt: input.expiresAt,
-    })
 
     if (input.expiresAt && this.schedulerService) {
       await this.schedulerService
@@ -313,10 +327,14 @@ export class LinksService {
   }
 
   async deleteAllUserLinks(userId: string): Promise<void> {
-    if (this.schedulerService) {
-      let cursor: string | undefined
-      do {
-        const page = await this.linksRepository.getAll({ userId, cursor })
+    const allSlugs: string[] = []
+    let cursor: string | undefined
+
+    do {
+      const page = await this.linksRepository.getAll({ userId, cursor })
+      allSlugs.push(...page.items.map((l) => l.PK))
+
+      if (this.schedulerService) {
         const slugsWithExpiry = page.items
           .filter((l) => l.expiresAt !== undefined)
           .map((l) => l.PK)
@@ -325,10 +343,13 @@ export class LinksService {
             slugsWithExpiry.map((s) => this.schedulerService!.cancelExpiry(s)),
           )
         }
-        cursor = page.nextCursor
-      } while (cursor)
-    }
+      }
 
-    await this.linksRepository.deleteAllByUser(userId)
+      cursor = page.nextCursor
+    } while (cursor)
+
+    if (allSlugs.length > 0) {
+      await this.linksRepository.bulkDelete(allSlugs)
+    }
   }
 }

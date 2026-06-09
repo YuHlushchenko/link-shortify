@@ -94,6 +94,8 @@ paths:
           $ref: "#/components/responses/Conflict"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     get:
       tags:
         - Anonymous Links
@@ -282,6 +284,8 @@ paths:
           $ref: "#/components/responses/Conflict"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Links
@@ -712,13 +716,21 @@ components:
           example:
             message: "Slug already exists"
     Gone:
-      description: Link is inactive, deleted, or expired
+      description: Link is permanently deleted
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
           example:
             message: "Gone"
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            message: "Internal Server Error"
     TooManyRequests:
       description: Rate limit exceeded
       content:

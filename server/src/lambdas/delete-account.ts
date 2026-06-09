@@ -2,6 +2,7 @@ import {
   CognitoIdentityProviderClient,
   AdminDeleteUserCommand,
 } from '@aws-sdk/client-cognito-identity-provider'
+import createHttpError from 'http-errors'
 import { LinksRepository } from '../repositories/links.repository'
 import { LinksService } from '../services/links.service'
 import { SchedulerService } from '../services/scheduler.service'
@@ -41,6 +42,16 @@ export const handler = createHandler(async (event) => {
       userId,
       error: notificationsResult.reason?.message,
     })
+
+  // If data cleanup failed, abort — Cognito account stays so user can authenticate and retry
+  if (
+    linksResult.status === 'rejected' ||
+    notificationsResult.status === 'rejected'
+  ) {
+    throw createHttpError.InternalServerError(
+      'Failed to delete account data. Please try again.',
+    )
+  }
 
   await cognito.send(
     new AdminDeleteUserCommand({

@@ -179,6 +179,21 @@ yarn test:watch
 yarn test:coverage
 ```
 
+4. **Integration tests** — require DynamoDB Local running locally (via Docker):
+
+```bash
+# Start DynamoDB Local (from server/)
+docker compose -f docker-compose.test.yml up -d
+
+# Run integration tests
+yarn test:integration
+
+# Stop when done
+docker compose -f docker-compose.test.yml down
+```
+
+> Integration tests create isolated tables (`test-links`, `test-clicks`) on startup and drop them on teardown. Each test uses unique IDs so tests don't interfere with each other.
+
 #### Infrastructure (run from `infrastructure/cdk/`)
 
 1. **Snapshot tests** (via Jest):

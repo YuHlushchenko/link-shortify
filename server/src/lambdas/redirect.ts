@@ -26,25 +26,37 @@ const _handler = async (
     return { statusCode: 404, body: 'Not Found' }
   }
 
-  if (link.status !== 'active' || (link.expiresAt && link.expiresAt < now)) {
+  if (link.status === 'deleted') {
     return { statusCode: 410, body: 'Gone' }
   }
 
-  try {
-    await Promise.all([
-      clicksRepository.create({
-        slug,
-        clickId: nanoid(),
-        clickedAt: now,
-        country: event.headers?.['cf-ipcountry'],
-        userAgent: event.headers?.['user-agent'],
-        referrer: event.headers?.['referer'],
-      }),
-      linksRepository.incrementClickCount(slug),
-    ])
-  } catch (err) {
-    logger.error({ text: 'Failed to track click', slug, err })
+  if (link.status !== 'active' || (link.expiresAt && link.expiresAt < now)) {
+    return { statusCode: 404, body: 'Not Found' }
   }
+
+  const [clickResult, countResult] = await Promise.allSettled([
+    clicksRepository.create({
+      slug,
+      clickId: nanoid(),
+      clickedAt: now,
+      country: event.headers?.['cf-ipcountry'],
+      userAgent: event.headers?.['user-agent'],
+      referrer: event.headers?.['referer'],
+    }),
+    linksRepository.incrementClickCount(slug),
+  ])
+  if (clickResult.status === 'rejected')
+    logger.error({
+      text: 'Failed to record click',
+      slug,
+      err: clickResult.reason,
+    })
+  if (countResult.status === 'rejected')
+    logger.error({
+      text: 'Failed to increment click count',
+      slug,
+      err: countResult.reason,
+    })
 
   return {
     statusCode: 302,
