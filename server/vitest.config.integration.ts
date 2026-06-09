@@ -13,6 +13,9 @@ export default defineConfig({
       LINKS_TABLE_NAME: 'test-links',
       CLICKS_TABLE_NAME: 'test-clicks',
       LOG_LEVEL: 'silent',
+      AWS_REGION: 'us-east-1',
+      AWS_ACCESS_KEY_ID: 'local',
+      AWS_SECRET_ACCESS_KEY: 'local',
     },
   },
 })
