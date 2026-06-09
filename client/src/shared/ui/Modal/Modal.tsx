@@ -21,7 +21,7 @@ const ANIMATION_DELAY = 700
 
 export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
   const [isClosing, setClosing] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setTimeout>>()
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const closeHandler = useCallback(() => {
     if (onClose) {
@@ -56,7 +56,7 @@ export const Modal = ({ children, isOpen, onClose, title }: IProps) => {
 
     // * it's important to clear the timeout and remove the event listener when the component is unmounted
     return () => {
-      clearTimeout(timerRef.current)
+      if (timerRef.current !== null) clearTimeout(timerRef.current)
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [isOpen, onKeyDown])

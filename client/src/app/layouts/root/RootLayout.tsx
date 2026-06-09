@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
 import { geistSans, geistMono, monserat } from '@/app/fonts'
-import { IChildren, TLocale } from '@/app/types/global'
+import { IChildren } from '@/app/types/global'
 
 import { AuthProvider } from '@/app/auth/AuthProvider'
 import { CustomToaster } from '@/shared/ui/CustomToaster/CustomToaster'
@@ -16,7 +16,8 @@ import '@/app/styles/index.scss'
 
 interface IProps {
   children: IChildren
-  params: Promise<{ locale: TLocale }> // since Next.js 15 `params` is asynchronous
+  // Next.js 16 generates params.locale as string; we narrow to TLocale after validation in request.ts
+  params: Promise<{ locale: string }>
 }
 
 export const metadata: Metadata = {

@@ -27,6 +27,11 @@ const config: Config = {
     'next/image': '<rootDir>/src/shared/config/jest/__mocks__/next/image.ts',
     '^@/(.*)$': '<rootDir>/src/$1', // absolute imports
     // '\\.(css|scss|sass)$': 'identity-obj-proxy', // Для CSS модулів
+
+    // next-intl@4 is ESM-only and cannot be transformed by Jest — mock it instead
+    '^next-intl$': '<rootDir>/src/shared/config/jest/__mocks__/next-intl.tsx',
+    '^next-intl/(.*)$':
+      '<rootDir>/src/shared/config/jest/__mocks__/next-intl.tsx',
   },
 }
 

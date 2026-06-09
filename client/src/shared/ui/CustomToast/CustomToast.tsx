@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, type JSX } from 'react'
 import { Toast as ReactToastType, toast } from 'react-hot-toast'
 
 import { ToastType } from '@/shared/const/toast'

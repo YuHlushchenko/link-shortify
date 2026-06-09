@@ -5,10 +5,11 @@
  * @param delay - delay in ms
  */
 
-import { MutableRefObject, useCallback, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 export function useDebounce(callback: (...args: any[]) => void, delay: number) {
-  const timer = useRef() as MutableRefObject<any>
+  // React 19 requires an initial value for useRef
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   return useCallback(
     (...args: any[]) => {

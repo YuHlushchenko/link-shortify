@@ -14,10 +14,12 @@ interface PortalProps {
 export const Portal = ({ children, element }: PortalProps) => {
   const [domNode, setDomNode] = useState<HTMLElement | null>(null)
 
-  // * wait for the document to be defined
+  // * wait for the document to be defined (SSR safety — DOM not available on server)
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setDomNode(element || document.body)
   }, [element])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   if (!domNode) return null
 

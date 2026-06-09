@@ -10,13 +10,13 @@ const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   sassOptions: {
-    // Use the new Dart Sass compiler
-    // api: 'modern-compiler', // should work, but doesn't
-    silenceDeprecations: ['legacy-js-api'], // Disable deprecation warnings (sass)
-    // TODO: try again when sass is updated
+    // Use the modern Dart Sass compiler API (works as of Sass 1.85+ / Next.js 16)
+    api: 'modern-compiler',
   },
 
-  // TODO: check if Next.js 15 has better support for SVG imports
+  // SVG imports via @svgr/webpack — webpack is required since Turbopack
+  // doesn't support @svgr/webpack yet. Pass --turbopack to opt in to Turbopack
+  // once SVG support lands.
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

@@ -18,6 +18,7 @@ interface IProps {
 }
 
 const ThemeSwitcher = ({ initialTheme }: IProps) => {
+  // eslint-disable-next-line react-hooks/refs -- intentional: stable Zustand store instance created once via ref
   const themeStore = useRef(createThemeStore(initialTheme)).current
   const theme = useStore(themeStore).theme
   const setTheme = useStore(themeStore).setTheme

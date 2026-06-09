@@ -36,14 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadUserProfile().catch((err) => {
-      // eslint-disable-next-line no-console
-      console.warn('Failed to load user profile on mount:', err)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const isUserLoggedIn = async (): Promise<boolean> => {
     try {
       const user = await getCurrentUser()
@@ -90,6 +82,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     }
   }
+
+  /* eslint-disable react-hooks/set-state-in-effect -- intentional: load user profile on mount */
+  useEffect(() => {
+    loadUserProfile().catch((err) => {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to load user profile on mount:', err)
+    })
+  }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const login = async (email: string, password: string): Promise<void> => {
     if (userProfile) {

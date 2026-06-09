@@ -78,10 +78,12 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
     }
   }
 
+  /* eslint-disable react-hooks/set-state-in-effect -- intentional: read localStorage on mount then clear pending state */
   useEffect(() => {
     getAutoPasteFromLocalStorage()
     setAutoPastePending(false)
   }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return (
     <div className={styles.container}>
