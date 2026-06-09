@@ -18,7 +18,7 @@ Single table design with two entity types: Links and Notifications.
 | Entity       | PK       | SK                       |
 | ------------ | -------- | ------------------------ |
 | Link         | `slug`   | `LINK`                   |
-| Notification | `userId` | `NOTIFICATION#createdAt` |
+| Notification | `userId` | `NOTIFICATION#<ms_timestamp>` |
 
 ### Attributes — Link
 
@@ -42,7 +42,7 @@ A link has either `userId` (authenticated) or `anonymousId` (anonymous), never b
 | Attribute      | Type    | Notes                                             |
 | -------------- | ------- | ------------------------------------------------- |
 | PK             | String  | Partition key — userId (Cognito sub)              |
-| SK             | String  | Sort key — `NOTIFICATION#createdAt`               |
+| SK             | String  | Sort key — `NOTIFICATION#<ms_timestamp>` (millisecond precision to prevent collisions when multiple links expire simultaneously) |
 | notificationId | String  | UUID                                              |
 | message        | String  | Notification content                              |
 | isRead         | Boolean | Read status                                       |

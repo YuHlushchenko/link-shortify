@@ -58,6 +58,7 @@ Creates a shortened link for an unauthenticated user. No `Authorization` header 
   "originalUrl": "https://example.com/very/long/url",
   "status": "active",
   "createdAt": 1735689600,
+  "updatedAt": 1735689600,
   "clickCount": 0
 }
 ```
@@ -96,6 +97,7 @@ Returns all active anonymous links for the current browser session. No `Authoriz
       "originalUrl": "https://example.com",
       "status": "active",
       "createdAt": 1735689600,
+      "updatedAt": 1735689600,
       "clickCount": 3
     }
   ]
@@ -233,6 +235,7 @@ Creates a new shortened link.
   "originalUrl": "https://example.com/very/long/url",
   "status": "active",
   "createdAt": 1735689600,
+  "updatedAt": 1735689600,
   "expiresAt": 1767225600,
   "clickCount": 0
 }
