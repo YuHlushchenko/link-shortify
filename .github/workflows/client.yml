@@ -41,24 +41,23 @@ jobs:
           yarn test:unit
 
         if: always()
-      - name: Build Storybook
-        run: |
-          cd client
-          yarn storybook:build
-
-        if: always()
-      - name: Start Storybook
-        run: |
-          cd client
-          pm2 start yarn --name "storybook" -- storybook
-
-        if: always()
-      - name: Screenshot testing
-        run: |
-          cd client
-          yarn test:ui:ci
-
-        if: always()
+      # Storybook build + Loki screenshot testing disabled — Loki 0.35 is incompatible
+      # with Storybook 10. Will be re-enabled after migrating to Playwright visual tests.
+      # - name: Build Storybook
+      #   run: |
+      #     cd client
+      #     yarn storybook:build
+      # - name: Start Storybook
+      #   run: |
+      #     cd client
+      #     pm2 start yarn --name "storybook" -- storybook
+      # - name: Screenshot testing
+      #   run: |
+      #     cd client
+      #     yarn test:ui:ci
+      # - name: Stop Storybook
+      #   run: |
+      #     pm2 stop "storybook"
       - name: Lint code
         run: |
           cd client
@@ -66,11 +65,6 @@ jobs:
           yarn lint:prettier
           yarn lint:style
 
-      - name: Stop Storybook
-        run: |
-          pm2 stop "storybook"
-
-        if: always()
       - name: Build Next.js app
         run: |
           cd client

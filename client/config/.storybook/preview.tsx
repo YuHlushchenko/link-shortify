@@ -1,7 +1,10 @@
+import 'loki/configure-react'
 import React from 'react'
-import nextIntl from './next-intl'
+import { NextIntlClientProvider } from 'next-intl'
+import { useGlobals } from 'storybook/preview-api'
+import nextIntlConfig from './next-intl'
 
-import type { Preview } from '@storybook/react'
+import type { Preview, Decorator } from '@storybook/nextjs-vite'
 
 import { ThemeDecorator } from '../../src/shared/config/storybook/ThemeDecorator'
 
@@ -30,9 +33,22 @@ import './font.css' //local fonts
 //   },
 // })
 
+// Inline next-intl decorator — wraps every story with NextIntlClientProvider.
+// Replaces storybook-next-intl addon which doesn't load reliably in Storybook 10.
+const withNextIntl: Decorator = (Story, context) => {
+  const [{ locale }] = useGlobals()
+  const currentLocale = (locale as string) || nextIntlConfig.defaultLocale
+  const messages = nextIntlConfig.messagesByLocale[currentLocale] || {}
+
+  return (
+    <NextIntlClientProvider locale={currentLocale} messages={messages}>
+      <Story {...context} />
+    </NextIntlClientProvider>
+  )
+}
+
 const preview: Preview = {
   parameters: {
-    nextIntl,
     nextjs: {
       appDirectory: true,
     },
@@ -44,8 +60,27 @@ const preview: Preview = {
       },
     },
   },
+  // Locale toolbar — replaces storybook-next-intl / storybook-i18n toolbar
+  globalTypes: {
+    locale: {
+      name: 'Locale',
+      description: 'Internationalization locale',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'en', title: 'English', right: '🇺🇸' },
+          { value: 'uk', title: 'Українська', right: '🇺🇦' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    locale: 'en',
+  },
   //* global decorators for every story
   decorators: [
+    withNextIntl,
     ThemeDecorator,
     (Story) => (
       <div
@@ -59,19 +94,6 @@ const preview: Preview = {
       </div>
     ),
   ],
-  initialGlobals: {
-    locale: 'en',
-    locales: {
-      en: {
-        icon: '🇺🇸',
-        title: 'English',
-      },
-      uk: {
-        icon: '🇺🇦',
-        title: 'Українська',
-      },
-    },
-  },
 }
 
 export default preview

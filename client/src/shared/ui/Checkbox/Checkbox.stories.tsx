@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/nextjs-vite'
 import Checkbox from './Checkbox'
 
 import { Theme } from '@/shared/const/theme'

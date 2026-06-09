@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/nextjs-vite'
 import BgCover from './BgCover'
 import { Theme } from '@/shared/const/theme'
 
