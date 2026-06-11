@@ -22,9 +22,7 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
+    // typeRoots removed — Yarn 4 hoists @types to root node_modules, TS finds them via parent-dir traversal
     "types": [
       "jest",
       "node"
