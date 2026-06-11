@@ -10,7 +10,7 @@ exports[`BgCover matches snapshot 1`] = `
     >
       <img
         alt="swirl"
-        src="test-file-stub"
+        src="/assets/svgs/swirl.svg"
       />
     </div>
     <div
