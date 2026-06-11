@@ -6,29 +6,21 @@ const createJestConfig = nextJest({
   dir: './',
 })
 
-// Add any custom config to be passed to Jest
 const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
-  clearMocks: true, // Automatically clear mock calls, instances and results before every test (looks like it doesn't)
+  clearMocks: true,
 
+  // rootDir points to client/ root so paths in other options are relative to it
   rootDir: '../../',
-  setupFilesAfterEnv: ['<rootDir>config/jest/jest.setup.ts'], // щоб отримати доступ до ф-ї toBeInTheDocument() для тестів реакт-компонентів
-  // A set of global variables that need to be available in all test environments
-  //   globals: {
-  //     __IS_DEV__: true,
-  //   },
-  // щоб працювали абсолютні імпорти в файлах з тестами
-  // modulePaths: ['<rootDir>src'],
+  setupFilesAfterEnv: ['<rootDir>config/jest/jest.setup.ts'],
 
   moduleNameMapper: {
-    '^.+\\.(svg)$': '<rootDir>/src/shared/config/jest/__mocks__/fileMock.ts', // mock for SVG
-    '\\.svg\\?url$': '<rootDir>/src/shared/config/jest/__mocks__/fileMock.ts', // mock for svg?url
+    '^.+\\.(svg)$': '<rootDir>/src/shared/config/jest/__mocks__/fileMock.ts',
     'next/image': '<rootDir>/src/shared/config/jest/__mocks__/next/image.ts',
-    '^@/(.*)$': '<rootDir>/src/$1', // absolute imports
-    // '\\.(css|scss|sass)$': 'identity-obj-proxy', // Для CSS модулів
+    '^@/(.*)$': '<rootDir>/src/$1',
 
-    // next-intl@4 is ESM-only and cannot be transformed by Jest — mock it instead
+    // next-intl is ESM-only and can't be transformed by Jest — mock it
     '^next-intl$': '<rootDir>/src/shared/config/jest/__mocks__/next-intl.tsx',
     '^next-intl/(.*)$':
       '<rootDir>/src/shared/config/jest/__mocks__/next-intl.tsx',

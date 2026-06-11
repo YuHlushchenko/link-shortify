@@ -18,7 +18,8 @@ describe('Heading', () => {
   })
   test('if style', () => {
     render(<Heading style={{ color: 'red' }}>Heading</Heading>)
-    expect(screen.getByText('Heading')).toHaveStyle('color: red')
+    // jsdom 26 (Jest 30) normalizes named colors to rgb()
+    expect(screen.getByText('Heading')).toHaveStyle('color: rgb(255, 0, 0)')
   })
   test('if color', () => {
     render(<Heading color={HeadingColor.ACCENT}>Heading</Heading>)
