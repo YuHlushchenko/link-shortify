@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
+    // Explicit list required — TS6 no longer auto-includes @types/* packages
+    "types": ["node", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,7 +20,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      // Replaces baseUrl: "." — allows bare `public/foo` imports to resolve to ./public/foo
+      "public/*": ["./public/*"]
     },
     "target": "ES2017"
   },
