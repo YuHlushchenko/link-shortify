@@ -1,21 +1,6 @@
-interface ISvgUrl {
-  src: string
-  height: number
-  width: number
-  blurWidth: number
-  blurHeight: number
+// Allows importing *.svg files as React components (via @svgr/webpack / Turbopack SVGR rule)
+declare module '*.svg' {
+  import type { FC, SVGProps } from 'react'
+  const ReactComponent: FC<SVGProps<SVGSVGElement>>
+  export default ReactComponent
 }
-
-declare module '*.svg?url' {
-  const content: ISvgUrl
-
-  export default content
-}
-
-// declare module '*.svg' {
-//   const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>
-//   const content: string
-
-//   export { ReactComponent }
-//   export default content
-// }

@@ -15,16 +15,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
-
-      - name: Install pm2
-        run: |
-          npm install -g pm2
 
       - name: Enable Corepack
         run: corepack enable
@@ -41,23 +37,7 @@ jobs:
           yarn test:unit
 
         if: always()
-      # Storybook build + Loki screenshot testing disabled — Loki 0.35 is incompatible
-      # with Storybook 10. Will be re-enabled after migrating to Playwright visual tests.
-      # - name: Build Storybook
-      #   run: |
-      #     cd client
-      #     yarn storybook:build
-      # - name: Start Storybook
-      #   run: |
-      #     cd client
-      #     pm2 start yarn --name "storybook" -- storybook
-      # - name: Screenshot testing
-      #   run: |
-      #     cd client
-      #     yarn test:ui:ci
-      # - name: Stop Storybook
-      #   run: |
-      #     pm2 stop "storybook"
+      # TODO: add Playwright visual/e2e tests step once Playwright is set up
       - name: Lint code
         run: |
           cd client

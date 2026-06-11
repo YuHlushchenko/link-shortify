@@ -14,9 +14,22 @@ const nextConfig = {
     api: 'modern-compiler',
   },
 
-  // SVG imports via @svgr/webpack — webpack is required since Turbopack
-  // doesn't support @svgr/webpack yet. Pass --turbopack to opt in to Turbopack
-  // once SVG support lands.
+  images: {
+    // Allow quality=10 used in BgCover for the decorative swirl (intentionally low — it's a background element)
+    qualities: [10, 75],
+  },
+
+  // Next.js 16 uses Turbopack by default — configure SVGR here for `next dev`
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+
+  // Webpack config applies for `next build` (production still uses webpack)
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

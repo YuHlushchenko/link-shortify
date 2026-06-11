@@ -15,7 +15,7 @@ const compat = new FlatCompat({
 })
 
 export default defineConfig([
-  globalIgnores(['**/storybook-static', '.loki', 'config/.storybook/**']),
+  globalIgnores(['**/storybook-static', 'config/.storybook/**']),
   {
     extends: [
       ...nextCoreWebVitals,

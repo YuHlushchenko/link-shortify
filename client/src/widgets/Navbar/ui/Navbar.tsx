@@ -8,7 +8,8 @@ import Button from '@/shared/ui/Button/Button'
 
 import styles from './Navbar.module.scss'
 
-import LogoUrl from 'public/assets/svgs/logo.svg?url' // ! more optimized option
+// Static path — SVG lives in /public, no bundler processing needed
+const LogoUrl = '/assets/svgs/logo.svg'
 import Login from 'public/assets/svgs/sign-in.svg' // ! will be added to bundle as a React component, will be rendered in a client-side cuz of 'use client'
 
 const Navbar = () => {

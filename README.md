@@ -6,7 +6,6 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 
 ## Features
 
-
 - Create shortened URLs with auto-generated or custom slugs
 - Track clicks and statistics for each shortened link
 - QR code generation for any shortened link
@@ -19,18 +18,16 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 ### Frontend
 
 - **FSD** (Feature-Sliced Design) architecture. More details: [Feature-Sliced Design](https://feature-sliced.design)
-- **Next.js** (v15.3.6)
+- **Next.js** (v16.2.3) with Turbopack
 - **TypeScript**
 - **SCSS**
 - **Custom Hooks** for reusable logic
 - **Jest** for unit testing
 - **React Testing Library** for testing components
 - **Storybook** for component documentation
-- **Loki** for screenshot testing
-- **Reg-cli** for reporting tests results
 - **Zustand** for state management
-- **Axios** for API requests
-- **React Hook Form** for form handling
+- **TanStack Query** for server state and data fetching
+- **AWS Amplify** for authentication and API communication
 - Custom components (no UI libraries like Material-UI)
 
 ### Backend
@@ -60,15 +57,13 @@ Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.a
 
 ## Get Started with **Link-Shortify**
 
-Welcome to **Link-Shortify**! This project is built using **Next.js** as the foundation, providing a powerful framework for modern web development. Below are the steps to get started, including how to set up the development environment, build the project, and run essential scripts.
-
 ### Prerequisites
 
 Ensure the following software is installed on your system:
 
-- **Node.js** (version 18 or later recommended)
+- **Node.js** (v20.9 LTS or later — required by Next.js 16)
 - **Yarn** (required — the project uses Yarn workspaces)
-- **Docker** (optional, for specific testing configurations)
+- **Docker** (optional, for running DynamoDB Local in integration tests)
 
 ---
 
@@ -86,7 +81,13 @@ yarn install
 
 ### Development Workflow
 
-Start the development server:
+Start the development server (runs from the workspace root):
+
+```bash
+yarn workspace client dev
+```
+
+Or from the `client/` directory:
 
 ```bash
 yarn dev
@@ -98,21 +99,16 @@ Open http://localhost:3000 in your browser to see the app.
 
 ### Building for Production
 
-To create a production build:
-
 ```bash
-yarn build
-```
-
-Serve the production build locally:
-
-```bash
-yarn start
+yarn workspace client build
+yarn workspace client start
 ```
 
 ---
 
 ### Linting and Formatting
+
+Run from `client/`:
 
 - **Lint code**: `yarn lint`
 - **Fix linting errors**: `yarn lint:fix`
@@ -127,59 +123,33 @@ yarn start
 
 #### Frontend (run from `client/`)
 
-1. **Unit tests** (via Jest):
+**Unit tests** (via Jest):
 
 ```bash
 yarn test:unit
-```
-
-2. **Visual regression tests** (via Loki):
-
-   - Test current UI:
-
-```bash
-     yarn test:ui
-```
-
-   - Approve visual changes:
-
-```bash
-     yarn test:ui:ok
-```
-
-   - Run tests in CI:
-
-```bash
-     yarn test:ui:ci
-```
-
-   - Generate test reports:
-
-```bash
-     yarn test:ui:report
 ```
 
 #### Backend (run from `server/`)
 
-1. **Unit tests** (via Vitest):
+**Unit tests** (via Vitest):
 
 ```bash
 yarn test:unit
 ```
 
-2. **Watch mode** (reruns tests on file change):
+**Watch mode**:
 
 ```bash
 yarn test:watch
 ```
 
-3. **Coverage report** (generates `server/coverage/index.html`):
+**Coverage report** (generates `server/coverage/index.html`):
 
 ```bash
 yarn test:coverage
 ```
 
-4. **Integration tests** — require DynamoDB Local running locally (via Docker):
+**Integration tests** — require DynamoDB Local running locally (via Docker):
 
 ```bash
 # Start DynamoDB Local (from server/)
@@ -196,13 +166,13 @@ docker compose -f docker-compose.test.yml down
 
 #### Infrastructure (run from `infrastructure/cdk/`)
 
-1. **Snapshot tests** (via Jest):
+**Snapshot tests** (via Jest):
 
 ```bash
 yarn test
 ```
 
-2. **Update snapshots** after an intentional infrastructure change:
+**Update snapshots** after an intentional infrastructure change:
 
 ```bash
 yarn test -u
@@ -266,21 +236,19 @@ The project uses **Husky** and **lint-staged** for automated checks:
 
 **i18n Ally** is a VS Code extension that simplifies working with localization in your project [Official Documentation for i18n Ally](https://github.com/lokalise/i18n-ally). Below are the steps to configure it for your setup.
 
-#### 1. **Install the Extension**
+#### 1. Install the Extension
 
 Install **i18n Ally** in VS Code:
 
-- Open the **Extensions** panel (Ctrl+Shift+X).
-- Search for `i18n Ally`.
-- Click **Install**.
+- Open the **Extensions** panel (Ctrl+Shift+X)
+- Search for `i18n Ally`
+- Click **Install**
 
-#### 2. **Create Configuration Files**
+#### 2. Create Configuration Files
 
 In the root of the project, create a directory named `.vscode` and add the following files:
 
-##### **2.1. i18n-ally-custom-framework.yml**
-
-This file customizes key detection in your project:
+##### 2.1. i18n-ally-custom-framework.yml
 
 ```yaml
 languageIds:
@@ -298,9 +266,7 @@ scopeRangeRegex: "useTranslations\\(\\s*['\"`](.*?)['\"`]"
 monopoly: true
 ```
 
-##### **2.2. settings.json**
-
-This file defines the main paths and format for your localization files:
+##### 2.2. settings.json
 
 ```json
 {
@@ -310,15 +276,6 @@ This file defines the main paths and format for your localization files:
 }
 ```
 
-#### 3. **Usage**
+#### 3. Usage
 
-Once configured:
-
-- Open any file containing translation keys, and **i18n Ally** will automatically recognize them.
-- Use the extension to manage keys, edit translations, and find usages directly from the editor.
-
-Your project is now ready for smooth localization management with **i18n Ally**! 🚀
-
----
-
-Feel free to contribute, report issues, or customize as needed. Happy coding! 🎉
+Once configured, open any file containing translation keys and **i18n Ally** will automatically recognize them. Use the extension to manage keys, edit translations, and find usages directly from the editor.

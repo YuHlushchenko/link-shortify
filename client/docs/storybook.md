@@ -1,6 +1,6 @@
 ## Storybook
 
-yarn storybook
-yarn storybook:build
-yarn test:ui:ci
-yarn test:ui:report
+```bash
+yarn storybook        # dev server on http://localhost:6006
+yarn storybook:build  # build static version
+```

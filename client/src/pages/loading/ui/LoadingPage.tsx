@@ -2,7 +2,8 @@ import Image from 'next/image'
 
 import styles from './LoadingPage.module.scss'
 
-import Logo from 'public/assets/svgs/logo.svg?url'
+// Static path — SVG lives in /public, no bundler processing needed
+const Logo = '/assets/svgs/logo.svg'
 import LoadingAnimation from '@/shared/ui/LoadinglAnimation/LoadinglAnimation'
 
 const CIRCLES_COUNT = 100
@@ -12,7 +13,7 @@ const LoadingPage = () => {
     <div className={styles.container}>
       <div className={styles.logoWithTextContainer}>
         <div className={styles.logoContainer}>
-          <Image src={Logo} alt='Link-Shortify' layout='fill' />
+          <Image src={Logo} alt='Link-Shortify' fill />
         </div>
 
         <h1>Link-Shortify</h1>

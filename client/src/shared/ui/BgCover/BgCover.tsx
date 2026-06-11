@@ -2,7 +2,8 @@ import Image from 'next/image'
 
 import styles from './BgCover.module.scss'
 
-import SwirlUrl from 'public/assets/svgs/swirl.svg?url'
+// Static path — SVG lives in /public, no bundler processing needed
+const SwirlUrl = '/assets/svgs/swirl.svg'
 
 const BgCover = () => {
   return (

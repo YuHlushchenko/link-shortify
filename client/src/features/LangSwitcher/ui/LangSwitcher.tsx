@@ -5,16 +5,17 @@ import { useParams } from 'next/navigation'
 import Image from 'next/image'
 
 import { usePathname, useRouter } from '@/app/i18n/routing'
-import { ISvgUrl, TLocale } from '@/app/types/global'
+import { TLocale } from '@/app/types/global'
 
 import styles from './LangSwitcher.module.scss'
 
-import UAFlagUrl from 'public/assets/svgs/ua-flag.svg?url'
-import ENFlagUrl from 'public/assets/svgs/en-flag.svg?url'
+// Static paths — SVGs live in /public, served as-is without bundler processing
+const UAFlagUrl = '/assets/svgs/ua-flag.svg'
+const ENFlagUrl = '/assets/svgs/en-flag.svg'
 
 interface IRenderBtnProps {
   locale: TLocale
-  flagUrl: ISvgUrl
+  flagUrl: string
   alt: string
   lang: string
 }

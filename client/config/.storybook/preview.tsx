@@ -1,5 +1,3 @@
-import 'loki/configure-react'
-import React from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import { useGlobals } from 'storybook/preview-api'
 import nextIntlConfig from './next-intl'
