@@ -11,9 +11,6 @@ interface AuthStackProps extends cdk.StackProps {
   domainName: string;
   // Wildcard cert ARN from CertificateStack (must be in us-east-1)
   certificateArn: string;
-  // Extra callback/logout URLs (e.g. Vercel preview URLs)
-  extraCallbackUrls?: string[];
-  extraLogoutUrls?: string[];
 }
 
 export class AuthStack extends cdk.Stack {
@@ -100,12 +97,10 @@ export class AuthStack extends cdk.Stack {
     const callbackUrls = [
       "http://localhost:3000/api/auth/callback",
       `https://${props.domainName}/api/auth/callback`,
-      ...(props.extraCallbackUrls ?? []),
     ];
     const logoutUrls = [
       "http://localhost:3000",
       `https://${props.domainName}`,
-      ...(props.extraLogoutUrls ?? []),
     ];
 
     if (props.stage === "dev") {

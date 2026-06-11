@@ -15,7 +15,8 @@
   "workspaces": [
     "client",
     "server",
-    "infrastructure/cdk"
+    "infrastructure/cdk",
+    "infrastructure/sst"
   ],
   "devDependencies": {
     "esbuild": "^0.25.0",

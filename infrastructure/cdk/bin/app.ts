@@ -40,7 +40,6 @@ const dynamodbStack = new DynamodbStack(app, `${stackPrefix}DynamodbStack`, {
 })
 
 const certificateArn = process.env.CERTIFICATE_ARN!
-const vercelUrl = process.env.VERCEL_APP_URL
 
 const authStack = new AuthStack(app, `${stackPrefix}AuthStack`, {
   env: { account, region },
@@ -48,8 +47,6 @@ const authStack = new AuthStack(app, `${stackPrefix}AuthStack`, {
   stage,
   domainName,
   certificateArn,
-  extraCallbackUrls: vercelUrl ? [`${vercelUrl}/api/auth/callback`] : [],
-  extraLogoutUrls: vercelUrl ? [vercelUrl] : [],
 })
 
 const alertEmail = process.env.ALERT_EMAIL

@@ -1,5 +1,0 @@
-{
-  "installCommand": "yarn install --no-immutable",
-  "buildCommand": "yarn workspace client build",
-  "outputDirectory": ".next"
-}

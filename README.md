@@ -2,7 +2,7 @@
 
 **Link-Shortify** is a URL shortening web application that allows users to create, manage, and track shortened links. Built with Next.js on the frontend and a fully serverless AWS infrastructure on the backend.
 
-Deployed URL: [https://link-shortify.vercel.app/](https://link-shortify.vercel.app/)
+Deployed URL: [https://julab.space](https://julab.space)
 
 ## Features
 

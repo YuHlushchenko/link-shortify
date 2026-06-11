@@ -1,11 +1,14 @@
 node_modules
 .next
+.open-next
 .vscode
 .env
 .env.*
 dist/
 coverage/
 infrastructure/cdk.out/
+infrastructure/sst/.sst/
+infrastructure/sst/sst-env.d.ts
 *.log
 .DS_Store
 
