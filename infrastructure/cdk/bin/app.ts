@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 import * as dotenv from 'dotenv'
+
+// Load stage-specific env file first (.env.dev or .env.prod),
+// fall back to .env for backward compatibility
+dotenv.config({ path: `.env.${process.env.STAGE || 'dev'}` })
 dotenv.config()
 
 import * as cdk from 'aws-cdk-lib'

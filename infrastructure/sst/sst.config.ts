@@ -4,7 +4,7 @@ export default $config({
   app(input) {
     return {
       name: "link-shortify",
-      removal: input?.stage === "production" ? "retain" : "remove",
+      removal: input?.stage === "prod" ? "retain" : "remove",
       home: "aws",
       providers: {
         aws: { region: "eu-central-1" },
@@ -12,14 +12,14 @@ export default $config({
     };
   },
   async run() {
-    const isProd = $app.stage === "production";
+    const isProd = $app.stage === "prod";
     const domain = isProd ? "julab.space" : `${$app.stage}.julab.space`;
 
     const site = new sst.aws.Nextjs("Client", {
       path: "../../client",
       domain: {
         name: domain,
-        redirects: [`www.${domain}`],
+        ...(isProd ? { redirects: [`www.${domain}`] } : {}),
         // Existing wildcard ACM cert created by CertificateStack (must be in us-east-1)
         cert: process.env.CERTIFICATE_ARN!,
         // DNS is managed manually in Cloudflare — SST outputs the CloudFront domain as CNAME target

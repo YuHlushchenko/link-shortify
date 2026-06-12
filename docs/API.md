@@ -379,7 +379,7 @@ Returns the click history for a specific link. Supports cursor-based pagination 
 
 `GET /s/{slug}`
 
-Redirects the user to the original URL. Does not require authentication. Handled by a dedicated Lambda function, bypassing API Gateway.
+Redirects the user to the original URL. Does not require authentication.
 
 **Response**
 

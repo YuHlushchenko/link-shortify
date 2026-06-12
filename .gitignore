@@ -4,6 +4,7 @@ node_modules
 .vscode
 .env
 .env.*
+!.env.*.example
 dist/
 coverage/
 infrastructure/cdk.out/

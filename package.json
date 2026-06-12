@@ -28,6 +28,10 @@
   "scripts": {
     "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi",
     "esbuild": "esbuild",
-    "docs:api": "bash docs/swagger/serve.sh"
+    "docs:api": "bash docs/swagger/serve.sh",
+    "deploy:server:dev": "STAGE=dev yarn workspace link-shortify-infra cdk deploy --all --require-approval never --asset-parallelism=false --profile shortify",
+    "deploy:server:prod": "STAGE=prod yarn workspace link-shortify-infra cdk deploy --all --require-approval never --asset-parallelism=false --profile shortify",
+    "deploy:client:dev": "AWS_PROFILE=shortify yarn workspace link-shortify-sst sst deploy --stage dev",
+    "deploy:client:prod": "AWS_PROFILE=shortify yarn workspace link-shortify-sst sst deploy --stage prod"
   }
 }

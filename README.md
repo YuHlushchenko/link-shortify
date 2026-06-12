@@ -36,7 +36,7 @@ Deployed URL: [https://julab.space](https://julab.space)
 - **AWS API Gateway** for HTTP routing
 - **AWS DynamoDB** for storing shortened URLs and analytics data
 - **AWS Cognito** for authentication (Google OAuth)
-- **AWS CloudFront** as CDN and single entry point
+- **AWS CloudFront** as CDN for the frontend
 - **AWS S3** for static assets
 - **Upstash Redis** for rate limiting
 - **TypeScript**
@@ -61,7 +61,7 @@ Deployed URL: [https://julab.space](https://julab.space)
 
 Ensure the following software is installed on your system:
 
-- **Node.js** (v20.9 LTS or later — required by Next.js 16)
+- **Node.js** (v22 LTS or later — required by Next.js 16)
 - **Yarn** (required — the project uses Yarn workspaces)
 - **Docker** (optional, for running DynamoDB Local in integration tests)
 
@@ -102,6 +102,38 @@ Open http://localhost:3000 in your browser to see the app.
 ```bash
 yarn workspace client build
 yarn workspace client start
+```
+
+---
+
+### Deployment
+
+All deploy commands run from the workspace root. AWS profile `shortify` is used automatically.
+
+Before deploying, copy the corresponding example file and fill in the values:
+
+```bash
+# Backend
+cp infrastructure/cdk/.env.dev.example infrastructure/cdk/.env.dev
+cp infrastructure/cdk/.env.prod.example infrastructure/cdk/.env.prod
+
+# Frontend
+cp infrastructure/sst/.env.dev.example infrastructure/sst/.env.dev
+cp infrastructure/sst/.env.prod.example infrastructure/sst/.env.prod
+```
+
+**Backend (CDK)** — deploys API Gateway, Lambda functions, DynamoDB, Cognito:
+
+```bash
+yarn deploy:server:dev   # → dev-api.julab.space
+yarn deploy:server:prod  # → api.julab.space
+```
+
+**Frontend (SST)** — deploys Next.js via OpenNext to CloudFront + S3 + Lambda:
+
+```bash
+yarn deploy:client:dev   # → dev.julab.space
+yarn deploy:client:prod  # → julab.space
 ```
 
 ---

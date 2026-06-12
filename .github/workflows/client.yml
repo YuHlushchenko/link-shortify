@@ -22,35 +22,32 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Enable Corepack
         run: corepack enable
 
       - name: Install dependencies
-        run: |
-          cd client
-          yarn install --immutable
+        working-directory: client
+        run: yarn install --immutable
 
-        if: always()
-      - name: Run tests
-        run: |
-          cd client
-          yarn test:unit
-
-        if: always()
       # TODO: add Playwright visual/e2e tests step once Playwright is set up
+      - name: Run tests
+        working-directory: client
+        run: yarn test:unit
+        if: always()
+
       - name: Lint code
+        working-directory: client
         run: |
-          cd client
           yarn lint
           yarn lint:prettier
           yarn lint:style
+        if: always()
 
       - name: Build Next.js app
-        run: |
-          cd client
-          yarn build
+        working-directory: client
+        run: yarn build
 
   deploy:
     needs: build
@@ -63,7 +60,7 @@ jobs:
 
     env:
       AWS_REGION: eu-central-1
-      STAGE: production
+      STAGE: prod
       CERTIFICATE_ARN: ${{ secrets.CERTIFICATE_ARN }}
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
       NEXT_PUBLIC_COGNITO_DOMAIN: ${{ secrets.NEXT_PUBLIC_COGNITO_DOMAIN }}
@@ -91,7 +88,7 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Deploy
         working-directory: infrastructure/sst
