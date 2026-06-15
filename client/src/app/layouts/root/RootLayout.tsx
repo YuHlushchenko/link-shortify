@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
-import { geistSans, geistMono, monserat } from '@/app/fonts'
+import { inter, geistMono, monserat } from '@/app/fonts'
 import { IChildren } from '@/app/types/global'
 
 import { AuthProvider } from '@/app/auth/AuthProvider'
@@ -44,7 +44,7 @@ const RootLayout = async ({ children, params }: Readonly<IProps>) => {
   return (
     <html
       lang={locale}
-      className={`${geistSans.className} ${geistMono.variable} ${monserat.variable}`}
+      className={`${inter.variable} ${geistMono.variable} ${monserat.variable}`}
     >
       <body data-theme={themeFromCookies}>
         <NextIntlClientProvider messages={messages}>

@@ -1,24 +1,26 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite'
-import Heading, { THeadingClassName } from './Heading'
+import Heading, { THeadingVariant } from './Heading'
 import { HeadingColor } from './Heading.type'
+import { Theme } from '@/shared/const/theme'
 
 const meta: Meta<typeof Heading> = {
   title: 'Shared/Heading',
   component: Heading,
   argTypes: {
-    className: {
-      control: 'select',
-      options: ['default300', 'default', 'subTitle', 'title', 'lg'],
-    },
-    color: {
+    variant: {
       control: 'select',
       options: [
-        HeadingColor.PRIMARY,
-        HeadingColor.SECONDARY,
-        HeadingColor.ACCENT,
-        HeadingColor.TEXT,
-        // HeadingColor.TEXT_INVERTED,
-      ],
+        'display',
+        'title',
+        'subtitle',
+        'heading',
+        'headingThin',
+      ] satisfies THeadingVariant[],
+    },
+    gradient: { control: 'boolean' },
+    color: {
+      control: 'select',
+      options: Object.values(HeadingColor),
     },
   },
 }
@@ -30,7 +32,39 @@ type Story = StoryObj<typeof Heading>
 export const Default: Story = {
   args: {
     children: 'Default Heading',
-    className: 'default' as THeadingClassName,
-    color: HeadingColor.SECONDARY,
+    variant: 'heading',
+    color: HeadingColor.DEFAULT,
+  },
+}
+
+export const DefaultLIGHT: Story = {
+  args: {
+    children: 'Default Heading',
+    variant: 'heading',
+    color: HeadingColor.DEFAULT,
+  },
+  globals: {
+    theme: Theme.LIGHT,
+  },
+}
+
+export const Hero: Story = {
+  args: {
+    tag: 'h1',
+    children: 'Shorten Your Loooong Links :)',
+    variant: 'display',
+    gradient: true,
+  },
+}
+
+export const HeroLIGHT: Story = {
+  args: {
+    tag: 'h1',
+    children: 'Shorten Your Loooong Links :)',
+    variant: 'display',
+    gradient: true,
+  },
+  globals: {
+    theme: Theme.LIGHT,
   },
 }

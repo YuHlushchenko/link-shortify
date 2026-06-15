@@ -1,12 +1,9 @@
-/* ! this file is used to load the local font for ONLY STORYBOOK */
+/* Storybook-only font loading — Next.js font loader doesn't run here */
 
-@font-face {
-  font-family: 'Geist Sans';
-  src: url('../../src/app/fonts/GeistVF.woff') format('woff');
-  font-weight: 100 900;
-  font-style: normal;
-}
+/* Inter via Google Fonts (mirrors next/font/google in app/fonts/index.ts) */
+@import 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap';
 
+/* Geist Mono — local file, used for URLs and code snippets */
 @font-face {
   font-family: 'Geist Mono';
   src: url('../../src/app/fonts/GeistMonoVF.woff') format('woff');
@@ -14,7 +11,8 @@
   font-style: normal;
 }
 
+/* Mirror the CSS vars that Next.js font loader sets on <html> in production */
 :root {
-  --font-geist-sans: 'Geist Sans';
-  --font-geist-mono: 'Geist Mono';
+  --font-inter: 'Inter', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
 }

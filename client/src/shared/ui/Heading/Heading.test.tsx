@@ -12,9 +12,10 @@ describe('Heading', () => {
     render(<Heading tag='h1'>Heading</Heading>)
     expect(screen.getByText('Heading').tagName).toBe('H1')
   })
-  test('if className', () => {
-    render(<Heading className='title'>Heading</Heading>)
-    expect(screen.getByText('Heading')).toHaveClass('title')
+  test('if variant', () => {
+    render(<Heading variant='display'>Heading</Heading>)
+    // display variant applies text-h1 from the variants map
+    expect(screen.getByText('Heading')).toHaveClass('text-h1')
   })
   test('if style', () => {
     render(<Heading style={{ color: 'red' }}>Heading</Heading>)
@@ -26,5 +27,12 @@ describe('Heading', () => {
     expect(screen.getByText('Heading')).toHaveStyle(
       `color: var(${HeadingColor.ACCENT})`,
     )
+  })
+  test('if gradient', () => {
+    render(<Heading gradient>Heading</Heading>)
+    const el = screen.getByText('Heading')
+    expect(el).toHaveClass('text-h1-gradient')
+    // color style is not applied when gradient is active
+    expect(el).not.toHaveStyle('color: var(--fg-2)')
   })
 })

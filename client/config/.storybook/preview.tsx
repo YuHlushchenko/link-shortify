@@ -6,7 +6,7 @@ import type { Preview, Decorator } from '@storybook/nextjs-vite'
 
 import { ThemeDecorator } from '../../src/shared/config/storybook/ThemeDecorator'
 
-import { monserat } from '../../src/app/fonts/index' // google font
+import { inter, monserat } from '../../src/app/fonts/index' // google fonts
 
 import './font.css' //local fonts
 
@@ -83,9 +83,9 @@ const preview: Preview = {
       <div
         id='root'
         style={{
-          fontFamily: 'var(--font-geist-sans)', //? setting as default font for storybook
+          fontFamily: 'var(--font-sans)',
         }}
-        className={`${monserat.variable}`}
+        className={`${inter.variable} ${monserat.variable}`}
       >
         <Story />
       </div>

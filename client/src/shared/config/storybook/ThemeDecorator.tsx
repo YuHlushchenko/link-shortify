@@ -11,8 +11,8 @@ export const ThemeDecorator: Decorator = (Story, context) => {
     <div
       data-theme={`${theme}`}
       style={{
-        backgroundColor: 'var(--bg-color)',
-        color: 'var(--text-color)',
+        backgroundColor: 'var(--bg)',
+        color: 'var(--fg-1)',
         // styling storybook preview
         minHeight: '100svh',
         padding: '1rem 4rem',
