@@ -12,6 +12,7 @@ import { CustomToaster } from '@/shared/ui/CustomToaster/CustomToaster'
 
 import { Theme } from '@/shared/const/theme'
 
+import '@/app/styles/tailwind.css'
 import '@/app/styles/index.scss'
 
 interface IProps {

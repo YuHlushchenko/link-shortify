@@ -1,6 +1,7 @@
 import { Decorator } from '@storybook/react'
 import { Theme } from '@/shared/const/theme'
 
+import '@/app/styles/tailwind.css'
 import '@/app/styles/index.scss'
 
 export const ThemeDecorator: Decorator = (Story, context) => {

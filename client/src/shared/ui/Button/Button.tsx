@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import React from 'react'
 import { Link } from '@/app/i18n/routing'
 import { IChildren } from '@/app/types/global'

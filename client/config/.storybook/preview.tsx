@@ -10,8 +10,7 @@ import { monserat } from '../../src/app/fonts/index' // google font
 
 import './font.css' //local fonts
 
-// Додаємо заглушку для оптимізації зображень у Storybook
-// layout='fill' замінюємо його на width='100%' та height='100%'
+// next/image optimization stub for Storybook — layout='fill' swapped to explicit width/height
 // const OriginalNextImage = require('next/image').default
 
 // Object.defineProperty(require('next/image'), 'default', {

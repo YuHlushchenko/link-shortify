@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 'use client'
 
 import { useState, useEffect } from 'react'

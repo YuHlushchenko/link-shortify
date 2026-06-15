@@ -34,8 +34,8 @@ const ThemeSwitcher = ({ initialTheme }: IProps) => {
   }, [theme, setTheme])
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme) // <body data-theme='app_dark_theme'></body>
-    document.cookie = `app_theme=${theme}; max-age=2592000 path=/` // 30 days
+    document.body.setAttribute('data-theme', theme) // syncs <body data-theme="dark|light"> for CSS vars
+    document.cookie = `app_theme=${theme}; max-age=2592000; path=/` // persists theme for 30 days (read server-side in RootLayout)
   }, [theme])
 
   return (

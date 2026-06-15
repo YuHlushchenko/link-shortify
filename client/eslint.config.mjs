@@ -15,7 +15,14 @@ const compat = new FlatCompat({
 })
 
 export default defineConfig([
-  globalIgnores(['**/storybook-static', 'config/.storybook/**']),
+  globalIgnores([
+    '**/storybook-static',
+    'config/.storybook/**',
+    '.next/**',
+    '.open-next/**',
+    'coverage/**',
+    'reports/**',
+  ]),
   {
     extends: [
       ...nextCoreWebVitals,
@@ -27,7 +34,6 @@ export default defineConfig([
     rules: {
       'react-hooks/exhaustive-deps': 'off',
       'react/react-in-jsx-scope': 'off',
-      indent: [1, 2],
       quotes: [1, 'single'],
       semi: [1, 'never'],
 
@@ -66,13 +72,6 @@ export default defineConfig([
       ],
 
       'no-console': [1],
-
-      'react/jsx-one-expression-per-line': [
-        1,
-        {
-          allow: 'single-child',
-        },
-      ],
 
       '@typescript-eslint/no-unused-expressions': 'off',
     },

@@ -1,1 +1,6 @@
 storybook-static
+.next
+.open-next
+coverage
+reports
+node_modules
