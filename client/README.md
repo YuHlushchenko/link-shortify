@@ -13,8 +13,8 @@ Next.js 16 frontend for Link-Shortify. See the [root README](../README.md) for f
 | `yarn lint:fix`          | Run ESLint with auto-fix                                 |
 | `yarn lint:prettier`     | Check formatting with Prettier                           |
 | `yarn lint:prettier:fix` | Fix formatting with Prettier                             |
-| `yarn lint:style`        | Lint SCSS with Stylelint                                 |
-| `yarn lint:style:fix`    | Fix SCSS with Stylelint                                  |
+| `yarn lint:style`        | Lint CSS/SCSS with Stylelint                             |
+| `yarn lint:style:fix`    | Fix CSS/SCSS with Stylelint                              |
 | `yarn test:unit`         | Run Jest unit tests                                      |
 | `yarn test:unit:ok`      | Update Jest snapshots                                    |
 | `yarn storybook`         | Launch Storybook on http://localhost:6006                |

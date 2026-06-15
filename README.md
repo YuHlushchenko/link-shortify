@@ -20,7 +20,7 @@ Deployed URL: [https://julab.space](https://julab.space)
 - **FSD** (Feature-Sliced Design) architecture. More details: [Feature-Sliced Design](https://feature-sliced.design)
 - **Next.js** (v16.2.3) with Turbopack
 - **TypeScript**
-- **SCSS**
+- **Tailwind CSS v4**
 - **Custom Hooks** for reusable logic
 - **Jest** for unit testing
 - **React Testing Library** for testing components
