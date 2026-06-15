@@ -55,6 +55,52 @@ Deployed URL: [https://julab.space](https://julab.space)
 
 ---
 
+## Project Structure
+
+```
+link-shortify/                         # Yarn monorepo root
+├── client/                            # Next.js frontend (Feature-Sliced Design)
+│   ├── src/
+│   │   ├── app/                       # Providers, layouts, global styles, i18n, Amplify setup
+│   │   ├── pages/                     # Page-level components (home, login, signup, etc.)
+│   │   ├── widgets/                   # Composite UI blocks (Navbar, Footer, InputLink)
+│   │   ├── features/                  # User-facing features (auth form, theme/lang switcher)
+│   │   ├── entities/                  # Domain models and their UI representations
+│   │   └── shared/                    # Reusable UI components, hooks, utils, constants
+│   ├── app/                           # Next.js App Router — route segments and layouts
+│   ├── public/
+│   │   ├── assets/                    # Static images and icons
+│   │   └── locales/                   # Translation files (en, uk)
+│   ├── config/                        # Jest and Storybook configuration
+│   └── docs/                          # Frontend-specific developer notes
+├── server/                            # Serverless backend — one Lambda per endpoint
+│   └── src/
+│       ├── lambdas/                   # Lambda handlers (create-link, redirect, delete, etc.)
+│       ├── services/                  # Business logic layer
+│       ├── repositories/              # DynamoDB data access
+│       ├── validators/                # Request input validation
+│       ├── mappers/                   # DynamoDB ↔ domain object transformations
+│       ├── common/                    # Shared DB client, middleware, rate limiter, logger
+│       └── integration-tests/         # Integration tests against DynamoDB Local
+├── infrastructure/
+│   ├── cdk/                           # AWS CDK — API Gateway, Lambda, DynamoDB, Cognito stacks
+│   │   ├── bin/                       # CDK app entrypoint
+│   │   ├── lib/                       # Stack definitions (api, auth, db, certificate, etc.)
+│   │   ├── utils/                     # Stage helpers and Lambda path resolver
+│   │   └── test/                      # CDK snapshot tests
+│   └── sst/                           # SST config — deploys Next.js to CloudFront + S3
+├── docs/                              # Project documentation
+│   ├── ARCHITECTURE.md                # System architecture overview
+│   ├── SCHEMA.md                      # DynamoDB table schemas and access patterns
+│   ├── API.md                         # API endpoint reference
+│   ├── PRD.md                         # Product requirements
+│   ├── swagger/                       # OpenAPI spec + Swagger UI
+│   └── legal/                         # Privacy Policy and Terms of Service
+└── .github/workflows/                 # CI/CD pipelines (client, server, infrastructure)
+```
+
+---
+
 ## Get Started with **Link-Shortify**
 
 ### Prerequisites
