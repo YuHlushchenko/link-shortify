@@ -3,40 +3,136 @@
 exports[`BgCover matches snapshot 1`] = `
 <div>
   <div
-    class="container"
+    class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
   >
     <div
-      class="bgSwirlContainer"
+      class="absolute top-0 right-[20%] size-[340px] -translate-y-1/3 rounded-full bg-brand-blue opacity-40 blur-[160px] shadow-[0_0_180px_120px_var(--color-brand-blue)]"
+    />
+    <div
+      class="absolute bottom-[20%] left-0 size-[500px] translate-y-1/4 rounded-full bg-brand-pink opacity-20 blur-[200px] shadow-[0_0_220px_140px_var(--color-brand-pink)]"
+    />
+    <div
+      class="absolute top-[44%] left-[54%] size-[480px] -translate-y-1/2 rounded-full bg-brand-purple opacity-20 blur-[140px] shadow-[0_0_180px_120px_var(--color-brand-purple)]"
+    />
+    <div
+      class="absolute"
+      style="top: 16.94%; left: 76.13%; animation: float 19.3s ease-in-out -15s infinite; --dx: 13px; --dy: 37px;"
     >
-      <img
-        alt="swirl"
-        src="/assets/svgs/swirl.svg"
+      <test-file-stub
+        style="rotate: 270deg; width: 49px; height: 49px; color: var(--color-brand-blue); animation: pulse-shape 8.8s linear -8.7s infinite; --scale-to: 1.5; --opacity-min: 0.09; --opacity-max: 0.26;"
       />
     </div>
     <div
-      class="bgCubesContainer"
+      class="absolute"
+      style="top: 16.35%; left: 67.39%; animation: float 21.5s ease-in-out -2s infinite; --dx: 34px; --dy: 15px;"
     >
-      <div
-        class="cubeOneContainer"
-      >
-        <div
-          class="cubeOne"
-        />
-      </div>
-      <div
-        class="cubeTwoContainer"
-      >
-        <div
-          class="cubeTwo"
-        />
-      </div>
-      <div
-        class="cubeThreeContainer"
-      >
-        <div
-          class="cubeThree"
-        />
-      </div>
+      <test-file-stub
+        style="rotate: 306deg; width: 74px; height: 74px; color: var(--color-brand-blue); animation: pulse-shape 9.1s linear -7.9s infinite; --scale-to: 1.33; --opacity-min: 0.1; --opacity-max: 0.22;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 15.4%; left: 88.15%; animation: float 28.7s ease-in-out -3.4s infinite; --dx: 31px; --dy: 22px;"
+    >
+      <test-file-stub
+        style="rotate: 238deg; width: 28px; height: 28px; color: var(--color-brand-blue); animation: pulse-shape 15.8s linear -10.8s infinite; --scale-to: 1.29; --opacity-min: 0.07; --opacity-max: 0.19;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 23.46%; left: 67.49%; animation: float 29s ease-in-out -8.6s infinite; --dx: 17px; --dy: 29px;"
+    >
+      <test-file-stub
+        style="rotate: 194deg; width: 38px; height: 38px; color: var(--color-brand-blue); animation: pulse-shape 12.7s linear -9.2s infinite; --scale-to: 1.34; --opacity-min: 0.04; --opacity-max: 0.21;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 22.79%; left: 87.53%; animation: float 32.3s ease-in-out -4.1s infinite; --dx: 30px; --dy: 19px;"
+    >
+      <test-file-stub
+        style="rotate: 242deg; width: 33px; height: 33px; color: var(--color-brand-blue); animation: pulse-shape 10.2s linear -7.4s infinite; --scale-to: 1.45; --opacity-min: 0.08; --opacity-max: 0.24;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 64.44%; left: 7.69%; animation: float 22.5s ease-in-out -9.1s infinite; --dx: 23px; --dy: 39px;"
+    >
+      <test-file-stub
+        style="rotate: 75deg; width: 51px; height: 51px; color: var(--color-brand-pink); animation: pulse-shape 9.9s linear -8.1s infinite; --scale-to: 1.29; --opacity-min: 0.09; --opacity-max: 0.22;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 71.35%; left: 21.28%; animation: float 23.9s ease-in-out -17.2s infinite; --dx: 39px; --dy: 36px;"
+    >
+      <test-file-stub
+        style="rotate: 109deg; width: 28px; height: 28px; color: var(--color-brand-pink); animation: pulse-shape 15.6s linear -7.2s infinite; --scale-to: 1.18; --opacity-min: 0.05; --opacity-max: 0.22;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 82.56%; left: 10.1%; animation: float 26.4s ease-in-out -1.2s infinite; --dx: 35px; --dy: 23px;"
+    >
+      <test-file-stub
+        style="rotate: 245deg; width: 79px; height: 79px; color: var(--color-brand-pink); animation: pulse-shape 9s linear -8.8s infinite; --scale-to: 1.33; --opacity-min: 0.1; --opacity-max: 0.14;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 76.23%; left: 24.77%; animation: float 28.7s ease-in-out -16.7s infinite; --dx: 18px; --dy: 25px;"
+    >
+      <test-file-stub
+        style="rotate: 38deg; width: 46px; height: 46px; color: var(--color-brand-pink); animation: pulse-shape 15s linear -1.7s infinite; --scale-to: 1.46; --opacity-min: 0.07; --opacity-max: 0.24;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 65.22%; left: 22.39%; animation: float 22.5s ease-in-out -12.6s infinite; --dx: 37px; --dy: 39px;"
+    >
+      <test-file-stub
+        style="rotate: 2deg; width: 29px; height: 29px; color: var(--color-brand-pink); animation: pulse-shape 7s linear -8.1s infinite; --scale-to: 1.37; --opacity-min: 0.05; --opacity-max: 0.18;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 53.05%; left: 75.41%; animation: float 21s ease-in-out -18.7s infinite; --dx: 29px; --dy: 20px;"
+    >
+      <test-file-stub
+        style="rotate: 54deg; width: 28px; height: 28px; color: var(--color-brand-purple); animation: pulse-shape 6.7s linear -8.3s infinite; --scale-to: 1.33; --opacity-min: 0.07; --opacity-max: 0.14;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 61.86%; left: 60.81%; animation: float 25.3s ease-in-out -2.2s infinite; --dx: 39px; --dy: 19px;"
+    >
+      <test-file-stub
+        style="rotate: 357deg; width: 28px; height: 28px; color: var(--color-brand-purple); animation: pulse-shape 10.9s linear -0.6s infinite; --scale-to: 1.18; --opacity-min: 0.06; --opacity-max: 0.2;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 63.57%; left: 74.62%; animation: float 18.2s ease-in-out -2.8s infinite; --dx: 14px; --dy: 35px;"
+    >
+      <test-file-stub
+        style="rotate: 51deg; width: 32px; height: 32px; color: var(--color-brand-purple); animation: pulse-shape 11.6s linear -1.5s infinite; --scale-to: 1.25; --opacity-min: 0.06; --opacity-max: 0.2;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 67.49%; left: 73.1%; animation: float 30s ease-in-out -15.3s infinite; --dx: 23px; --dy: 28px;"
+    >
+      <test-file-stub
+        style="rotate: 260deg; width: 35px; height: 35px; color: var(--color-brand-purple); animation: pulse-shape 7.8s linear -6.7s infinite; --scale-to: 1.19; --opacity-min: 0.06; --opacity-max: 0.2;"
+      />
+    </div>
+    <div
+      class="absolute"
+      style="top: 50.94%; left: 55.42%; animation: float 26.8s ease-in-out -11.7s infinite; --dx: 28px; --dy: 20px;"
+    >
+      <test-file-stub
+        style="rotate: 318deg; width: 62px; height: 62px; color: var(--color-brand-purple); animation: pulse-shape 10.6s linear -0.6s infinite; --scale-to: 1.28; --opacity-min: 0.1; --opacity-max: 0.23;"
+      />
     </div>
   </div>
 </div>

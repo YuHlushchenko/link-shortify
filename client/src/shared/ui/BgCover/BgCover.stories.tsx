@@ -1,57 +1,33 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite'
-import BgCover from './BgCover'
+
 import { Theme } from '@/shared/const/theme'
+
+import BgCover from './BgCover'
 
 const meta: Meta<typeof BgCover> = {
   title: 'Shared/BgCover',
   component: BgCover,
-  argTypes: {},
+  parameters: {
+    layout: 'fullscreen',
+  },
+  decorators: [
+    (Story) => (
+      // position:fixed creates a stacking context — BgCover (-z-10) renders behind
+      // this transparent wrapper, which itself sits above ThemeDecorator's background
+      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden' }}>
+        <Story />
+      </div>
+    ),
+  ],
 }
 export default meta
 
 type Story = StoryObj<typeof BgCover>
 
-// for dark theme
-export const Default: Story = {
-  args: {},
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          zIndex: 1,
-          width: '100%',
-          minHeight: '100svh',
-          height: '100%',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
-}
+export const Dark: Story = {}
 
-// for light theme
-export const DefaultLIGHT: Story = {
-  args: {},
+export const Light: Story = {
   globals: {
     theme: Theme.LIGHT,
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          zIndex: 1,
-          width: '100%',
-          minHeight: '100svh',
-          height: '100%',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
 }

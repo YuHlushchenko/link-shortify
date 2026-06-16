@@ -115,6 +115,44 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   BgCover keyframes
+   --dx / --dy / --scale-to / --opacity-min / --opacity-max are set
+   as inline CSS custom properties per particle in BgCover.tsx
+   ───────────────────────────────────────────────────────────────── */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(var(--dx), calc(var(--dy) * -0.7));
+  }
+
+  50% {
+    transform: translate(calc(var(--dx) * 0.4), var(--dy));
+  }
+
+  75% {
+    transform: translate(calc(var(--dx) * -0.6), calc(var(--dy) * 0.5));
+  }
+}
+
+@keyframes pulse-shape {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: var(--opacity-min);
+  }
+
+  50% {
+    transform: scale(var(--scale-to));
+    opacity: var(--opacity-max);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
    Gradient text — not doable with Tailwind utilities
    ───────────────────────────────────────────────────────────────── */
 

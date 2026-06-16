@@ -15,7 +15,6 @@ import styles from './HomePage.module.scss'
 
 const HomePage = async () => {
   // const t = useTranslations('common')
-  // console.log('HomePage') // REALY WORKS IN SERVER-SIDE
 
   const themeFromCookies =
     ((await cookies()).get('app_theme')?.value as Theme) || Theme.DARK
