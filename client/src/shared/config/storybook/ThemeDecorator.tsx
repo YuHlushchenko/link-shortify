@@ -15,7 +15,7 @@ export const ThemeDecorator: Decorator = (Story, context) => {
         color: 'var(--fg-1)',
         // styling storybook preview
         minHeight: '100svh',
-        padding: '1rem 4rem',
+        padding: '1rem 1.5rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

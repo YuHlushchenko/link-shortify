@@ -21,25 +21,6 @@ describe('Button', () => {
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 
-  test('disables default button when disabled prop is true', () => {
-    render(<Button disabled>Click me</Button>)
-    const buttonElement = screen.getByText('Click me').closest('button')
-    expect(buttonElement).toBeDisabled()
-    expect(buttonElement).toHaveClass('disabledDefault')
-  })
-
-  test('disables accent button when disabled prop is true', () => {
-    render(
-      <Button className='accent' disabled>
-        Go to test
-      </Button>,
-    )
-
-    const buttonElement = screen.getByText('Go to test').closest('button')
-    expect(buttonElement).toBeDisabled()
-    expect(buttonElement).toHaveClass('disabledAccent')
-  })
-
   test('does not call onClick when disabled', () => {
     const handleClick = jest.fn()
     render(
@@ -51,25 +32,33 @@ describe('Button', () => {
     expect(handleClick).not.toHaveBeenCalled()
   })
 
-  test('applies default styles', () => {
-    render(<Button className='default'>Styled Button</Button>)
-    const buttonElement = screen.getByText('Styled Button')
-    expect(buttonElement).toHaveClass('default')
+  test('disables button element when disabled prop is true', () => {
+    render(<Button disabled>Click me</Button>)
+    expect(screen.getByRole('button')).toBeDisabled()
   })
 
-  test('renders loading state', () => {
+  test('does not call onClick when isLoading', () => {
+    const handleClick = jest.fn()
+    render(
+      <Button isLoading onClick={handleClick}>
+        Click me
+      </Button>,
+    )
+    fireEvent.click(screen.getByTestId('btn-loading'))
+    expect(handleClick).not.toHaveBeenCalled()
+  })
+
+  test('renders loading indicator when isLoading is true', () => {
     render(<Button isLoading>Loading</Button>)
-    const loadingElements = screen
-      .getByTestId('btn-loading')
-      .parentElement?.querySelectorAll('div.circlesContainer')
-    expect(loadingElements).not.toBeNull()
+    expect(screen.getByTestId('btn-loading')).toBeInTheDocument()
+    expect(screen.queryByText('Loading')).not.toBeInTheDocument()
   })
 
-  test('renders icons correctly', () => {
+  test('renders icons when provided', () => {
     render(
       <Button
-        iconLeft={<span data-testid='icon-left'>Left</span>}
-        iconRight={<span data-testid='icon-right'>Right</span>}
+        iconLeft={<span data-testid='icon-left'>L</span>}
+        iconRight={<span data-testid='icon-right'>R</span>}
       >
         Icon Button
       </Button>,
@@ -78,9 +67,29 @@ describe('Button', () => {
     expect(screen.getByTestId('icon-right')).toBeInTheDocument()
   })
 
-  test('renders rounded button when isRounded is true', () => {
-    render(<Button isRounded>Rounded Button</Button>)
-    const buttonElement = screen.getByText('Rounded Button')
-    expect(buttonElement).toHaveClass('rounded')
+  test('renders as button element by default', () => {
+    render(<Button>Click me</Button>)
+    expect(screen.getByRole('button')).toBeInTheDocument()
+  })
+
+  test('applies extra className', () => {
+    render(<Button className='my-custom-class'>Styled</Button>)
+    expect(screen.getByRole('button')).toHaveClass('my-custom-class')
+  })
+
+  test('renders primary variant by default', () => {
+    render(<Button>Primary</Button>)
+    expect(screen.getByRole('button')).toHaveClass('bg-brand-blue')
+  })
+
+  test('renders secondary variant', () => {
+    render(<Button variant='secondary'>Secondary</Button>)
+    const btn = screen.getByRole('button')
+    expect(btn).not.toHaveClass('bg-brand-blue')
+  })
+
+  test('renders rounded button', () => {
+    render(<Button isRounded>R</Button>)
+    expect(screen.getByRole('button')).toHaveClass('rounded-full')
   })
 })

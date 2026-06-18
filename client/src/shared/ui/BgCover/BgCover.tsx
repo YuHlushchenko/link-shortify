@@ -102,9 +102,9 @@ const particles = rawParticles.map((p) => ({
 const BgCover = () => (
   <div className='pointer-events-none fixed inset-0 -z-10 overflow-hidden'>
     {/* Gradient orbs — cx/cy % match ORB_GROUPS in the particle system */}
-    <div className='absolute top-0 right-[20%] size-[340px] -translate-y-1/3 rounded-full bg-brand-blue opacity-40 blur-[160px] shadow-[0_0_180px_120px_var(--color-brand-blue)]' />
-    <div className='absolute bottom-[20%] left-0 size-[500px] translate-y-1/4 rounded-full bg-brand-pink opacity-20 blur-[200px] shadow-[0_0_220px_140px_var(--color-brand-pink)]' />
-    <div className='absolute top-[44%] left-[54%] size-[480px] -translate-y-1/2 rounded-full bg-brand-purple opacity-20 blur-[140px] shadow-[0_0_180px_120px_var(--color-brand-purple)]' />
+    <div className='absolute top-0 right-[20%] size-42.5 -translate-y-1/3 rounded-full bg-brand-blue opacity-40 blur-[160px] shadow-[0_0_180px_120px_var(--color-brand-blue)]' />
+    <div className='absolute bottom-[20%] left-0 size-62.5 translate-y-1/4 rounded-full bg-brand-pink opacity-20 blur-[200px] shadow-[0_0_220px_140px_var(--color-brand-pink)]' />
+    <div className='absolute top-[44%] left-[54%] size-60 -translate-y-1/2 rounded-full bg-brand-purple opacity-20 blur-[140px] shadow-[0_0_180px_120px_var(--color-brand-purple)]' />
 
     {/* Shapes clustered near each orb */}
     {particles.map(

@@ -11,8 +11,6 @@ import Checkbox from '@/shared/ui/Checkbox/Checkbox'
 import { notify } from '@/shared/lib/utils/notify'
 import { ToastType } from '@/shared/const/toast'
 
-import styles from './InputLinkWithAutoPaste.module.scss'
-
 interface IProps {
   checkboxId: string
   checkboxName: string
@@ -78,16 +76,17 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
     }
   }
 
-  /* eslint-disable react-hooks/set-state-in-effect -- intentional: read localStorage on mount then clear pending state */
   useEffect(() => {
-    getAutoPasteFromLocalStorage()
-    setAutoPastePending(false)
+    try {
+      getAutoPasteFromLocalStorage()
+    } finally {
+      setAutoPastePending(false)
+    }
   }, [])
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   return (
-    <div className={styles.container}>
-      <div className={styles.linkInputContainer}>
+    <div className='flex flex-col items-center justify-center'>
+      <div className='w-full sm:w-auto'>
         <InputLink
           inputValue={inputValue}
           setInputValue={setInputValue}
@@ -99,7 +98,7 @@ const InputLinkWithAutoPaste: FC<IProps> = ({
         />
       </div>
 
-      <div className={styles.checkboxAutoPasteContainer}>
+      <div className='mt-4 sm:mt-6 md:mt-8'>
         <Checkbox
           id={checkboxId}
           name={checkboxName}

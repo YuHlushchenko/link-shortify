@@ -1,35 +1,43 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite'
-import Button, { TButtonClassName } from './Button'
+import Button, { ButtonVariant } from './Button'
 import { Theme } from '@/shared/const/theme'
 
 import LinkSvg from 'public/assets/svgs/link.svg'
 
-// Storybook meta-інформація про компонент
+const ButtonIcon = () => (
+  <LinkSvg style={{ width: '16px', height: '16px', flexShrink: 0 }} />
+)
+
+const RoundedIcon = () => (
+  <span
+    style={{ display: 'block', width: '20px', height: '20px', flexShrink: 0 }}
+  >
+    <LinkSvg style={{ width: '100%', height: '100%' }} />
+  </span>
+)
+
+const VARIANTS: ButtonVariant[] = [
+  'primary',
+  'secondary',
+  'ghost',
+  'destructive',
+]
+
 const meta: Meta<typeof Button> = {
   title: 'Shared/Button',
   component: Button,
-
   argTypes: {
-    className: {
-      control: 'select',
-      options: ['default', 'accent'],
-    },
+    variant: { control: 'select', options: VARIANTS },
     onClick: { action: 'clicked' },
     disabled: { control: 'boolean' },
     isLoading: { control: 'boolean' },
     isRounded: { control: 'boolean' },
-    iconLeftContainerStyle: { control: 'object' },
-    iconRightContainerStyle: { control: 'object' },
+    isGlowing: { control: 'boolean' },
     href: { control: 'text' },
-  },
-  parameters: {
-    actions: {
-      handles: ['click'],
-    },
   },
   decorators: [
     (Story) => (
-      <div style={{ margin: '1rem' }}>
+      <div style={{ padding: '1.5rem' }}>
         <Story />
       </div>
     ),
@@ -39,230 +47,203 @@ export default meta
 
 type Story = StoryObj<typeof Button>
 
-export const Default: Story = {
-  args: {
-    children: 'Default Button',
-    className: 'default' as TButtonClassName,
-    disabled: false,
-  },
+// ─── helpers ────────────────────────────────────────────────────────────────
+
+const Row = ({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <span
+      style={{
+        fontSize: '11px',
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+        color: '#949CB1',
+      }}
+    >
+      {label}
+    </span>
+    <div
+      style={{
+        display: 'flex',
+        gap: '12px',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+      }}
+    >
+      {children}
+    </div>
+  </div>
+)
+
+const Grid = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    {children}
+  </div>
+)
+
+// ─── All Variants overview ───────────────────────────────────────────────────
+
+export const AllVariants: Story = {
+  render: () => (
+    <Grid>
+      <Row label='Default'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v}>
+            {v}
+          </Button>
+        ))}
+      </Row>
+      <Row label='Disabled'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} disabled>
+            {v}
+          </Button>
+        ))}
+      </Row>
+      <Row label='Loading'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} isLoading>
+            {v}
+          </Button>
+        ))}
+      </Row>
+      <Row label='Glowing (primary only)'>
+        <Button variant='primary' isGlowing>
+          primary
+        </Button>
+        <Button variant='primary' isGlowing disabled>
+          primary · disabled
+        </Button>
+      </Row>
+    </Grid>
+  ),
 }
 
-export const DefaultLIGHT: Story = {
-  args: {
-    children: 'Default Button LIGHT',
-    className: 'default' as TButtonClassName,
-    disabled: false,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
+export const AllVariantsLight: Story = {
+  ...AllVariants,
+  globals: { theme: Theme.LIGHT },
 }
 
-export const Accent: Story = {
-  args: {
-    children: 'Accent Button',
-    className: 'accent' as TButtonClassName,
-    disabled: false,
-  },
+// ─── With icon left ──────────────────────────────────────────────────────────
+
+export const WithIconLeft: Story = {
+  render: () => (
+    <Grid>
+      <Row label='Icon left'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} iconLeft={<ButtonIcon />}>
+            {v}
+          </Button>
+        ))}
+      </Row>
+      <Row label='Icon left · glowing (primary only)'>
+        <Button variant='primary' iconLeft={<ButtonIcon />} isGlowing>
+          primary
+        </Button>
+      </Row>
+      <Row label='Icon left · disabled'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} iconLeft={<ButtonIcon />} disabled>
+            {v}
+          </Button>
+        ))}
+      </Row>
+    </Grid>
+  ),
 }
 
-export const AccentLIGHT: Story = {
-  args: {
-    children: 'Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    disabled: false,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
+export const WithIconLeftLight: Story = {
+  ...WithIconLeft,
+  globals: { theme: Theme.LIGHT },
 }
 
-export const Disabled: Story = {
-  args: {
-    children: 'Disabled Button',
-    className: 'default' as TButtonClassName,
-    disabled: true,
-  },
+// ─── With icon right ─────────────────────────────────────────────────────────
+
+export const WithIconRight: Story = {
+  render: () => (
+    <Grid>
+      <Row label='Icon right'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} iconRight={<ButtonIcon />}>
+            {v}
+          </Button>
+        ))}
+      </Row>
+      <Row label='Icon right · glowing (primary only)'>
+        <Button variant='primary' iconRight={<ButtonIcon />} isGlowing>
+          primary
+        </Button>
+      </Row>
+      <Row label='Icon right · disabled'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} iconRight={<ButtonIcon />} disabled>
+            {v}
+          </Button>
+        ))}
+      </Row>
+    </Grid>
+  ),
 }
 
-export const DisabledLIGHT: Story = {
-  args: {
-    children: 'Disabled Button LIGHT',
-    className: 'default' as TButtonClassName,
-    disabled: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
+export const WithIconRightLight: Story = {
+  ...WithIconRight,
+  globals: { theme: Theme.LIGHT },
 }
 
-export const DisabledAccent: Story = {
-  args: {
-    children: 'Disabled Accent Button',
-    className: 'accent' as TButtonClassName,
-    disabled: true,
-  },
-}
-
-export const DisabledAccentLIGHT: Story = {
-  args: {
-    children: 'Disabled Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    disabled: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const Loading: Story = {
-  args: {
-    children: 'Loading Button',
-    className: 'default' as TButtonClassName,
-    isLoading: true,
-  },
-}
-
-export const LoadingLIGHT: Story = {
-  args: {
-    children: 'Loading Button LIGHT',
-    className: 'default' as TButtonClassName,
-    isLoading: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const LoadingAccent: Story = {
-  args: {
-    children: 'Loading Accent Button',
-    className: 'accent' as TButtonClassName,
-    isLoading: true,
-  },
-}
-
-export const LoadingAccentLIGHT: Story = {
-  args: {
-    children: 'Loading Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    isLoading: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const IconLeft: Story = {
-  args: {
-    children: 'Icon Left Button',
-    className: 'default' as TButtonClassName,
-    iconLeft: <LinkSvg />,
-  },
-}
-
-export const IconLeftLIGHT: Story = {
-  args: {
-    children: 'Icon Left Button LIGHT',
-    className: 'default' as TButtonClassName,
-    iconLeft: <LinkSvg />,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const IconLeftAccent: Story = {
-  args: {
-    children: 'Icon Left Accent Button',
-    className: 'accent' as TButtonClassName,
-    iconLeft: <LinkSvg />,
-  },
-}
-
-export const IconLeftAccentLIGHT: Story = {
-  args: {
-    children: 'Icon Left Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    iconLeft: <LinkSvg />,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const IconRight: Story = {
-  args: {
-    children: 'Icon Right Button LIGHT',
-    className: 'default' as TButtonClassName,
-    iconRight: <LinkSvg />,
-  },
-}
-
-export const IconRightLIGHT: Story = {
-  args: {
-    children: 'Icon Right Button LIGHT',
-    className: 'default' as TButtonClassName,
-    iconRight: <LinkSvg />,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
-
-export const IconRightAccent: Story = {
-  args: {
-    children: 'Icon Right Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    iconRight: <LinkSvg />,
-  },
-}
-
-export const IconRightAccentLIGHT: Story = {
-  args: {
-    children: 'Icon Right Accent Button LIGHT',
-    className: 'accent' as TButtonClassName,
-    iconRight: <LinkSvg />,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
-}
+// ─── Rounded (icon-only) ─────────────────────────────────────────────────────
 
 export const Rounded: Story = {
-  args: {
-    children: <LinkSvg />,
-    className: 'default' as TButtonClassName,
-    isRounded: true,
-  },
+  render: () => (
+    <Grid>
+      <Row label='Rounded · default'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} isRounded>
+            <RoundedIcon />
+          </Button>
+        ))}
+      </Row>
+      <Row label='Rounded · glowing (primary only)'>
+        <Button variant='primary' isRounded isGlowing>
+          <RoundedIcon />
+        </Button>
+      </Row>
+      <Row label='Rounded · disabled'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} isRounded disabled>
+            <RoundedIcon />
+          </Button>
+        ))}
+      </Row>
+      <Row label='Rounded · loading'>
+        {VARIANTS.map((v) => (
+          <Button key={v} variant={v} isRounded isLoading>
+            <RoundedIcon />
+          </Button>
+        ))}
+      </Row>
+    </Grid>
+  ),
 }
 
-export const RoundedLIGHT: Story = {
-  args: {
-    children: <LinkSvg />,
-    className: 'default' as TButtonClassName,
-    isRounded: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
-  },
+export const RoundedLight: Story = {
+  ...Rounded,
+  globals: { theme: Theme.LIGHT },
 }
 
-export const RoundedAccent: Story = {
-  args: {
-    children: <LinkSvg />,
-    className: 'accent' as TButtonClassName,
-    isRounded: true,
-  },
-}
+// ─── Playground (controls) ───────────────────────────────────────────────────
 
-export const RoundedAccentLIGHT: Story = {
+export const Playground: Story = {
   args: {
-    children: <LinkSvg />,
-    className: 'accent' as TButtonClassName,
-    isRounded: true,
-  },
-  globals: {
-    theme: Theme.LIGHT,
+    children: 'Click me',
+    variant: 'primary',
+    disabled: false,
+    isLoading: false,
+    isRounded: false,
+    isGlowing: false,
   },
 }

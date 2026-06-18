@@ -38,7 +38,7 @@ const Navbar = () => {
                 <Button
                   href='/auth/login'
                   iconRight={<Login />}
-                  className='accent'
+                  variant='primary'
                   iconRightContainerStyle={{ right: '24px' }}
                 >
                   login
@@ -47,7 +47,7 @@ const Navbar = () => {
 
               {/* for mobile */}
               <div className={styles.loginBtnContainerMobile}>
-                <Button href='/auth/login' className='accent' isRounded={true}>
+                <Button href='/auth/login' variant='primary' isRounded={true}>
                   <Login />
                 </Button>
               </div>

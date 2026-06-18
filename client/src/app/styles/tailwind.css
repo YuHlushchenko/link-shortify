@@ -49,6 +49,7 @@
   --shadow-input-focus: 0px 0px 0px 3px rgb(20 78 227 / 18%);
   --shadow-card: 0px 12px 32px rgb(0 0 0 / 40%);
   --shadow-pop: 0px 20px 40px rgb(0 0 0 / 50%);
+  --shadow-glow-primary: 0px 0px 24px 6px rgb(20 78 227 / 60%);
 
   /* ── Spacing (8pt grid: m-1=8px, m-2=16px, m-3=24px …) ─────── */
   --spacing: 0.5rem;
@@ -115,6 +116,16 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   Responsive token overrides
+   ───────────────────────────────────────────────────────────────── */
+
+@media (width <= 599px) {
+  :root {
+    --shadow-glow-primary: 0px 0px 10px 2px rgb(20 78 227 / 70%);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
    BgCover keyframes
    --dx / --dy / --scale-to / --opacity-min / --opacity-max are set
    as inline CSS custom properties per particle in BgCover.tsx
@@ -153,6 +164,83 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────
+    InputLink keyframes + utilities
+   ───────────────────────────────────────────────────────────────── */
+
+@keyframes cursor-blinking {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 150% 50%;
+  }
+
+  100% {
+    background-position: -50% 50%;
+  }
+}
+
+@utility paste-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border),
+    var(--surface-2),
+    var(--border)
+  );
+  background-size: 200% 200%;
+  background-position: 100% 50%;
+  animation: skeleton 0.8s infinite linear;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@utility animate-gradient {
+  animation: gradient-move 4s infinite linear;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Button loading dots keyframe
+   ───────────────────────────────────────────────────────────────── */
+
+@keyframes btn-dot {
+  0% {
+    transform: scale(1);
+  }
+
+  33% {
+    transform: scale(0.6);
+  }
+
+  50% {
+    transform: scale(0.3);
+  }
+
+  66% {
+    transform: scale(0.6);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
    Gradient text — not doable with Tailwind utilities
    ───────────────────────────────────────────────────────────────── */
 
@@ -171,6 +259,7 @@
     #a353aa 60%,
     #144ee3 100%
   );
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

@@ -13,7 +13,7 @@
       "rules": {
         "at-rule-no-unknown": [
           true,
-          { "ignoreAtRules": ["theme", "custom-variant"] }
+          { "ignoreAtRules": ["theme", "custom-variant", "utility"] }
         ],
         "scss/at-rule-no-unknown": null,
         "property-no-vendor-prefix": null

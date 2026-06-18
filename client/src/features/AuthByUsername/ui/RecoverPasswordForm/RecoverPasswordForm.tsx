@@ -89,7 +89,7 @@ export const RecoverPasswordForm = () => {
 
               <Button
                 type='submit'
-                className='accent'
+                variant='primary'
                 style={{
                   width: '100%',
                   height: '50px',
@@ -185,7 +185,7 @@ export const RecoverPasswordForm = () => {
 
               <Button
                 type='submit'
-                className='accent'
+                variant='primary'
                 style={{
                   width: '100%',
                   height: '50px',

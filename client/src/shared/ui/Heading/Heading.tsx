@@ -24,7 +24,8 @@ interface IProps {
 
 // Variant → Tailwind class map based on Figma typography scale
 const variants: Record<THeadingVariant, string> = {
-  display: 'text-h1 leading-[1.05] font-extrabold tracking-[-1.5px]',
+  display:
+    'text-[48px] leading-[1.2] font-extrabold tracking-[-1.5px] xl:text-h1',
   title: 'text-h2 leading-[1.15] font-bold',
   subtitle: 'text-h3 leading-[1.3] font-bold',
   heading: 'text-h4 leading-[1.4] font-bold',

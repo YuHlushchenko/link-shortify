@@ -125,7 +125,7 @@ export const VerifyEmailForm = () => {
 
           <Button
             type='submit'
-            className='accent'
+            variant='primary'
             style={{
               width: '100%',
               height: '50px',
