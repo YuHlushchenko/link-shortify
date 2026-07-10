@@ -10,7 +10,7 @@ exports[`AuthStack dev matches snapshot 1`] = `
       },
       "Value": {
         "Fn::GetAtt": [
-          "UserPoolDomain5479B217",
+          "UserPoolDomainV228791335",
           "CloudFrontDistribution",
         ],
       },
@@ -172,7 +172,7 @@ exports[`AuthStack dev matches snapshot 1`] = `
       },
       "Type": "AWS::Cognito::UserPoolClient",
     },
-    "UserPoolDomain5479B217": {
+    "UserPoolDomainV228791335": {
       "DependsOn": [
         "UserPoolClient2F5918F7",
       ],
@@ -228,7 +228,7 @@ exports[`AuthStack prod matches snapshot 1`] = `
       },
       "Value": {
         "Fn::GetAtt": [
-          "UserPoolDomain5479B217",
+          "UserPoolDomainV228791335",
           "CloudFrontDistribution",
         ],
       },
@@ -396,7 +396,7 @@ exports[`AuthStack prod matches snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                ":identity/noreply@test.example.com",
+                ":identity/test.example.com",
               ],
             ],
           },
@@ -487,7 +487,7 @@ exports[`AuthStack prod matches snapshot 1`] = `
       },
       "Type": "AWS::Cognito::UserPoolClient",
     },
-    "UserPoolDomain5479B217": {
+    "UserPoolDomainV228791335": {
       "DependsOn": [
         "UserPoolClient2F5918F7",
       ],
