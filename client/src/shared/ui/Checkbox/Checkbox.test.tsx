@@ -21,7 +21,7 @@ describe('Checkbox Component', () => {
   it('renders the component with default props', () => {
     render(<Checkbox {...defaultProps} />)
 
-    const inputElement = screen.getByLabelText('Сheckbox Auto Paste')
+    const inputElement = screen.getByLabelText('Checkbox Auto Paste')
     const labelElement = screen.getByText('Test Checkbox')
 
     expect(inputElement).toBeInTheDocument()
@@ -39,7 +39,7 @@ describe('Checkbox Component', () => {
   it('handles toggleCheck on checkbox change', () => {
     render(<Checkbox {...defaultProps} />)
 
-    const inputElement = screen.getByLabelText('Сheckbox Auto Paste')
+    const inputElement = screen.getByLabelText('Checkbox Auto Paste')
 
     fireEvent.click(inputElement)
     expect(mockToggleCheck).toHaveBeenCalledTimes(1)
@@ -48,7 +48,7 @@ describe('Checkbox Component', () => {
   it('handles Enter key press to toggle check', () => {
     render(<Checkbox {...defaultProps} />)
 
-    const inputElement = screen.getByLabelText('Сheckbox Auto Paste')
+    const inputElement = screen.getByLabelText('Checkbox Auto Paste')
 
     fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
     expect(mockToggleCheck).toHaveBeenCalledTimes(1)

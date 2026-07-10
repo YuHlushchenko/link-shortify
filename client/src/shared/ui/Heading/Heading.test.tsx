@@ -14,8 +14,8 @@ describe('Heading', () => {
   })
   test('if variant', () => {
     render(<Heading variant='display'>Heading</Heading>)
-    // display variant applies text-h1 from the variants map
-    expect(screen.getByText('Heading')).toHaveClass('text-h1')
+    // display variant base size is text-[48px]; xl:text-h1 is responsive
+    expect(screen.getByText('Heading')).toHaveClass('text-[48px]')
   })
   test('if style', () => {
     render(<Heading style={{ color: 'red' }}>Heading</Heading>)
