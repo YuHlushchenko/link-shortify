@@ -22,9 +22,9 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://api.julab.space
+  - url: https://api.julab-x.space
     description: Production
-  - url: https://dev-api.julab.space
+  - url: https://dev-api.julab-x.space
     description: Development
 
 tags:

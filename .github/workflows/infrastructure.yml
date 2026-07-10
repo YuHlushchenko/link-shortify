@@ -19,7 +19,7 @@ env:
   CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
   CDK_DEFAULT_REGION: eu-central-1
   STAGE: prod
-  DOMAIN_NAME: julab.space
+  DOMAIN_NAME: julab-x.space
   CERTIFICATE_ARN: ${{ secrets.CERTIFICATE_ARN }}
   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
   UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}

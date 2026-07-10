@@ -3,20 +3,21 @@
 export default $config({
   app(input) {
     return {
-      name: "link-shortify",
-      removal: input?.stage === "prod" ? "retain" : "remove",
-      home: "aws",
+      name: 'link-shortify',
+      removal: input?.stage === 'prod' ? 'retain' : 'remove',
+      home: 'aws',
       providers: {
-        aws: { region: "eu-central-1" },
+        aws: { region: 'eu-central-1' },
       },
-    };
+    }
   },
   async run() {
-    const isProd = $app.stage === "prod";
-    const domain = isProd ? "julab.space" : `${$app.stage}.julab.space`;
+    const isProd = $app.stage === 'prod'
+    const baseDomain = process.env.DOMAIN_NAME ?? 'julab-x.space'
+    const domain = isProd ? baseDomain : `${$app.stage}.${baseDomain}`
 
-    const site = new sst.aws.Nextjs("Client", {
-      path: "../../client",
+    const site = new sst.aws.Nextjs('Client', {
+      path: '../../client',
       domain: {
         name: domain,
         ...(isProd ? { redirects: [`www.${domain}`] } : {}),
@@ -28,15 +29,17 @@ export default $config({
       environment: {
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL!,
         NEXT_PUBLIC_COGNITO_DOMAIN: process.env.NEXT_PUBLIC_COGNITO_DOMAIN!,
-        NEXT_PUBLIC_COGNITO_CLIENT_ID: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
-        NEXT_PUBLIC_COGNITO_USER_POOL_ID: process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID!,
+        NEXT_PUBLIC_COGNITO_CLIENT_ID:
+          process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
+        NEXT_PUBLIC_COGNITO_USER_POOL_ID:
+          process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID!,
         NEXT_PUBLIC_AUTH_CALLBACK_URL: `https://${domain}/api/auth/callback`,
         NEXT_PUBLIC_AUTH_LOGOUT_URL: process.env.NEXT_PUBLIC_AUTH_LOGOUT_URL!,
       },
-    });
+    })
 
     return {
       url: site.url,
-    };
+    }
   },
-});
+})

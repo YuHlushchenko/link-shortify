@@ -2,7 +2,7 @@
 
 **Link-Shortify** is a URL shortening web application that allows users to create, manage, and track shortened links. Built with Next.js on the frontend and a fully serverless AWS infrastructure on the backend.
 
-Deployed URL: [https://julab.space](https://julab.space)
+Deployed URL: [https://julab-x.space](https://julab-x.space)
 
 ## Features
 
@@ -171,15 +171,15 @@ cp infrastructure/sst/.env.prod.example infrastructure/sst/.env.prod
 **Backend (CDK)** — deploys API Gateway, Lambda functions, DynamoDB, Cognito:
 
 ```bash
-yarn deploy:server:dev   # → dev-api.julab.space
-yarn deploy:server:prod  # → api.julab.space
+yarn deploy:server:dev   # → dev-api.julab-x.space
+yarn deploy:server:prod  # → api.julab-x.space
 ```
 
 **Frontend (SST)** — deploys Next.js via OpenNext to CloudFront + S3 + Lambda:
 
 ```bash
-yarn deploy:client:dev   # → dev.julab.space
-yarn deploy:client:prod  # → julab.space
+yarn deploy:client:dev   # → dev.julab-x.space
+yarn deploy:client:prod  # → julab-x.space
 ```
 
 ---
